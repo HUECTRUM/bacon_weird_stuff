@@ -1,6 +1,7 @@
 package com.bacon.holders;
 
 import com.bacon.gameobjects.field.Field;
+import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.resolvers.ResolversContainer;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,12 @@ public class GameInfoHolder {
 
     public Field field = new Field();
 
+    public int beatNumber = 0;
+    public BeatInfoHolder beatInfoHolder;
+
+
+    //logging for states
+    //TODO: views
     public void logGameInfo() {
         log.info("----------------------------------");
         if (playerOne != null && playerTwo != null) {

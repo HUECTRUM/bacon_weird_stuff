@@ -9,4 +9,6 @@ public class ResolversContainer {
     public CharacterSelectionResolver characterSelectionResolver;
     @Autowired
     public DiscardResolver discardResolver;
+    @Autowired
+    public Recycler recycler;
 }

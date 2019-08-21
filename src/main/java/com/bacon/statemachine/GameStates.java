@@ -117,12 +117,23 @@ public enum GameStates implements GameState {
     REACTIVE_PLAYER_DAMAGE {
         @Override
         public GameState nextState() {
-            return BEAT_START;
+            return RECYCLE;
         }
 
         @Override
         public void transition(GameInfoHolder holder) {
 
+        }
+    },
+    RECYCLE {
+        @Override
+        public GameState nextState() {
+            return BEAT_START;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+            holder.resolversContainer.recycler.recycle(holder);
         }
     },
     GAME_END {
