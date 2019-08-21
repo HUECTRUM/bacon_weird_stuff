@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameInfoHolder {
-    Player playerOne;
-    Player playerTwo;
+    public Player playerOne;
+    public Player playerTwo;
 }

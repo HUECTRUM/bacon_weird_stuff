@@ -113,4 +113,15 @@ public enum GameStates implements GameState {
 
         }
     },
+    GAME_END {
+        @Override
+        public GameState nextState() {
+            return null; //should never be called
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    }
 }

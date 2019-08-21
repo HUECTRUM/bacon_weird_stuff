@@ -1,4 +1,4 @@
-package com.bacon.gameobjects;
+package com.bacon.gameobjects.characters;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

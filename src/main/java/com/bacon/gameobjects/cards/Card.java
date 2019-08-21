@@ -1,4 +1,4 @@
-package com.bacon.gameobjects;
+package com.bacon.gameobjects.cards;
 
 import com.bacon.gameobjects.enums.CardType;
 import lombok.AllArgsConstructor;

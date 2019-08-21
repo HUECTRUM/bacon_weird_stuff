@@ -1,6 +1,6 @@
 package com.bacon.player;
 
-import com.bacon.gameobjects.Card;
+import com.bacon.gameobjects.cards.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

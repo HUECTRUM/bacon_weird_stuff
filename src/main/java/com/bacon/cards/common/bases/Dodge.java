@@ -1,6 +1,6 @@
 package com.bacon.cards.common.bases;
 
-import com.bacon.gameobjects.Card;
+import com.bacon.gameobjects.cards.Card;
 
 import static com.bacon.gameobjects.enums.CardType.BASE;
 import static java.math.BigDecimal.valueOf;

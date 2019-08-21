@@ -1,7 +1,7 @@
 package com.bacon.characters.dummy;
 
 import com.bacon.characters.Character;
-import com.bacon.gameobjects.Card;
+import com.bacon.gameobjects.cards.Card;
 
 import java.util.List;
 

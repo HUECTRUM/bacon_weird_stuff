@@ -1,6 +1,6 @@
 package com.bacon.characters;
 
-import com.bacon.gameobjects.Card;
+import com.bacon.gameobjects.cards.Card;
 
 import java.util.List;
 
