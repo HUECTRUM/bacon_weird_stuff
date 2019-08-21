@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bacon.utils.StreamUtils.filterList;
 import static java.util.Collections.EMPTY_LIST;
 
 @Data
@@ -29,6 +30,20 @@ public class Player {
     public List<Card> discardOne;
     public List<Card> discardTwo;
 
+    public List<Card> availableBases() {
+        return filterOutDiscards(character.basesKit());
+    }
+
+    public List<Card> availableStyles() {
+        return filterOutDiscards(character.stylesKit());
+    }
+
+    private List<Card> filterOutDiscards(List<Card> cards) {
+        return filterList(cards, card -> !discardOne.contains(card) && !discardTwo.contains(card));
+    }
+
+
+    //constructors
     public static Player fromCharacter(Character character) {
         return Player.builder()
                 .playerId(character.displayName() + (counter++))
