@@ -6,6 +6,17 @@ public enum GameStates implements GameState {
     START {
         @Override
         public GameState nextState() {
+            return CHARACTERS_SELECTED;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    CHARACTERS_SELECTED {
+        @Override
+        public GameState nextState() {
             return PLAYER_SETUP_FINISHED;
         }
 
