@@ -1,4 +1,4 @@
-package com.bacon.statemachine.selectors.player;
+package com.bacon.selectors.player;
 
 import com.bacon.player.Player;
 

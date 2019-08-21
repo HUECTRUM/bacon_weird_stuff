@@ -12,7 +12,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.characterSelectionResolver.selectPlayers(holder);
         }
     },
     CHARACTERS_SELECTED {
