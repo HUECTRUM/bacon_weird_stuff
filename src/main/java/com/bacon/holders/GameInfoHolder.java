@@ -25,6 +25,7 @@ public class GameInfoHolder {
         if (playerOne != null && playerTwo != null) {
             logPlayer(playerOne, "one");
             logPlayer(playerTwo, "two");
+            log.info("Field {}", field.spaces);
         } else {
             log.info("Players not yet set");
         }

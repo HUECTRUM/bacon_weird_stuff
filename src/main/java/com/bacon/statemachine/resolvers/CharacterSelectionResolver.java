@@ -18,8 +18,8 @@ public class CharacterSelectionResolver {
         gameInfoHolder.playerTwo = playerSelector.selectPlayer();
 
         gameInfoHolder.field.setPlayers(
-                gameInfoHolder.playerOne.character.displayName(),
-                gameInfoHolder.playerTwo.character.displayName()
+                gameInfoHolder.playerOne.playerId,
+                gameInfoHolder.playerTwo.playerId
         );
 
         log.info("Player select finished. Field {}", gameInfoHolder.field);
