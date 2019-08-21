@@ -1,4 +1,4 @@
-package com.bacon.statemachine.beat;
+package com.bacon.holders.beat;
 
 import com.bacon.player.Player;
 

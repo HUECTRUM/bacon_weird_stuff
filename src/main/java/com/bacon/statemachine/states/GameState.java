@@ -1,6 +1,6 @@
 package com.bacon.statemachine.states;
 
-import com.bacon.statemachine.GameInfoHolder;
+import com.bacon.holders.GameInfoHolder;
 
 public interface GameState {
     GameState nextState();

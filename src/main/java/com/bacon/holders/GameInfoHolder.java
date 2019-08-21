@@ -1,4 +1,4 @@
-package com.bacon.statemachine;
+package com.bacon.holders;
 
 import com.bacon.player.Player;
 import org.springframework.stereotype.Component;

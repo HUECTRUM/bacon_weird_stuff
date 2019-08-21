@@ -1,5 +1,6 @@
 package com.bacon.statemachine;
 
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.statemachine.states.GameState;
 
 public enum GameStates implements GameState {
