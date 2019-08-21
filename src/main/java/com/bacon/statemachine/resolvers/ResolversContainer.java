@@ -7,4 +7,6 @@ import org.springframework.stereotype.Component;
 public class ResolversContainer {
     @Autowired
     public CharacterSelectionResolver characterSelectionResolver;
+    @Autowired
+    public DiscardResolver discardResolver;
 }

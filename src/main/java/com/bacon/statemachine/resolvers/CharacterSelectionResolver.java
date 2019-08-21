@@ -12,6 +12,7 @@ public class CharacterSelectionResolver {
     @Autowired
     private PlayerSelector playerSelector;
 
+    //todo: extract interface for resolvers?
     public void selectPlayers(GameInfoHolder gameInfoHolder) {
         gameInfoHolder.playerOne = playerSelector.selectPlayer();
         gameInfoHolder.playerTwo = playerSelector.selectPlayer();

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.EMPTY_LIST;
@@ -27,8 +28,8 @@ public class Player {
         return new Player(
                 character.displayName() + (counter++),
                 character,
-                EMPTY_LIST,
-                EMPTY_LIST
+                new ArrayList<>(EMPTY_LIST),
+                new ArrayList<>(EMPTY_LIST)
         );
     }
 }

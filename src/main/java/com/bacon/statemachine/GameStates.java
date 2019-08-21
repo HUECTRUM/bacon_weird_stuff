@@ -23,7 +23,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.discardResolver.selectDiscards(holder);
         }
     },
     PLAYER_SETUP_FINISHED {
