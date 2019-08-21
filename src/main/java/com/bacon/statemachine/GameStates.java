@@ -84,7 +84,7 @@ public enum GameStates implements GameState {
     ACTIVE_PLAYER_DAMAGE {
         @Override
         public GameState nextState() {
-            return null;
+            return REACTIVE_PLAYER_ATTACK_START;
         }
 
         @Override

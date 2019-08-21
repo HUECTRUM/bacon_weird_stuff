@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Random;
 
+import static java.lang.Integer.MAX_VALUE;
 import static java.util.Arrays.asList;
 
 @Component
@@ -35,11 +36,11 @@ public class RandomDiscardSelector implements DiscardSelector {
     }
 
     private NumberPair randomizeTwoNumbers(int size) {
-        int first = random.nextInt() % size;
+        int first = (random.nextInt() & MAX_VALUE) % size;
         int second = first;
 
         while (second == first) {
-            second = random.nextInt() % size;
+            second = (random.nextInt() & MAX_VALUE) % size;
         }
 
         return new NumberPair(first, second);
