@@ -30,4 +30,14 @@ public class DummyOne implements Character {
     public List<Card> styles() {
         return of(DUMMY_ONE_BASE);
     }
+
+    @Override
+    public String name() {
+        return "Dummy1";
+    }
+
+    @Override
+    public String displayName() {
+        return "DM";
+    }
 }

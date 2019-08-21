@@ -12,6 +12,9 @@ public interface Character {
     List<Card> bases();
     List<Card> styles();
 
+    String name();
+    String displayName();
+
     default List<Card> basesKit() {
         return concatLists(bases(), COMMON_BASES);
     }
