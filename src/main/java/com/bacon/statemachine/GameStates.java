@@ -39,6 +39,72 @@ public enum GameStates implements GameState {
     BEAT_START {
         @Override
         public GameState nextState() {
+            return ACTIVE_PLAYER_ATTACK_START;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    ACTIVE_PLAYER_ATTACK_START {
+        @Override
+        public GameState nextState() {
+            return ACTIVE_PLAYER_RANGE_CHECK;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    ACTIVE_PLAYER_RANGE_CHECK {
+        @Override
+        public GameState nextState() {
+            return ACTIVE_PLAYER_DAMAGE;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    ACTIVE_PLAYER_DAMAGE {
+        @Override
+        public GameState nextState() {
+            return null;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    REACTIVE_PLAYER_ATTACK_START {
+        @Override
+        public GameState nextState() {
+            return REACTIVE_PLAYER_RANGE_CHECK;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    REACTIVE_PLAYER_RANGE_CHECK {
+        @Override
+        public GameState nextState() {
+            return REACTIVE_PLAYER_DAMAGE;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    REACTIVE_PLAYER_DAMAGE {
+        @Override
+        public GameState nextState() {
             return BEAT_START;
         }
 
@@ -46,5 +112,5 @@ public enum GameStates implements GameState {
         public void transition(GameInfoHolder holder) {
 
         }
-    }
+    },
 }
