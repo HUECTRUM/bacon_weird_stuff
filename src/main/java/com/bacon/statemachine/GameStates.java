@@ -45,7 +45,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
         }
     },
     PRIORITY_CHECK {
