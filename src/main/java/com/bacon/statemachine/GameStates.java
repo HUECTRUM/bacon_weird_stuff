@@ -39,6 +39,17 @@ public enum GameStates implements GameState {
     BEAT_START {
         @Override
         public GameState nextState() {
+            return PRIORITY_CHECK;
+        }
+
+        @Override
+        public void transition(GameInfoHolder holder) {
+
+        }
+    },
+    PRIORITY_CHECK {
+        @Override
+        public GameState nextState() {
             return ACTIVE_PLAYER_ATTACK_START;
         }
 
