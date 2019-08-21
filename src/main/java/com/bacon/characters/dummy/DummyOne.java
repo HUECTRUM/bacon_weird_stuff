@@ -17,6 +17,11 @@ import static java.util.Arrays.asList;
 public class DummyOne implements Character {
     @Override
     public List<Card> bases() {
+        return of(DUMMY_ONE_BASE);
+    }
+
+    @Override
+    public List<Card> styles() {
         return asList(
                 DUMMY_ONE_STYLE_ONE,
                 DUMMY_ONE_STYLE_TWO,
@@ -24,11 +29,6 @@ public class DummyOne implements Character {
                 DUMMY_ONE_STYLE_FOUR,
                 DUMMY_ONE_STYLE_FIVE
         );
-    }
-
-    @Override
-    public List<Card> styles() {
-        return of(DUMMY_ONE_BASE);
     }
 
     @Override

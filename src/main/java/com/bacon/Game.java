@@ -24,6 +24,7 @@ public class Game {
         int cnt = 0; //TODO: remove
         while (state != GAME_END && cnt != 100) {
             log.info("State {} cnt {}", state, cnt);
+            gameInfoHolder.logGameInfo();
             state.transition(gameInfoHolder);
             state = state.nextState();
             ++cnt;
