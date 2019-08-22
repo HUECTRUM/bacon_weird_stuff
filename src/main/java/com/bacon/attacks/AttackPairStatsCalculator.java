@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.bacon.utils.StreamUtils.sumInteger;
 import static java.math.BigDecimal.ZERO;
 
 @Component
@@ -18,10 +19,14 @@ public class AttackPairStatsCalculator {
     }
 
     public int minRange(List<Card> cards) {
-        return cards.stream().mapToInt(card -> card.minRange).sum();
+        return sumInteger(cards, card -> card.minRange);
     }
 
     public int maxRange(List<Card> cards) {
-        return cards.stream().mapToInt(card -> card.maxRange).sum();
+        return sumInteger(cards, card -> card.maxRange);
+    }
+
+    public int power(List<Card> cards) {
+        return sumInteger(cards, card -> card.power);
     }
 }

@@ -17,4 +17,6 @@ public class ResolversContainer {
     public PriorityResolver priorityResolver;
     @Autowired
     public RangeChecker rangeChecker;
+    @Autowired
+    public DamageResolver damageResolver;
 }

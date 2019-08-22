@@ -89,7 +89,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.damageResolver.resolveDamage(holder, true);
         }
     },
     REACTIVE_PLAYER_ATTACK_START {
@@ -122,7 +122,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.damageResolver.resolveDamage(holder, false);
         }
     },
     RECYCLE {
