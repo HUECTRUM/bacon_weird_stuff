@@ -17,8 +17,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.characterSelectionResolver.selectPlayers(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.characterSelectionResolver.selectPlayers(holder);
         }
     },
     CHARACTERS_SELECTED {
@@ -28,8 +28,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.discardResolver.selectDiscards(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.discardResolver.selectDiscards(holder);
         }
     },
     PLAYER_SETUP_FINISHED {
@@ -39,8 +39,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     BEAT_START {
@@ -50,8 +50,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
         }
     },
     PRIORITY_CHECK {
@@ -61,8 +61,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.priorityResolver.resolvePriority(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.priorityResolver.resolvePriority(holder);
         }
     },
     ACTIVE_PLAYER_ATTACK_START {
@@ -72,8 +72,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     ACTIVE_PLAYER_RANGE_CHECK {
@@ -83,8 +83,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.rangeChecker.checkRange(holder, true);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.rangeChecker.checkRange(holder, true);
         }
     },
     ACTIVE_PLAYER_DAMAGE {
@@ -94,8 +94,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.damageResolver.resolveDamage(holder, true);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.damageResolver.resolveDamage(holder, true);
         }
     },
     REACTIVE_PLAYER_ATTACK_START {
@@ -105,8 +105,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     REACTIVE_PLAYER_RANGE_CHECK {
@@ -116,8 +116,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.rangeChecker.checkRange(holder, false);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.rangeChecker.checkRange(holder, false);
         }
     },
     REACTIVE_PLAYER_DAMAGE {
@@ -127,8 +127,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.damageResolver.resolveDamage(holder, false);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.damageResolver.resolveDamage(holder, false);
         }
     },
     RECYCLE {
@@ -138,8 +138,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.recycler.recycle(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.recycler.recycle(holder);
         }
     },
     GAME_END {
@@ -149,8 +149,8 @@ public enum GameStates implements GameState {
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     }
 }

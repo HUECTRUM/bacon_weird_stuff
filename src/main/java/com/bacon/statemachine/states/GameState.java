@@ -8,5 +8,5 @@ import java.util.Map;
 public interface GameState {
     Map<StateTransitionCondition, GameState> nextStates();
 
-    void transition(GameInfoHolder holder);
+    StateTransitionCondition transition(GameInfoHolder holder);
 }
