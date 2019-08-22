@@ -1,13 +1,19 @@
 package com.bacon.statemachine;
 
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.states.GameState;
+
+import java.util.Map;
+
+import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.Map.of;
 
 public enum GameStates implements GameState {
     START {
         @Override
-        public GameState nextState() {
-            return CHARACTERS_SELECTED;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, CHARACTERS_SELECTED);
         }
 
         @Override
@@ -17,8 +23,8 @@ public enum GameStates implements GameState {
     },
     CHARACTERS_SELECTED {
         @Override
-        public GameState nextState() {
-            return PLAYER_SETUP_FINISHED;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, PLAYER_SETUP_FINISHED);
         }
 
         @Override
@@ -28,8 +34,8 @@ public enum GameStates implements GameState {
     },
     PLAYER_SETUP_FINISHED {
         @Override
-        public GameState nextState() {
-            return BEAT_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, BEAT_START);
         }
 
         @Override
@@ -39,8 +45,8 @@ public enum GameStates implements GameState {
     },
     BEAT_START {
         @Override
-        public GameState nextState() {
-            return PRIORITY_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, PRIORITY_CHECK);
         }
 
         @Override
@@ -50,8 +56,8 @@ public enum GameStates implements GameState {
     },
     PRIORITY_CHECK {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_ATTACK_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_ATTACK_START);
         }
 
         @Override
@@ -61,8 +67,8 @@ public enum GameStates implements GameState {
     },
     ACTIVE_PLAYER_ATTACK_START {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_RANGE_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_RANGE_CHECK);
         }
 
         @Override
@@ -72,8 +78,8 @@ public enum GameStates implements GameState {
     },
     ACTIVE_PLAYER_RANGE_CHECK {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_DAMAGE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
         }
 
         @Override
@@ -83,8 +89,8 @@ public enum GameStates implements GameState {
     },
     ACTIVE_PLAYER_DAMAGE {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_ATTACK_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_ATTACK_START);
         }
 
         @Override
@@ -94,8 +100,8 @@ public enum GameStates implements GameState {
     },
     REACTIVE_PLAYER_ATTACK_START {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_RANGE_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_RANGE_CHECK);
         }
 
         @Override
@@ -105,8 +111,8 @@ public enum GameStates implements GameState {
     },
     REACTIVE_PLAYER_RANGE_CHECK {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_DAMAGE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
         }
 
         @Override
@@ -116,8 +122,8 @@ public enum GameStates implements GameState {
     },
     REACTIVE_PLAYER_DAMAGE {
         @Override
-        public GameState nextState() {
-            return RECYCLE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, RECYCLE);
         }
 
         @Override
@@ -127,8 +133,8 @@ public enum GameStates implements GameState {
     },
     RECYCLE {
         @Override
-        public GameState nextState() {
-            return BEAT_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, BEAT_START);
         }
 
         @Override
@@ -138,8 +144,8 @@ public enum GameStates implements GameState {
     },
     GAME_END {
         @Override
-        public GameState nextState() {
-            return null; //should never be called
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of();
         }
 
         @Override
