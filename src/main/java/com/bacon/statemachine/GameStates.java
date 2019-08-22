@@ -56,7 +56,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.priorityResolver.resolvePriority(holder);
         }
     },
     ACTIVE_PLAYER_ATTACK_START {

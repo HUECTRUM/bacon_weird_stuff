@@ -15,4 +15,8 @@ public class BeatInfoHolder {
 
     public List<Card> firstPlayerPair;
     public List<Card> secondPlayerPair;
+
+    //just for convenience: avoids comparing activePlayer to playerOne all the time
+    public List<Card> activePlayerPair;
+    public List<Card> reactivePlayerPair;
 }

@@ -13,4 +13,6 @@ public class ResolversContainer {
     public Recycler recycler;
     @Autowired
     public PairSelectionResolver pairSelectionResolver;
+    @Autowired
+    public PriorityResolver priorityResolver;
 }
