@@ -16,6 +16,9 @@ public class BeatInfoHolder {
     public List<Card> firstPlayerPair;
     public List<Card> secondPlayerPair;
 
+    public boolean activePlayerHit = true;
+    public boolean reactivePlayerHit = true;
+
     //just for convenience: avoids comparing activePlayer to playerOne all the time
     public List<Card> activePlayerPair;
     public List<Card> reactivePlayerPair;

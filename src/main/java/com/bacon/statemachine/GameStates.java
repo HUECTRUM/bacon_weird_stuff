@@ -78,7 +78,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.rangeChecker.checkRange(holder, true);
         }
     },
     ACTIVE_PLAYER_DAMAGE {
@@ -111,7 +111,7 @@ public enum GameStates implements GameState {
 
         @Override
         public void transition(GameInfoHolder holder) {
-
+            holder.resolversContainer.rangeChecker.checkRange(holder, false);
         }
     },
     REACTIVE_PLAYER_DAMAGE {

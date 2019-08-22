@@ -16,4 +16,12 @@ public class AttackPairStatsCalculator {
                 .map(card -> card.priority)
                 .reduce(ZERO, BigDecimal::add);
     }
+
+    public int minRange(List<Card> cards) {
+        return cards.stream().mapToInt(card -> card.minRange).sum();
+    }
+
+    public int maxRange(List<Card> cards) {
+        return cards.stream().mapToInt(card -> card.maxRange).sum();
+    }
 }

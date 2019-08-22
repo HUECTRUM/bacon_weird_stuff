@@ -15,4 +15,6 @@ public class ResolversContainer {
     public PairSelectionResolver pairSelectionResolver;
     @Autowired
     public PriorityResolver priorityResolver;
+    @Autowired
+    public RangeChecker rangeChecker;
 }
