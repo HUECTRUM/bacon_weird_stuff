@@ -34,6 +34,13 @@ public class Player {
         return filterOutDiscards(character.basesKit());
     }
 
+    public List<Card> availableBasesAfterClash(List<Card> playedCards) {
+        return filterList(
+                character.basesKit(),
+                card -> !discardOne.contains(card) && !discardTwo.contains(card) && !playedCards.contains(card)
+        );
+    }
+
     public List<Card> availableStyles() {
         return filterOutDiscards(character.stylesKit());
     }

@@ -2,7 +2,9 @@ package com.bacon.statemachine.resolvers;
 
 import com.bacon.attacks.AttackPairStatsCalculator;
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
+import com.bacon.statemachine.resolvers.internal.ClashResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,20 +15,36 @@ import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPT
 @Component
 public class PriorityResolver {
     @Autowired
-    AttackPairStatsCalculator statsCalculator;
+    private AttackPairStatsCalculator statsCalculator;
+    @Autowired
+    private ClashResolver clashResolver;
 
     public StateTransitionCondition resolvePriority(GameInfoHolder holder) {
-        BigDecimal firstPlayerPrio = statsCalculator.totalPriority(holder.beatInfoHolder.firstPlayerPair);
-        BigDecimal secondPlayerPrio = statsCalculator.totalPriority(holder.beatInfoHolder.secondPlayerPair);
+        BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
+        resolveClashes(holder, beatInfoHolder);
+
+        BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
+        BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
 
         boolean firstPlayerFaster = firstPlayerPrio.compareTo(secondPlayerPrio) >= 0;
-        holder.beatInfoHolder.activePlayer = firstPlayerFaster? holder.playerOne : holder.playerTwo;
-        holder.beatInfoHolder.reactivePlayer = firstPlayerFaster ? holder.playerTwo : holder.playerOne;
+        beatInfoHolder.activePlayer = firstPlayerFaster? holder.playerOne : holder.playerTwo;
+        beatInfoHolder.reactivePlayer = firstPlayerFaster ? holder.playerTwo : holder.playerOne;
 
-        holder.beatInfoHolder.activePlayerPair =
-                firstPlayerFaster ? holder.beatInfoHolder.firstPlayerPair : holder.beatInfoHolder.secondPlayerPair;
-        holder.beatInfoHolder.reactivePlayerPair =
-                firstPlayerFaster ? holder.beatInfoHolder.secondPlayerPair : holder.beatInfoHolder.firstPlayerPair;
+        beatInfoHolder.activePlayerPair =
+                firstPlayerFaster ? beatInfoHolder.firstPlayerPair : beatInfoHolder.secondPlayerPair;
+        beatInfoHolder.reactivePlayerPair =
+                firstPlayerFaster ? beatInfoHolder.secondPlayerPair : beatInfoHolder.firstPlayerPair;
         return EMPTY;
+    }
+
+    private void resolveClashes(GameInfoHolder holder, BeatInfoHolder beatInfoHolder) {
+        BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
+        BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
+
+        while (firstPlayerPrio.compareTo(secondPlayerPrio) == 0) {
+            clashResolver.resolveClash(holder);
+            firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
+            secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
+        }
     }
 }

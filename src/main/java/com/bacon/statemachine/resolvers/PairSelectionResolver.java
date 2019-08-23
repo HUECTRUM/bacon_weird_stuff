@@ -20,13 +20,18 @@ public class PairSelectionResolver {
     public StateTransitionCondition selectPairs(GameInfoHolder gameInfoHolder) {
         gameInfoHolder.beatNumber++;
         gameInfoHolder.beatInfoHolder = new BeatInfoHolder();
+        BeatInfoHolder beatInfoHolder = gameInfoHolder.beatInfoHolder;
 
-        gameInfoHolder.beatInfoHolder.firstPlayerPair = pairSelector.selectPair(gameInfoHolder.playerOne);
-        gameInfoHolder.beatInfoHolder.secondPlayerPair = pairSelector.selectPair(gameInfoHolder.playerTwo);
+        beatInfoHolder.firstPlayerPair = pairSelector.selectPair(gameInfoHolder.playerOne);
+        beatInfoHolder.secondPlayerPair = pairSelector.selectPair(gameInfoHolder.playerTwo);
+
+        beatInfoHolder.cardsPlayed(beatInfoHolder.firstPlayerPair, true);
+        beatInfoHolder.cardsPlayed(beatInfoHolder.secondPlayerPair, false);
 
         log.info("Pairs selected. Player one pair {} player two pair {}",
-                mapList(gameInfoHolder.beatInfoHolder.firstPlayerPair, card -> card.name),
-                mapList(gameInfoHolder.beatInfoHolder.secondPlayerPair, card -> card.name));
+                mapList(beatInfoHolder.firstPlayerPair, card -> card.name),
+                mapList(beatInfoHolder.secondPlayerPair, card -> card.name)
+        );
         return EMPTY;
     }
 }
