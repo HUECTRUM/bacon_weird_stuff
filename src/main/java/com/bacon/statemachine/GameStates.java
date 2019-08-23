@@ -6,6 +6,7 @@ import com.bacon.statemachine.states.GameState;
 
 import java.util.Map;
 
+import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static java.util.Map.of;
 
@@ -57,7 +58,10 @@ public enum GameStates implements GameState {
     PRIORITY_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, ACTIVE_PLAYER_ATTACK_START);
+            return of(
+                    EMPTY, ACTIVE_PLAYER_ATTACK_START,
+                    CLASHED_OUT, RECYCLE
+            );
         }
 
         @Override

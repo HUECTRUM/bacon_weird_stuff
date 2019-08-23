@@ -19,7 +19,7 @@ public class ClashResolver {
     @Autowired
     private ClashBaseSelector clashBaseSelector;
 
-    public void resolveClash(GameInfoHolder holder) {
+    public boolean resolveClash(GameInfoHolder holder) {
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
         log.info("A clash has occurred. Pairs p1 {} p2 {}",
                 mapList(beatInfoHolder.firstPlayerPair, card -> card.name),
@@ -28,6 +28,10 @@ public class ClashResolver {
 
         Card firstPlayerBase = clashBaseSelector.selectBase(holder.playerOne, holder);
         Card secondPlayerBase = clashBaseSelector.selectBase(holder.playerTwo, holder);
+
+        if (firstPlayerBase == null || secondPlayerBase == null) {
+            return false;
+        }
 
         Card firstPlayerStyle = getFirst(filterList(beatInfoHolder.firstPlayerPair, card -> card.cardType == STYLE));
         Card secondPlayerStyle = getFirst(filterList(beatInfoHolder.secondPlayerPair, card -> card.cardType == STYLE));
@@ -42,5 +46,6 @@ public class ClashResolver {
                 mapList(beatInfoHolder.firstPlayerPair, card -> card.name),
                 mapList(beatInfoHolder.secondPlayerPair, card -> card.name)
         );
+        return true;
     }
 }

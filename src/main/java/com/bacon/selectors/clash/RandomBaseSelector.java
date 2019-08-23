@@ -22,6 +22,6 @@ public class RandomBaseSelector implements ClashBaseSelector {
                 ? clashInfoHolder.firstPlayerBasesPlayed : clashInfoHolder.secondPlayerBasesPlayed;
 
         List<Card> availableBases = player.availableBasesAfterClash(playedCards);
-        return availableBases.get(randomizer.randomize(availableBases.size()));
+        return availableBases.size() > 0 ? availableBases.get(randomizer.randomize(availableBases.size())) : null;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 
 @Component
@@ -21,7 +22,10 @@ public class PriorityResolver {
 
     public StateTransitionCondition resolvePriority(GameInfoHolder holder) {
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
-        resolveClashes(holder, beatInfoHolder);
+        boolean clashesResolved = resolveClashes(holder, beatInfoHolder);
+        if (!clashesResolved) {
+            return CLASHED_OUT;
+        }
 
         BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
         BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
@@ -37,14 +41,19 @@ public class PriorityResolver {
         return EMPTY;
     }
 
-    private void resolveClashes(GameInfoHolder holder, BeatInfoHolder beatInfoHolder) {
+    private boolean resolveClashes(GameInfoHolder holder, BeatInfoHolder beatInfoHolder) {
         BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
         BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
 
         while (firstPlayerPrio.compareTo(secondPlayerPrio) == 0) {
-            clashResolver.resolveClash(holder);
+            boolean clashResolved = clashResolver.resolveClash(holder);
+            if (!clashResolved) {
+                return false;
+            }
+
             firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
             secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
         }
+        return true;
     }
 }
