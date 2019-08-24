@@ -2,9 +2,12 @@ package com.bacon.statemachine.resolvers;
 
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.selectors.player.PlayerSelector;
+import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 
 @Component
 @Slf4j
@@ -13,7 +16,7 @@ public class CharacterSelectionResolver {
     private PlayerSelector playerSelector;
 
     //todo: extract interface for resolvers?
-    public void selectPlayers(GameInfoHolder gameInfoHolder) {
+    public StateTransitionCondition selectPlayers(GameInfoHolder gameInfoHolder) {
         gameInfoHolder.playerOne = playerSelector.selectPlayer();
         gameInfoHolder.playerTwo = playerSelector.selectPlayer();
 
@@ -23,5 +26,6 @@ public class CharacterSelectionResolver {
         );
 
         log.info("Player select finished. Field {}", gameInfoHolder.field);
+        return EMPTY;
     }
 }

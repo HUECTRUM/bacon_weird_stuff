@@ -1,150 +1,160 @@
 package com.bacon.statemachine;
 
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.states.GameState;
+
+import java.util.Map;
+
+import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
+import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.Map.of;
 
 public enum GameStates implements GameState {
     START {
         @Override
-        public GameState nextState() {
-            return CHARACTERS_SELECTED;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, CHARACTERS_SELECTED);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.characterSelectionResolver.selectPlayers(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.characterSelectionResolver.selectPlayers(holder);
         }
     },
     CHARACTERS_SELECTED {
         @Override
-        public GameState nextState() {
-            return PLAYER_SETUP_FINISHED;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, PLAYER_SETUP_FINISHED);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.discardResolver.selectDiscards(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.discardResolver.selectDiscards(holder);
         }
     },
     PLAYER_SETUP_FINISHED {
         @Override
-        public GameState nextState() {
-            return BEAT_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, BEAT_START);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     BEAT_START {
         @Override
-        public GameState nextState() {
-            return PRIORITY_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, PRIORITY_CHECK);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
         }
     },
     PRIORITY_CHECK {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_ATTACK_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(
+                    EMPTY, ACTIVE_PLAYER_ATTACK_START,
+                    CLASHED_OUT, RECYCLE
+            );
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.priorityResolver.resolvePriority(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.priorityResolver.resolvePriority(holder);
         }
     },
     ACTIVE_PLAYER_ATTACK_START {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_RANGE_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_RANGE_CHECK);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     ACTIVE_PLAYER_RANGE_CHECK {
         @Override
-        public GameState nextState() {
-            return ACTIVE_PLAYER_DAMAGE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.rangeChecker.checkRange(holder, true);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.rangeChecker.checkRange(holder, true);
         }
     },
     ACTIVE_PLAYER_DAMAGE {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_ATTACK_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_ATTACK_START);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.damageResolver.resolveDamage(holder, true);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.damageResolver.resolveDamage(holder, true);
         }
     },
     REACTIVE_PLAYER_ATTACK_START {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_RANGE_CHECK;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_RANGE_CHECK);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     },
     REACTIVE_PLAYER_RANGE_CHECK {
         @Override
-        public GameState nextState() {
-            return REACTIVE_PLAYER_DAMAGE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.rangeChecker.checkRange(holder, false);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.rangeChecker.checkRange(holder, false);
         }
     },
     REACTIVE_PLAYER_DAMAGE {
         @Override
-        public GameState nextState() {
-            return RECYCLE;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, RECYCLE);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.damageResolver.resolveDamage(holder, false);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.damageResolver.resolveDamage(holder, false);
         }
     },
     RECYCLE {
         @Override
-        public GameState nextState() {
-            return BEAT_START;
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, BEAT_START);
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-            holder.resolversContainer.recycler.recycle(holder);
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.recycler.recycle(holder);
         }
     },
     GAME_END {
         @Override
-        public GameState nextState() {
-            return null; //should never be called
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of();
         }
 
         @Override
-        public void transition(GameInfoHolder holder) {
-
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
         }
     }
 }

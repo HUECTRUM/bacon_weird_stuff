@@ -1,6 +1,7 @@
 package com.bacon;
 
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.states.GameState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,10 @@ public class Game {
         int cnt = 0; //TODO: remove
         while (state != GAME_END && cnt != 100) {
             log.info("State {} cnt {}", state, cnt);
-            state.transition(gameInfoHolder);
+            StateTransitionCondition condition = state.transition(gameInfoHolder);
 
             gameInfoHolder.logGameInfo();
-            state = state.nextState();
+            state = state.nextStates().get(condition);
             ++cnt;
         }
         log.info("Game ended");
