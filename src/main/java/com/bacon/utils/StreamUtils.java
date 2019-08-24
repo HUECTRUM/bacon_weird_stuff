@@ -1,5 +1,6 @@
 package com.bacon.utils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -27,5 +28,9 @@ public class StreamUtils {
 
     public static <T> T getFirst(List<T> list) {
         return list.stream().findFirst().orElse(null);
+    }
+
+    public static <T> List<T> flatMapList(List<List<T>> list) {
+        return list.stream().flatMap(Collection::stream).collect(toList());
     }
 }
