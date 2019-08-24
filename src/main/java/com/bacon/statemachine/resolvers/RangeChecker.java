@@ -21,14 +21,14 @@ public class RangeChecker {
     public StateTransitionCondition checkRange(GameInfoHolder holder, boolean active) {
         if (active) {
             holder.beatInfoHolder.activePlayerHit &= checkDist(
-                    pairStatsCalculator.minRange(holder.beatInfoHolder.activePlayerPair),
-                    pairStatsCalculator.maxRange(holder.beatInfoHolder.activePlayerPair),
+                    holder.beatInfoHolder.activePlayerPair.minRange(),
+                    holder.beatInfoHolder.activePlayerPair.maxRange(),
                     holder
             );
         } else {
             holder.beatInfoHolder.reactivePlayerHit &= checkDist(
-                    pairStatsCalculator.minRange(holder.beatInfoHolder.reactivePlayerPair),
-                    pairStatsCalculator.maxRange(holder.beatInfoHolder.reactivePlayerPair),
+                    holder.beatInfoHolder.reactivePlayerPair.minRange(),
+                    holder.beatInfoHolder.reactivePlayerPair.maxRange(),
                     holder
             );
         }

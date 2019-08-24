@@ -27,8 +27,8 @@ public class PriorityResolver {
             return CLASHED_OUT;
         }
 
-        BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
-        BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
+        BigDecimal firstPlayerPrio = beatInfoHolder.firstPlayerPair.totalPriority();
+        BigDecimal secondPlayerPrio = beatInfoHolder.secondPlayerPair.totalPriority();
 
         boolean firstPlayerFaster = firstPlayerPrio.compareTo(secondPlayerPrio) >= 0;
         beatInfoHolder.activePlayer = firstPlayerFaster? holder.playerOne : holder.playerTwo;
@@ -42,8 +42,8 @@ public class PriorityResolver {
     }
 
     private boolean resolveClashes(GameInfoHolder holder, BeatInfoHolder beatInfoHolder) {
-        BigDecimal firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
-        BigDecimal secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
+        BigDecimal firstPlayerPrio = beatInfoHolder.firstPlayerPair.totalPriority();
+        BigDecimal secondPlayerPrio = beatInfoHolder.secondPlayerPair.totalPriority();
 
         while (firstPlayerPrio.compareTo(secondPlayerPrio) == 0) {
             boolean clashResolved = clashResolver.resolveClash(holder);
@@ -51,8 +51,8 @@ public class PriorityResolver {
                 return false;
             }
 
-            firstPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.firstPlayerPair);
-            secondPlayerPrio = statsCalculator.totalPriority(beatInfoHolder.secondPlayerPair);
+            firstPlayerPrio = beatInfoHolder.firstPlayerPair.totalPriority();
+            secondPlayerPrio = beatInfoHolder.secondPlayerPair.totalPriority();
         }
         return true;
     }

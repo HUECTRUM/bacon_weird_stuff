@@ -12,8 +12,8 @@ public class Recycler {
         gameInfoHolder.playerOne.discardTwo = gameInfoHolder.playerOne.discardOne;
         gameInfoHolder.playerTwo.discardTwo = gameInfoHolder.playerTwo.discardOne;
 
-        gameInfoHolder.playerOne.discardOne = gameInfoHolder.beatInfoHolder.firstPlayerPair;
-        gameInfoHolder.playerTwo.discardOne = gameInfoHolder.beatInfoHolder.secondPlayerPair;
+        gameInfoHolder.playerOne.discardOne = gameInfoHolder.beatInfoHolder.firstPlayerPair.cards;
+        gameInfoHolder.playerTwo.discardOne = gameInfoHolder.beatInfoHolder.secondPlayerPair.cards;
 
         return EMPTY;
     }

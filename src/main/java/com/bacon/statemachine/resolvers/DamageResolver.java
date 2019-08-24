@@ -1,7 +1,7 @@
 package com.bacon.statemachine.resolvers;
 
+import com.bacon.attacks.AttackPair;
 import com.bacon.attacks.AttackPairStatsCalculator;
-import com.bacon.gameobjects.cards.Card;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
@@ -9,9 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.lang.Math.max;
 
 @Component
 @Slf4j
@@ -26,11 +25,13 @@ public class DamageResolver {
             return EMPTY;
         }
 
-        List<Card> attackPair = active
+        AttackPair attackPair = active
                 ? holder.beatInfoHolder.activePlayerPair : holder.beatInfoHolder.reactivePlayerPair;
+        AttackPair defendintPair = active
+                ? holder.beatInfoHolder.reactivePlayerPair : holder.beatInfoHolder.activePlayerPair;
         Player damageTaking = damageTakingPlayer(holder, active);
 
-        damageTaking.health -= pairStatsCalculator.power(attackPair);
+        damageTaking.health -= max(attackPair.power() - defendintPair.soak(), 0);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
         return EMPTY;

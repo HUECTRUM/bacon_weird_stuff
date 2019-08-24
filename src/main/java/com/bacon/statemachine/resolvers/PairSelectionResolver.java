@@ -25,12 +25,12 @@ public class PairSelectionResolver {
         beatInfoHolder.firstPlayerPair = pairSelector.selectPair(gameInfoHolder.playerOne);
         beatInfoHolder.secondPlayerPair = pairSelector.selectPair(gameInfoHolder.playerTwo);
 
-        beatInfoHolder.cardsPlayed(beatInfoHolder.firstPlayerPair, true);
-        beatInfoHolder.cardsPlayed(beatInfoHolder.secondPlayerPair, false);
+        beatInfoHolder.cardsPlayed(beatInfoHolder.firstPlayerPair.cards, true);
+        beatInfoHolder.cardsPlayed(beatInfoHolder.secondPlayerPair.cards, false);
 
         log.info("Pairs selected. Player one pair {} player two pair {}",
-                mapList(beatInfoHolder.firstPlayerPair, card -> card.name),
-                mapList(beatInfoHolder.secondPlayerPair, card -> card.name)
+                mapList(beatInfoHolder.firstPlayerPair.cards, card -> card.name),
+                mapList(beatInfoHolder.secondPlayerPair.cards, card -> card.name)
         );
         return EMPTY;
     }

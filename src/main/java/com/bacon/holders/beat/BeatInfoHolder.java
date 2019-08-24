@@ -1,5 +1,6 @@
 package com.bacon.holders.beat;
 
+import com.bacon.attacks.AttackPair;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.player.Player;
 import lombok.NoArgsConstructor;
@@ -13,15 +14,15 @@ public class BeatInfoHolder {
     public Player activePlayer;
     public Player reactivePlayer;
 
-    public List<Card> firstPlayerPair;
-    public List<Card> secondPlayerPair;
+    public AttackPair firstPlayerPair;
+    public AttackPair secondPlayerPair;
 
     public boolean activePlayerHit = true;
     public boolean reactivePlayerHit = true;
 
     //just for convenience: avoids comparing activePlayer to playerOne all the time
-    public List<Card> activePlayerPair;
-    public List<Card> reactivePlayerPair;
+    public AttackPair activePlayerPair;
+    public AttackPair reactivePlayerPair;
 
     public ClashInfoHolder clashInfoHolder = new ClashInfoHolder();
 
