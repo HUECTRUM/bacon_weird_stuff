@@ -24,4 +24,8 @@ public class StreamUtils {
     public static <T> int sumInteger(List<T> list, ToIntFunction<? super T> intMapper) {
         return list.stream().mapToInt(intMapper).sum();
     }
+
+    public static <T> T getFirst(List<T> list) {
+        return list.stream().findFirst().orElse(null);
+    }
 }
