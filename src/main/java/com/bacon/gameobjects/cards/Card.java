@@ -1,6 +1,7 @@
 package com.bacon.gameobjects.cards;
 
 import com.bacon.gameobjects.enums.CardType;
+import com.bacon.gameobjects.triggers.EffectTrigger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
 
 @Data
 @AllArgsConstructor
@@ -24,5 +27,5 @@ public class Card {
     public int stunGuard;
     public int soak;
 
-    public List<CardEffect> effects;
+    public Map<EffectTrigger, List<CardEffect>> cardEffects;
 }

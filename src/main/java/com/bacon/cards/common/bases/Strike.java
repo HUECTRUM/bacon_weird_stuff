@@ -3,8 +3,8 @@ package com.bacon.cards.common.bases;
 import com.bacon.gameobjects.cards.Card;
 
 import static com.bacon.gameobjects.enums.CardType.BASE;
+import static com.bacon.utils.CardInitUtils.EMPTY_EFFECTS_MAP;
 import static java.math.BigDecimal.valueOf;
-import static java.util.Collections.EMPTY_LIST;
 
 public class Strike {
     public static final Card STRIKE = Card
@@ -17,6 +17,6 @@ public class Strike {
             .priority(valueOf(3))
             .stunGuard(5)
             .soak(0)
-            .effects(EMPTY_LIST)
+            .cardEffects(EMPTY_EFFECTS_MAP)
             .build();
 }
