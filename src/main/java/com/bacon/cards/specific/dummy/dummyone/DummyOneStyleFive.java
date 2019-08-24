@@ -16,6 +16,7 @@ public class DummyOneStyleFive {
             .power(0)
             .priority(valueOf(0))
             .stunGuard(4)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

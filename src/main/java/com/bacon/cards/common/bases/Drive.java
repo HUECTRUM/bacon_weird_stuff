@@ -17,6 +17,7 @@ public class Drive {
             .power(3)
             .priority(valueOf(4))
             .stunGuard(0)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

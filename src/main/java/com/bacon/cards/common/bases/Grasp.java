@@ -17,6 +17,7 @@ public class Grasp {
             .power(2)
             .priority(valueOf(5))
             .stunGuard(0)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

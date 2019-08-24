@@ -16,6 +16,7 @@ public class Shot {
             .power(3)
             .priority(valueOf(2))
             .stunGuard(2)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

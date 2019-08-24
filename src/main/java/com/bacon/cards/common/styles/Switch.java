@@ -16,6 +16,7 @@ public class Switch {
             .power(0)
             .priority(valueOf(0))
             .stunGuard(0)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

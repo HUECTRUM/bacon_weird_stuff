@@ -16,6 +16,7 @@ public class Strike {
             .power(4)
             .priority(valueOf(3))
             .stunGuard(5)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }

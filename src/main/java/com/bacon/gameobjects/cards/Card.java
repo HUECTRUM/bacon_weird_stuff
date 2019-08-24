@@ -22,6 +22,7 @@ public class Card {
     public int power;
     public BigDecimal priority;
     public int stunGuard;
+    public int soak;
 
     public List<CardEffect> effects;
 }

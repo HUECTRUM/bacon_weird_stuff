@@ -17,6 +17,7 @@ public class Dodge {
             .power(0)
             .priority(valueOf(3))
             .stunGuard(0)
+            .soak(0)
             .effects(EMPTY_LIST)
             .build();
 }
