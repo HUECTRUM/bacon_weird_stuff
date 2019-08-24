@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import static com.bacon.utils.CardInitUtils.emptyEffectsMap;
 
 @Data
 @AllArgsConstructor
@@ -28,5 +27,5 @@ public class Card {
     public int stunGuard;
     public int soak;
 
-    public Map<EffectTrigger, List<CardEffect>> cardEffects = emptyEffectsMap();
+    public Map<EffectTrigger, List<CardEffect>> cardEffects;
 }

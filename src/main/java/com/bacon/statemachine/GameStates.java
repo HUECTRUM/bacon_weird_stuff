@@ -1,5 +1,6 @@
 package com.bacon.statemachine;
 
+import com.bacon.gameobjects.triggers.EffectTrigger;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.states.GameState;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode.*;
 import static java.util.Map.of;
 
 public enum GameStates implements GameState {
@@ -47,7 +49,7 @@ public enum GameStates implements GameState {
     BEAT_START {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, PRIORITY_CHECK);
+            return of(EMPTY, REVEAL);
         }
 
         @Override
@@ -55,11 +57,22 @@ public enum GameStates implements GameState {
             return holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
         }
     },
+    REVEAL {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, PRIORITY_CHECK);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.REVEAL, BOTH);
+        }
+    },
     PRIORITY_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
             return of(
-                    EMPTY, ACTIVE_PLAYER_ATTACK_START,
+                    EMPTY, SOB,
                     CLASHED_OUT, RECYCLE
             );
         }
@@ -69,7 +82,29 @@ public enum GameStates implements GameState {
             return holder.resolversContainer.priorityResolver.resolvePriority(holder);
         }
     },
+    SOB {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_ATTACK_START);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.SOB, ACTIVE_FIRST);
+        }
+    },
     ACTIVE_PLAYER_ATTACK_START {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_BA);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return EMPTY;
+        }
+    },
+    ACTIVE_PLAYER_BA {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
             return of(EMPTY, ACTIVE_PLAYER_RANGE_CHECK);
@@ -77,13 +112,14 @@ public enum GameStates implements GameState {
 
         @Override
         public StateTransitionCondition transition(GameInfoHolder holder) {
-            return EMPTY;
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.BA, ACTIVE);
         }
     },
     ACTIVE_PLAYER_RANGE_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
+            //todo: miss
+            return of(EMPTY, ACTIVE_PLAYER_OH);
         }
 
         @Override
@@ -91,10 +127,21 @@ public enum GameStates implements GameState {
             return holder.resolversContainer.rangeChecker.checkRange(holder, true);
         }
     },
+    ACTIVE_PLAYER_OH {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OH, ACTIVE);
+        }
+    },
     ACTIVE_PLAYER_DAMAGE {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REACTIVE_PLAYER_ATTACK_START);
+            return of(EMPTY, ACTIVE_PLAYER_OD);
         }
 
         @Override
@@ -102,10 +149,33 @@ public enum GameStates implements GameState {
             return holder.resolversContainer.damageResolver.resolveDamage(holder, true);
         }
     },
+    ACTIVE_PLAYER_OD {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_AA);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OD, ACTIVE);
+        }
+    },
+    ACTIVE_PLAYER_AA {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            //todo: stun
+            return of(EMPTY, REACTIVE_PLAYER_ATTACK_START);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.AA, ACTIVE);
+        }
+    },
     REACTIVE_PLAYER_ATTACK_START {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REACTIVE_PLAYER_RANGE_CHECK);
+            return of(EMPTY, REACTIVE_PLAYER_BA);
         }
 
         @Override
@@ -113,10 +183,22 @@ public enum GameStates implements GameState {
             return EMPTY;
         }
     },
+    REACTIVE_PLAYER_BA {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_RANGE_CHECK);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.BA, REACTIVE);
+        }
+    },
     REACTIVE_PLAYER_RANGE_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
+            //todo: miss
+            return of(EMPTY, REACTIVE_PLAYER_OH);
         }
 
         @Override
@@ -124,7 +206,51 @@ public enum GameStates implements GameState {
             return holder.resolversContainer.rangeChecker.checkRange(holder, false);
         }
     },
+    REACTIVE_PLAYER_OH {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OH, REACTIVE);
+        }
+    },
     REACTIVE_PLAYER_DAMAGE {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_OD);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.damageResolver.resolveDamage(holder, false);
+        }
+    },
+    REACTIVE_PLAYER_OD {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_AA);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OD, REACTIVE);
+        }
+    },
+    REACTIVE_PLAYER_AA {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, EOB);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.AA, REACTIVE);
+        }
+    },
+    EOB {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
             return of(EMPTY, RECYCLE);
@@ -132,7 +258,7 @@ public enum GameStates implements GameState {
 
         @Override
         public StateTransitionCondition transition(GameInfoHolder holder) {
-            return holder.resolversContainer.damageResolver.resolveDamage(holder, false);
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.EOB, ACTIVE_FIRST);
         }
     },
     RECYCLE {

@@ -19,4 +19,6 @@ public class ResolversContainer {
     public RangeChecker rangeChecker;
     @Autowired
     public DamageResolver damageResolver;
+    @Autowired
+    public TriggeredEffectsResolver effectsResolver;
 }

@@ -3,8 +3,8 @@ package com.bacon.cards.specific.dummy.dummyone;
 import com.bacon.gameobjects.cards.Card;
 
 import static com.bacon.gameobjects.enums.CardType.STYLE;
+import static com.bacon.utils.CardInitUtils.EMPTY_EFFECTS_MAP;
 import static java.math.BigDecimal.valueOf;
-import static java.util.Collections.EMPTY_LIST;
 
 public class DummyOneStyleOne {
     public static final Card DUMMY_ONE_STYLE_ONE = Card
@@ -17,6 +17,6 @@ public class DummyOneStyleOne {
             .priority(valueOf(0))
             .stunGuard(0)
             .soak(0)
-            .effects(EMPTY_LIST)
+            .cardEffects(EMPTY_EFFECTS_MAP)
             .build();
 }

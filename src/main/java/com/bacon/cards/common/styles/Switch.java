@@ -3,8 +3,8 @@ package com.bacon.cards.common.styles;
 import com.bacon.gameobjects.cards.Card;
 
 import static com.bacon.gameobjects.enums.CardType.STYLE;
+import static com.bacon.utils.CardInitUtils.EMPTY_EFFECTS_MAP;
 import static java.math.BigDecimal.valueOf;
-import static java.util.Collections.EMPTY_LIST;
 
 public class Switch {
     public static final Card SWITCH = Card
@@ -17,6 +17,6 @@ public class Switch {
             .priority(valueOf(0))
             .stunGuard(0)
             .soak(0)
-            .effects(EMPTY_LIST)
+            .cardEffects(EMPTY_EFFECTS_MAP)
             .build();
 }

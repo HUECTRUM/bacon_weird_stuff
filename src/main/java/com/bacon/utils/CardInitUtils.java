@@ -13,15 +13,13 @@ import static java.util.Collections.EMPTY_LIST;
 import static java.util.Map.of;
 
 public class CardInitUtils {
-    public static Map<EffectTrigger, List<CardEffect>> emptyEffectsMap() {
-        return new HashMap<>(of(
-                REVEAL, new ArrayList<CardEffect>(EMPTY_LIST),
-                SOB, new ArrayList<CardEffect>(EMPTY_LIST),
-                BA, new ArrayList<CardEffect>(EMPTY_LIST),
-                OH, new ArrayList<CardEffect>(EMPTY_LIST),
-                OD, new ArrayList<CardEffect>(EMPTY_LIST),
-                AA, new ArrayList<CardEffect>(EMPTY_LIST),
-                EOB, new ArrayList<CardEffect>(EMPTY_LIST)
-        ));
-    }
+    public static Map<EffectTrigger, List<CardEffect>> EMPTY_EFFECTS_MAP = new HashMap<>(of(
+            REVEAL, new ArrayList<CardEffect>(EMPTY_LIST),
+            SOB, new ArrayList<CardEffect>(EMPTY_LIST),
+            BA, new ArrayList<CardEffect>(EMPTY_LIST),
+            OH, new ArrayList<CardEffect>(EMPTY_LIST),
+            OD, new ArrayList<CardEffect>(EMPTY_LIST),
+            AA, new ArrayList<CardEffect>(EMPTY_LIST),
+            EOB, new ArrayList<CardEffect>(EMPTY_LIST)
+    ));
 }
