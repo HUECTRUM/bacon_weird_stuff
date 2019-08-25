@@ -7,6 +7,7 @@ import com.bacon.statemachine.states.GameState;
 
 import java.util.Map;
 
+import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.MISS;
 import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode.*;
@@ -118,8 +119,10 @@ public enum GameStates implements GameState {
     ACTIVE_PLAYER_RANGE_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            //todo: miss
-            return of(EMPTY, ACTIVE_PLAYER_OH);
+            return of(
+                    EMPTY, ACTIVE_PLAYER_OH,
+                    MISS, ACTIVE_PLAYER_AA
+            );
         }
 
         @Override
@@ -197,8 +200,10 @@ public enum GameStates implements GameState {
     REACTIVE_PLAYER_RANGE_CHECK {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            //todo: miss
-            return of(EMPTY, REACTIVE_PLAYER_OH);
+            return of(
+                    EMPTY, REACTIVE_PLAYER_OH,
+                    MISS, REACTIVE_PLAYER_AA
+            );
         }
 
         @Override

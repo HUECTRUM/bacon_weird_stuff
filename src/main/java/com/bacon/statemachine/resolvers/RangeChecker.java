@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.MISS;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
@@ -32,7 +33,9 @@ public class RangeChecker {
                     holder
             );
         }
-        return EMPTY;
+
+        boolean hit = active ? holder.beatInfoHolder.activePlayerHit : holder.beatInfoHolder.reactivePlayerHit;
+        return hit ? EMPTY : MISS;
     }
 
     private boolean checkDist(int minRange, int maxRange, GameInfoHolder holder) {
