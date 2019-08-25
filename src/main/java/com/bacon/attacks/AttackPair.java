@@ -3,6 +3,7 @@ package com.bacon.attacks;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import com.bacon.utils.StreamUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,5 +54,13 @@ public class AttackPair {
     //constructors
     public static AttackPair fromCards(List<Card> cards) {
         return new AttackPair(cards);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s~%s/%s/%s/SG %s/A %s",
+                String.join(" ", StreamUtils.mapList(cards, card -> card.name)),
+                minRange(), maxRange(), power(), totalPriority(), stunGuard(), soak()
+        );
     }
 }
