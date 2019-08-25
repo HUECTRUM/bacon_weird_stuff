@@ -8,6 +8,7 @@ import com.bacon.statemachine.states.GameState;
 import java.util.Map;
 
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.MISS;
+import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
 import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode.*;
@@ -144,7 +145,10 @@ public enum GameStates implements GameState {
     ACTIVE_PLAYER_DAMAGE {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, ACTIVE_PLAYER_OD);
+            return of(
+                    EMPTY, ACTIVE_PLAYER_OD,
+                    NO_DAMAGE, ACTIVE_PLAYER_AA
+            );
         }
 
         @Override
@@ -225,7 +229,10 @@ public enum GameStates implements GameState {
     REACTIVE_PLAYER_DAMAGE {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REACTIVE_PLAYER_OD);
+            return of(
+                    EMPTY, REACTIVE_PLAYER_OD,
+                    NO_DAMAGE, REACTIVE_PLAYER_AA
+            );
         }
 
         @Override
