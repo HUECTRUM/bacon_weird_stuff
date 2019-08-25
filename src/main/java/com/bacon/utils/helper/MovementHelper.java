@@ -1,20 +1,17 @@
-package com.bacon.helper;
+package com.bacon.utils.helper;
 
-import com.bacon.calculation.MovementCalculator;
 import com.bacon.effects.movement.common.Direction;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.bacon.effects.movement.common.Direction.LEFT;
+import static com.bacon.utils.calculation.MovementCalculator.findPlayerIndex;
 
 @Slf4j
-//todo: singleton
 public class MovementHelper {
-    private MovementCalculator movementCalculator = new MovementCalculator();
-
-    public void move(GameInfoHolder holder, Player player, Direction direction, int spaces) {
-        int index = movementCalculator.findPlayerIndex(holder, player);
+    public static void move(GameInfoHolder holder, Player player, Direction direction, int spaces) {
+        int index = findPlayerIndex(holder, player);
         int endIndex = (direction == LEFT) ? index - spaces : index + spaces;
 
         if (endIndex < 0 || endIndex > 6) {
