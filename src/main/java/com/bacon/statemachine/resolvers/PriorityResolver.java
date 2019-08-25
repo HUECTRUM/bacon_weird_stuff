@@ -1,6 +1,5 @@
 package com.bacon.statemachine.resolvers;
 
-import com.bacon.attacks.AttackPairStatsCalculator;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
@@ -15,8 +14,6 @@ import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPT
 
 @Component
 public class PriorityResolver {
-    @Autowired
-    private AttackPairStatsCalculator statsCalculator;
     @Autowired
     private ClashResolver clashResolver;
 

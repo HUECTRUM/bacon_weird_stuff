@@ -1,9 +1,7 @@
 package com.bacon.statemachine.resolvers;
 
-import com.bacon.attacks.AttackPairStatsCalculator;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,9 +14,6 @@ import static java.util.stream.IntStream.range;
 
 @Component
 public class RangeChecker {
-    @Autowired
-    private AttackPairStatsCalculator pairStatsCalculator;
-
     public StateTransitionCondition checkRange(GameInfoHolder holder, boolean active) {
         if (active) {
             holder.beatInfoHolder.activePlayerHit &= checkDist(

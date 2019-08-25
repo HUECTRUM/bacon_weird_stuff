@@ -1,13 +1,11 @@
 package com.bacon.statemachine.resolvers;
 
 import com.bacon.attacks.AttackPair;
-import com.bacon.attacks.AttackPairStatsCalculator;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
@@ -17,9 +15,6 @@ import static java.lang.Math.max;
 @Component
 @Slf4j
 public class DamageResolver {
-    @Autowired
-    private AttackPairStatsCalculator pairStatsCalculator;
-
     public StateTransitionCondition resolveDamage(GameInfoHolder holder, boolean active) {
         AttackPair attackPair = active
                 ? holder.beatInfoHolder.activePlayerPair : holder.beatInfoHolder.reactivePlayerPair;
