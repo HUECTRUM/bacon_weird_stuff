@@ -21,4 +21,6 @@ public class ResolversContainer {
     public DamageResolver damageResolver;
     @Autowired
     public TriggeredEffectsResolver effectsResolver;
+    @Autowired
+    public StunCheckResolver stunCheckResolver;
 }

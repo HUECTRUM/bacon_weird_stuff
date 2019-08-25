@@ -42,6 +42,10 @@ public class AttackPair {
         return sumInteger(cards, card -> card.soak);
     }
 
+    public int stunGuard() {
+        return sumInteger(cards, card -> card.stunGuard);
+    }
+
     public int power() {
         return sumInteger(cards, card -> card.power);
     }

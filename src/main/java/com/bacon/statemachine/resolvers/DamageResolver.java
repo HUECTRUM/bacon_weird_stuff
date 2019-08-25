@@ -3,6 +3,7 @@ package com.bacon.statemachine.resolvers;
 import com.bacon.attacks.AttackPair;
 import com.bacon.attacks.AttackPairStatsCalculator;
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class DamageResolver {
         int damageDealt = max(attackPair.power() - defendintPair.soak(), 0);
         damageTaking.health -= damageDealt;
 
+        setStunConditions(holder.beatInfoHolder, damageDealt, defendintPair, active);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
 
@@ -40,5 +42,17 @@ public class DamageResolver {
         return active
                 ? (firstPlayerActive ? holder.playerTwo : holder.playerOne)
                 : (firstPlayerActive ? holder.playerOne : holder.playerTwo);
+    }
+
+    private void setStunConditions(BeatInfoHolder holder, int damageDealt, AttackPair defendingPair, boolean active) {
+        if (damageDealt <= defendingPair.stunGuard()) {
+            return;
+        }
+
+        if (active) {
+            holder.reactivePlayerStunned = true;
+        } else {
+            holder.activePlayerStunned = true;
+        }
     }
 }

@@ -17,8 +17,12 @@ public class BeatInfoHolder {
     public AttackPair firstPlayerPair;
     public AttackPair secondPlayerPair;
 
+    //hit & damage conditions
     public boolean activePlayerHit = true;
     public boolean reactivePlayerHit = true;
+
+    public boolean activePlayerStunned = false;
+    public boolean reactivePlayerStunned = false;
 
     //just for convenience: avoids comparing activePlayer to playerOne all the time
     public AttackPair activePlayerPair;
