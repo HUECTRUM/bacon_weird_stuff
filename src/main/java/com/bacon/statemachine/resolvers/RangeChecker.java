@@ -29,8 +29,9 @@ public class RangeChecker {
         return hit ? EMPTY : MISS;
     }
 
-    private boolean checkDist(int minRange, int maxRange, GameInfoHolder holder) {
+    private boolean checkDist(Integer minRange, Integer maxRange, GameInfoHolder holder) {
         int playerDist = playerDist(holder);
-        return playerDist >= minRange && playerDist <= maxRange;
+        return minRange != null && maxRange != null
+                && playerDist >= minRange && playerDist <= maxRange;
     }
 }
