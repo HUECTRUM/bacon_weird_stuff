@@ -7,17 +7,20 @@ import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Retreat implements CardEffect {
-    @Autowired
-    public MovementCalculator movementCalculator;
-    @Autowired
-    public MovementHelper movementHelper;
+    private MovementCalculator movementCalculator = new MovementCalculator();
+    private MovementHelper movementHelper = new MovementHelper();
 
     public int spaces;
+
+    public Retreat(int spaces) {
+        this.spaces = spaces;
+    }
 
     @Override
     public void apply(Player player, GameInfoHolder gameInfoHolder) {

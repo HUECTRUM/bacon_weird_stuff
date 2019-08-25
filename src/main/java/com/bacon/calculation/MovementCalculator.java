@@ -3,7 +3,6 @@ package com.bacon.calculation;
 import com.bacon.effects.movement.common.Direction;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
-import org.springframework.stereotype.Component;
 
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
@@ -11,12 +10,12 @@ import java.util.stream.IntStream;
 import static com.bacon.effects.movement.common.Direction.LEFT;
 import static com.bacon.effects.movement.common.Direction.RIGHT;
 
-@Component
+//todo: singleton
 public class MovementCalculator {
     public int findPlayerIndex(GameInfoHolder holder, Player player) {
         return findIndex(
                 holder,
-                ind -> holder.field.spaces.get(ind).equals(player.playerId)
+                ind -> holder.field.spaces.get(ind) != null && holder.field.spaces.get(ind).equals(player.playerId)
         );
     }
 
