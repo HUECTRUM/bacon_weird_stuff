@@ -29,7 +29,7 @@ public class Advance implements CardEffect {
         movementHelper.move(
                 gameInfoHolder,
                 player,
-                movementCalculator.retreatDirection(gameInfoHolder, player),
+                movementCalculator.advanceDirection(gameInfoHolder, player),
                 spaces >= playerDist(gameInfoHolder) ? spaces + 1 : spaces
         );
     }
