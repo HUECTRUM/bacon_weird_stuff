@@ -146,7 +146,8 @@ public enum GameStates implements GameState {
         public Map<StateTransitionCondition, GameState> nextStates() {
             return of(
                     EMPTY, ACTIVE_PLAYER_OD,
-                    NO_DAMAGE, ACTIVE_PLAYER_AA
+                    NO_DAMAGE, ACTIVE_PLAYER_AA,
+                    PLAYER_DEAD, GAME_END
             );
         }
 
@@ -243,7 +244,8 @@ public enum GameStates implements GameState {
         public Map<StateTransitionCondition, GameState> nextStates() {
             return of(
                     EMPTY, REACTIVE_PLAYER_OD,
-                    NO_DAMAGE, REACTIVE_PLAYER_AA
+                    NO_DAMAGE, REACTIVE_PLAYER_AA,
+                    PLAYER_DEAD, GAME_END
             );
         }
 

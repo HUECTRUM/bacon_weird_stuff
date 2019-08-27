@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
+import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.PLAYER_DEAD;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static java.lang.Math.max;
 
@@ -29,7 +30,9 @@ public class DamageResolver {
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
 
-        return damageDealt > 0 ? EMPTY : NO_DAMAGE;
+        return damageTaking.health <= 0
+                ? PLAYER_DEAD
+                : damageDealt > 0 ? EMPTY : NO_DAMAGE;
     }
 
     private Player damageTakingPlayer(GameInfoHolder holder, boolean active) {

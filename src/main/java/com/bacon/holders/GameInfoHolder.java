@@ -35,7 +35,7 @@ public class GameInfoHolder {
 
     public void run() {
         int cnt = 0;
-        while (state != GAME_END && cnt != 300) {
+        while (state != GAME_END) {
             log.info("State {} cnt {}", state, cnt);
             StateTransitionCondition condition = state.transition(this);
 
