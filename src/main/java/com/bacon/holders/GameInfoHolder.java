@@ -3,14 +3,21 @@ package com.bacon.holders;
 import com.bacon.gameobjects.field.Field;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
+import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.ResolversContainer;
+import com.bacon.statemachine.states.GameState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static com.bacon.statemachine.GameStates.GAME_END;
+import static com.bacon.statemachine.GameStates.START;
 import static com.bacon.utils.StreamUtils.mapList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
+@Scope(value = SCOPE_PROTOTYPE)
 @Slf4j
 public class GameInfoHolder {
     @Autowired
@@ -24,6 +31,20 @@ public class GameInfoHolder {
     public int beatNumber = 0;
     public BeatInfoHolder beatInfoHolder;
 
+    public GameState state = START;
+
+    public void run() {
+        int cnt = 0;
+        while (state != GAME_END && cnt != 300) {
+            log.info("State {} cnt {}", state, cnt);
+            StateTransitionCondition condition = state.transition(this);
+
+            logGameInfo();
+            state = state.nextStates().get(condition);
+            ++cnt;
+        }
+        log.info("Game ended");
+    }
 
     //logging for states
     //TODO: views
