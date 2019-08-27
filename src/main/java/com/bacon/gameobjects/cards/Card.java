@@ -20,8 +20,8 @@ public class Card {
     public CardType cardType;
     public String name;
 
-    public int minRange;
-    public int maxRange;
+    public Integer minRange;
+    public Integer maxRange;
     public int power;
     public BigDecimal priority;
     public int stunGuard;

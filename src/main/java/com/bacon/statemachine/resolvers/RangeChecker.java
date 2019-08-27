@@ -4,13 +4,9 @@ import com.bacon.holders.GameInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.MISS;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
-import static java.lang.Math.abs;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.range;
+import static com.bacon.utils.FieldUtils.playerDist;
 
 @Component
 public class RangeChecker {
@@ -33,17 +29,9 @@ public class RangeChecker {
         return hit ? EMPTY : MISS;
     }
 
-    private boolean checkDist(int minRange, int maxRange, GameInfoHolder holder) {
+    private boolean checkDist(Integer minRange, Integer maxRange, GameInfoHolder holder) {
         int playerDist = playerDist(holder);
-        return playerDist >= minRange && playerDist <= maxRange;
-    }
-
-    private int playerDist(GameInfoHolder holder) {
-        List<Integer> playersPoints = range(0, holder.field.spaces.size())
-                .filter(ind -> holder.field.spaces.get(ind) != null)
-                .boxed()
-                .collect(toList());
-
-        return abs(playersPoints.get(0) - playersPoints.get(1));
+        return minRange != null && maxRange != null
+                && playerDist >= minRange && playerDist <= maxRange;
     }
 }

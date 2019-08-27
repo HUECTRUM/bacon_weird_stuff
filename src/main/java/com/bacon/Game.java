@@ -23,7 +23,7 @@ public class Game {
     @EventListener(ApplicationReadyEvent.class)
     public void startGame() {
         int cnt = 0; //TODO: remove
-        while (state != GAME_END && cnt != 100) {
+        while (state != GAME_END && cnt != 300) {
             log.info("State {} cnt {}", state, cnt);
             StateTransitionCondition condition = state.transition(gameInfoHolder);
 

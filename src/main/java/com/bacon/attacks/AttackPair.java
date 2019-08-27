@@ -31,11 +31,17 @@ public class AttackPair {
                 .reduce(ZERO, BigDecimal::add);
     }
 
-    public int minRange() {
+    public Integer minRange() {
+        if (cards.stream().anyMatch(card -> card.minRange == null)) {
+            return null;
+        }
         return sumInteger(cards, card -> card.minRange);
     }
 
-    public int maxRange() {
+    public Integer maxRange() {
+        if (cards.stream().anyMatch(card -> card.maxRange == null)) {
+            return null;
+        }
         return sumInteger(cards, card -> card.maxRange);
     }
 
