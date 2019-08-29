@@ -17,12 +17,8 @@ public class RandomChoiceSelector implements ChoiceSelector {
     private Randomizer randomizer;
 
     @Override
-    public int choose(GameInfoHolder holder, Player player, CardEffect effect) {
-        List<?> choices = effect.choices(player, holder);
-        log.info("Choices {}", choices);
-        int size = choices.size();
-
-        int randomized = randomizer.randomize(size);
+    public int choose(GameInfoHolder holder, Player player, CardEffect effect, List<?> choices) {
+        int randomized = randomizer.randomize(choices.size());
         log.info("Choice selected index {}", randomized);
         return randomized;
     }

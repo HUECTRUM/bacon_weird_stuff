@@ -24,7 +24,7 @@ public class Advance implements CardEffect {
     @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
-        return filterList(choices, choice -> choice < advanceMax);
+        return filterList(choices, choice -> choice <= advanceMax);
     }
 
     @Override

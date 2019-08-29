@@ -7,6 +7,7 @@ import com.bacon.player.Player;
 import com.bacon.selectors.choices.ChoiceSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 
 @Component
+@Slf4j
 public class TriggeredEffectsResolver {
     @Autowired
     private ChoiceSelector choiceSelector;
@@ -46,7 +48,7 @@ public class TriggeredEffectsResolver {
                 ? holder.beatInfoHolder.activePlayerPair.triggeredEffects(trigger)
                 : holder.beatInfoHolder.reactivePlayerPair.triggeredEffects(trigger);
 
-        effects.forEach(effect -> effect.apply(player, holder, choiceSelector.choose(holder, player, effect)));
+        effects.forEach(effect -> resolveEffect(holder, player, effect));
         return EMPTY;
     }
 
@@ -55,16 +57,18 @@ public class TriggeredEffectsResolver {
         List<CardEffect> firstPlayerEffects = holder.beatInfoHolder.firstPlayerPair.triggeredEffects(trigger);
         List<CardEffect> secondPlayerEffects = holder.beatInfoHolder.secondPlayerPair.triggeredEffects(trigger);
 
-        firstPlayerEffects.forEach(effect -> effect.apply(
-                holder.playerOne,
-                holder,
-                choiceSelector.choose(holder, holder.playerOne, effect)
-        ));
-        secondPlayerEffects.forEach(effect -> effect.apply(
-                holder.playerTwo,
-                holder,
-                choiceSelector.choose(holder, holder.playerTwo, effect)
-        ));
+        firstPlayerEffects.forEach(effect -> resolveEffect(holder, holder.playerOne, effect));
+        secondPlayerEffects.forEach(effect -> resolveEffect(holder, holder.playerTwo, effect));
         return EMPTY;
+    }
+
+    private void resolveEffect(GameInfoHolder holder, Player player, CardEffect effect) {
+        List<?> choices = effect.choices(player, holder);
+        log.info("Effect choices available for effect {}: {}", effect, choices);
+
+        if (!choices.isEmpty()) {
+            int index = choiceSelector.choose(holder, player, effect, choices);
+            effect.apply(player, holder, index);
+        }
     }
 }

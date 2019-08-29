@@ -23,7 +23,7 @@ public class Retreat implements CardEffect {
     @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int retreatMax = maxAvailableRetreat(gameInfoHolder, player);
-        return filterList(choices, choice -> choice < retreatMax);
+        return filterList(choices, choice -> choice <= retreatMax);
     }
 
     @Override

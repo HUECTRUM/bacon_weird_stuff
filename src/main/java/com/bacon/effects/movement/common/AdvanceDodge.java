@@ -25,10 +25,10 @@ public class AdvanceDodge implements CardEffect {
     @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
-        List<Integer> advances = filterList(choices, choice -> choice > 0 && abs(choice) < advanceMax);
+        List<Integer> advances = filterList(choices, choice -> choice > 0 && abs(choice) <= advanceMax);
 
         int retreatMax = maxAvailableRetreat(gameInfoHolder, player);
-        List<Integer> retreats = filterList(choices, choice -> choice < 0 && abs(choice) < retreatMax);
+        List<Integer> retreats = filterList(choices, choice -> choice < 0 && abs(choice) <= retreatMax);
 
         return concatLists(advances, retreats);
     }
