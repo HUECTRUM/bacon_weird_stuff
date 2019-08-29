@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
 import static com.bacon.utils.StreamUtils.mapList;
@@ -28,10 +31,11 @@ public class GameInfoHolder {
 
     public Field field = new Field();
 
-    public int beatNumber = 0;
     public BeatInfoHolder beatInfoHolder;
 
-    public GameState state = START;
+    private GameState state = START;
+
+    public List<BeatInfoHolder> prevBeats = new ArrayList<>();
 
     public void run() {
         while (state != GAME_END) {
@@ -42,6 +46,10 @@ public class GameInfoHolder {
             state = state.nextStates().get(condition);
         }
         log.info("Game ended");
+    }
+
+    public int lastBeatNumber() {
+        return prevBeats.isEmpty() ? 0 : prevBeats.get(prevBeats.size() - 1).beatNumber;
     }
 
     //logging for states
@@ -59,6 +67,7 @@ public class GameInfoHolder {
             log.info("First player pair {} ", beatInfoHolder.firstPlayerPair);
             log.info("Second player pair {}", beatInfoHolder.secondPlayerPair);
         }
+        log.info("Prev beat num {}", lastBeatNumber());
         log.info("----------------------------------");
     }
 

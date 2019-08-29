@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 @NoArgsConstructor
 public class BeatInfoHolder {
+    public int beatNumber;
+
     public Player activePlayer;
     public Player reactivePlayer;
 

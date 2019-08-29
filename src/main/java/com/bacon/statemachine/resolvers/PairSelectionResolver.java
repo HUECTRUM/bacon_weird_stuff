@@ -18,8 +18,8 @@ public class PairSelectionResolver {
     private PairSelector pairSelector;
 
     public StateTransitionCondition selectPairs(GameInfoHolder gameInfoHolder) {
-        gameInfoHolder.beatNumber++;
         gameInfoHolder.beatInfoHolder = new BeatInfoHolder();
+        gameInfoHolder.beatInfoHolder.beatNumber = gameInfoHolder.lastBeatNumber() + 1;
         BeatInfoHolder beatInfoHolder = gameInfoHolder.beatInfoHolder;
 
         beatInfoHolder.firstPlayerPair = pairSelector.selectPair(gameInfoHolder.playerOne);
