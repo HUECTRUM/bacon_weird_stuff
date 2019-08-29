@@ -7,6 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
+import static com.bacon.utils.StreamUtils.filterList;
+import static com.bacon.utils.calculation.MovementCalculator.maxAvailableRetreat;
 import static com.bacon.utils.calculation.MovementCalculator.retreatDirection;
 import static com.bacon.utils.helper.MovementHelper.move;
 
@@ -14,10 +18,17 @@ import static com.bacon.utils.helper.MovementHelper.move;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Retreat implements CardEffect {
-    public int spaces;
+    public List<Integer> choices;
 
     @Override
-    public void apply(Player player, GameInfoHolder gameInfoHolder) {
+    public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
+        int retreatMax = maxAvailableRetreat(gameInfoHolder, player);
+        return filterList(choices, choice -> choice < retreatMax);
+    }
+
+    @Override
+    public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
+        int spaces = choices(player, gameInfoHolder).get(choiceIndex);
         move(
                 gameInfoHolder,
                 player,

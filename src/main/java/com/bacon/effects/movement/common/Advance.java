@@ -7,18 +7,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import static com.bacon.utils.FieldUtils.playerDist;
+import static com.bacon.utils.StreamUtils.filterList;
 import static com.bacon.utils.calculation.MovementCalculator.advanceDirection;
+import static com.bacon.utils.calculation.MovementCalculator.maxAvailableAdvance;
 import static com.bacon.utils.helper.MovementHelper.move;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Advance implements CardEffect {
-    public int spaces;
+    public List<Integer> choices;
 
     @Override
-    public void apply(Player player, GameInfoHolder gameInfoHolder) {
+    public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
+        int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
+        return filterList(choices, choice -> choice < advanceMax);
+    }
+
+    @Override
+    public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
+        int spaces = choices(player, gameInfoHolder).get(choiceIndex);
         move(
                 gameInfoHolder,
                 player,
