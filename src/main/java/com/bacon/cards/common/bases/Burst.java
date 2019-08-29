@@ -13,6 +13,7 @@ import java.util.Map;
 import static com.bacon.gameobjects.enums.CardType.BASE;
 import static com.bacon.gameobjects.triggers.EffectTrigger.*;
 import static java.math.BigDecimal.valueOf;
+import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
 import static java.util.Map.of;
@@ -20,7 +21,7 @@ import static java.util.Map.of;
 public class Burst {
     private static Map<EffectTrigger, List<CardEffect>> BURST_EFFECTS_MAP = new HashMap<>(of(
             REVEAL, new ArrayList<CardEffect>(EMPTY_LIST),
-            SOB, new ArrayList<>(singletonList(new Retreat(2))),
+            SOB, new ArrayList<>(singletonList(new Retreat(asList(1, 2)))),
             BA, new ArrayList<CardEffect>(EMPTY_LIST),
             OH, new ArrayList<CardEffect>(EMPTY_LIST),
             OD, new ArrayList<CardEffect>(EMPTY_LIST),
