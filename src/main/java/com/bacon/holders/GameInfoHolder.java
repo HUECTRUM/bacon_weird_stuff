@@ -34,14 +34,12 @@ public class GameInfoHolder {
     public GameState state = START;
 
     public void run() {
-        int cnt = 0;
         while (state != GAME_END) {
-            log.info("State {} cnt {}", state, cnt);
+            log.info("State {}", state);
             StateTransitionCondition condition = state.transition(this);
 
             logGameInfo();
             state = state.nextStates().get(condition);
-            ++cnt;
         }
         log.info("Game ended");
     }

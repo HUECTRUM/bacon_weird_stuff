@@ -13,6 +13,7 @@ import java.util.Map;
 import static com.bacon.gameobjects.enums.CardType.BASE;
 import static com.bacon.gameobjects.triggers.EffectTrigger.*;
 import static java.math.BigDecimal.valueOf;
+import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.singletonList;
 import static java.util.Map.of;
@@ -21,7 +22,7 @@ public class Drive {
     private static Map<EffectTrigger, List<CardEffect>> DRIVE_EFFECTS_MAP = new HashMap<>(of(
             REVEAL, new ArrayList<CardEffect>(EMPTY_LIST),
             SOB, new ArrayList<CardEffect>(EMPTY_LIST),
-            BA, new ArrayList<>(singletonList(new Advance(2))),
+            BA, new ArrayList<>(singletonList(new Advance(asList(1, 2)))),
             OH, new ArrayList<CardEffect>(EMPTY_LIST),
             OD, new ArrayList<CardEffect>(EMPTY_LIST),
             AA, new ArrayList<CardEffect>(EMPTY_LIST),

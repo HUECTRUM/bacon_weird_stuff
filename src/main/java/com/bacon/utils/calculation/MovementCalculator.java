@@ -40,4 +40,17 @@ public class MovementCalculator {
                 .findFirst()
                 .orElse(-1);
     }
+
+    //choices selection
+    public static int maxAvailableAdvance(GameInfoHolder holder, Player player) {
+        int index = findPlayerIndex(holder, player);
+        Direction advanceDirection = advanceDirection(holder, player);
+        return advanceDirection == LEFT ? index - 1 : 5 - index; //one space is occupied by the opponent
+    }
+
+    public static int maxAvailableRetreat(GameInfoHolder holder, Player player) {
+        int index = findPlayerIndex(holder, player);
+        Direction retreatDirection = retreatDirection(holder, player);
+        return retreatDirection == LEFT ? index : 6 - index;
+    }
 }
