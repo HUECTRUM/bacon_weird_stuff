@@ -1,5 +1,6 @@
 package com.bacon.holders;
 
+import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.field.Field;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
@@ -12,7 +13,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
@@ -25,16 +28,19 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 public class GameInfoHolder {
     @Autowired
     public ResolversContainer resolversContainer;
+    @Autowired
+    public GameInfoHelper infoHelper;
+
+    private GameState state = START;
 
     public Player playerOne;
     public Player playerTwo;
 
     public Field field = new Field();
 
+    public Map<BeatTriggerKey, CardEffect> additionalEffects = new HashMap<>();
+
     public BeatInfoHolder beatInfoHolder;
-
-    private GameState state = START;
-
     public List<BeatInfoHolder> prevBeats = new ArrayList<>();
 
     public void run() {
@@ -46,10 +52,6 @@ public class GameInfoHolder {
             state = state.nextStates().get(condition);
         }
         log.info("Game ended");
-    }
-
-    public int lastBeatNumber() {
-        return prevBeats.isEmpty() ? 0 : prevBeats.get(prevBeats.size() - 1).beatNumber;
     }
 
     //logging for states
@@ -67,7 +69,7 @@ public class GameInfoHolder {
             log.info("First player pair {} ", beatInfoHolder.firstPlayerPair);
             log.info("Second player pair {}", beatInfoHolder.secondPlayerPair);
         }
-        log.info("Prev beat num {}", lastBeatNumber());
+        log.info("Prev beat num {}", infoHelper.lastBeatNumber(this));
         log.info("----------------------------------");
     }
 

@@ -10,6 +10,10 @@ import static java.lang.Integer.MAX_VALUE;
 public class Randomizer {
     private static final Random random = new Random();
 
+    public boolean coinFlip() {
+        return randomize(2) == 0;
+    }
+
     public int randomize(int size) {
         return (random.nextInt() & MAX_VALUE) % size;
     }
