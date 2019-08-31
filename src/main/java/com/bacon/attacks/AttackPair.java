@@ -10,63 +10,80 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
+import static com.bacon.attacks.AttackPairBonusType.*;
 import static com.bacon.utils.StreamUtils.*;
 import static java.math.BigDecimal.ZERO;
+import static java.util.Collections.EMPTY_LIST;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttackPair {
     public List<Card> cards;
+    public List<AttackPairBonus> bonuses;
 
     public List<CardEffect> triggeredEffects(EffectTrigger trigger) {
         return flatMapList(mapList(cards, card -> card.cardEffects.get(trigger)));
     }
 
     public BigDecimal totalPriority() {
-        return cards
+        BigDecimal cardPrio = cards
                 .stream()
                 .map(card -> card.priority)
                 .reduce(ZERO, BigDecimal::add);
+        BigDecimal bonusPrio = filterList(bonuses, b -> b.type == PRIORITY)
+                .stream()
+                .map(x -> (BigDecimal)x.value)
+                .reduce(ZERO, BigDecimal::add);
+        return cardPrio.add(bonusPrio);
     }
 
     public Integer minRange() {
         if (cards.stream().anyMatch(card -> card.minRange == null)) {
             return null;
         }
-        return sumInteger(cards, card -> card.minRange);
+        return calculateValue(card -> card.minRange, MINRANGE);
     }
 
     public Integer maxRange() {
         if (cards.stream().anyMatch(card -> card.maxRange == null)) {
             return null;
         }
-        return sumInteger(cards, card -> card.maxRange);
+        return calculateValue(card -> card.maxRange, MAXRANGE);
     }
 
     public int soak() {
-        return sumInteger(cards, card -> card.soak);
+        return calculateValue(card -> card.soak, SOAK);
     }
 
     public int stunGuard() {
-        return sumInteger(cards, card -> card.stunGuard);
+        return calculateValue(card -> card.stunGuard, STUNGUARD);
     }
 
     public int power() {
-        return sumInteger(cards, card -> card.power);
+        return calculateValue(card -> card.power, POWER);
+    }
+
+    private int calculateValue(ToIntFunction<? super Card> statFunction, AttackPairBonusType bonusType) {
+        int bonusValue = sumInteger(
+                filterList(bonuses, b -> b.type == bonusType),
+                b -> (int) b.value
+        );
+        return sumInteger(cards, statFunction) + bonusValue;
     }
 
     //constructors
     public static AttackPair fromCards(List<Card> cards) {
-        return new AttackPair(cards);
+        return new AttackPair(cards, EMPTY_LIST);
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s~%s/%s/%s/SG %s/A %s",
+        return String.format("%s: %s~%s/%s/%s/SG %s/A %s with %s bonuses",
                 String.join(" ", StreamUtils.mapList(cards, card -> card.name)),
-                minRange(), maxRange(), power(), totalPriority(), stunGuard(), soak()
+                minRange(), maxRange(), power(), totalPriority(), stunGuard(), soak(), bonuses
         );
     }
 }
