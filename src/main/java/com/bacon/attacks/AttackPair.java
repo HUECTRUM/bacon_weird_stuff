@@ -22,6 +22,7 @@ import static java.util.Collections.EMPTY_LIST;
 @NoArgsConstructor
 public class AttackPair {
     public List<Card> cards;
+    //TODO: MOVE TO PLAYER!!!
     public List<AttackPairBonus> bonuses;
 
     public List<CardEffect> triggeredEffects(EffectTrigger trigger) {
