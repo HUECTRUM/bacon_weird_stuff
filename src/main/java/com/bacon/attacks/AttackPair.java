@@ -3,6 +3,7 @@ package com.bacon.attacks;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import com.bacon.player.Player;
 import com.bacon.utils.StreamUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,14 +23,12 @@ import static java.util.Collections.EMPTY_LIST;
 @NoArgsConstructor
 public class AttackPair {
     public List<Card> cards;
-    //TODO: MOVE TO PLAYER!!!
-    public List<AttackPairBonus> bonuses;
 
     public List<CardEffect> triggeredEffects(EffectTrigger trigger) {
         return flatMapList(mapList(cards, card -> card.cardEffects.get(trigger)));
     }
 
-    public BigDecimal totalPriority() {
+    public BigDecimal totalPriority(List<AttackPairBonus> bonuses) {
         BigDecimal cardPrio = cards
                 .stream()
                 .map(card -> card.priority)
@@ -41,33 +40,57 @@ public class AttackPair {
         return cardPrio.add(bonusPrio);
     }
 
-    public Integer minRange() {
+    public BigDecimal totalPriority(Player player, int beatNum) {
+        return totalPriority(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
+    }
+
+    public Integer minRange(List<AttackPairBonus> bonuses) {
         if (cards.stream().anyMatch(card -> card.minRange == null)) {
             return null;
         }
-        return calculateValue(card -> card.minRange, MINRANGE);
+        return calculateValue(card -> card.minRange, MINRANGE, bonuses);
     }
 
-    public Integer maxRange() {
+    public Integer minRange(Player player, int beatNum) {
+        return minRange(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
+    }
+
+    public Integer maxRange(List<AttackPairBonus> bonuses) {
         if (cards.stream().anyMatch(card -> card.maxRange == null)) {
             return null;
         }
-        return calculateValue(card -> card.maxRange, MAXRANGE);
+        return calculateValue(card -> card.maxRange, MAXRANGE, bonuses);
     }
 
-    public int soak() {
-        return calculateValue(card -> card.soak, SOAK);
+    public Integer maxRange(Player player, int beatNum) {
+        return maxRange(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
     }
 
-    public int stunGuard() {
-        return calculateValue(card -> card.stunGuard, STUNGUARD);
+    public int soak(List<AttackPairBonus> bonuses) {
+        return calculateValue(card -> card.soak, SOAK, bonuses);
     }
 
-    public int power() {
-        return calculateValue(card -> card.power, POWER);
+    public Integer soak(Player player, int beatNum) {
+        return soak(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
     }
 
-    private int calculateValue(ToIntFunction<? super Card> statFunction, AttackPairBonusType bonusType) {
+    public int stunGuard(List<AttackPairBonus> bonuses) {
+        return calculateValue(card -> card.stunGuard, STUNGUARD, bonuses);
+    }
+
+    public Integer stunGuard(Player player, int beatNum) {
+        return stunGuard(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
+    }
+
+    public int power(List<AttackPairBonus> bonuses) {
+        return calculateValue(card -> card.power, POWER, bonuses);
+    }
+
+    public Integer power(Player player, int beatNum) {
+        return power(player.bonuses.getOrDefault(beatNum, EMPTY_LIST));
+    }
+
+    private int calculateValue(ToIntFunction<? super Card> statFunction, AttackPairBonusType bonusType, List<AttackPairBonus> bonuses) {
         int bonusValue = sumInteger(
                 filterList(bonuses, b -> b.type == bonusType),
                 b -> (int) b.value
@@ -77,14 +100,15 @@ public class AttackPair {
 
     //constructors
     public static AttackPair fromCards(List<Card> cards) {
-        return new AttackPair(cards, EMPTY_LIST);
+        return new AttackPair(cards);
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s~%s/%s/%s/SG %s/A %s with %s bonuses",
+        return String.format("%s: %s~%s/%s/%s/SG %s/A %s",
                 String.join(" ", StreamUtils.mapList(cards, card -> card.name)),
-                minRange(), maxRange(), power(), totalPriority(), stunGuard(), soak(), bonuses
+                minRange(EMPTY_LIST), maxRange(EMPTY_LIST),
+                power(EMPTY_LIST), totalPriority(EMPTY_LIST), stunGuard(EMPTY_LIST), soak(EMPTY_LIST)
         );
     }
 }

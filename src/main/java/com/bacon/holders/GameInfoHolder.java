@@ -38,7 +38,7 @@ public class GameInfoHolder {
 
     public Field field = new Field();
 
-    public Map<BeatTriggerKey, CardEffect> additionalEffects = new HashMap<>();
+    public Map<BeatTriggerKey, List<CardEffect>> additionalEffects = new HashMap<>();
 
     public BeatInfoHolder beatInfoHolder;
     public List<BeatInfoHolder> prevBeats = new ArrayList<>();

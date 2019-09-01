@@ -11,16 +11,17 @@ import static com.bacon.utils.FieldUtils.playerDist;
 @Component
 public class RangeChecker {
     public StateTransitionCondition checkRange(GameInfoHolder holder, boolean active) {
+        int beatNum = holder.infoHelper.currentBeatNumber(holder);
         if (active) {
             holder.beatInfoHolder.activePlayerHit &= checkDist(
-                    holder.beatInfoHolder.activePlayerPair.minRange(),
-                    holder.beatInfoHolder.activePlayerPair.maxRange(),
+                    holder.beatInfoHolder.activePlayerPair.minRange(holder.beatInfoHolder.activePlayer, beatNum),
+                    holder.beatInfoHolder.activePlayerPair.maxRange(holder.beatInfoHolder.activePlayer, beatNum),
                     holder
             );
         } else {
             holder.beatInfoHolder.reactivePlayerHit &= checkDist(
-                    holder.beatInfoHolder.reactivePlayerPair.minRange(),
-                    holder.beatInfoHolder.reactivePlayerPair.maxRange(),
+                    holder.beatInfoHolder.reactivePlayerPair.minRange(holder.beatInfoHolder.reactivePlayer, beatNum),
+                    holder.beatInfoHolder.reactivePlayerPair.maxRange(holder.beatInfoHolder.reactivePlayer, beatNum),
                     holder
             );
         }

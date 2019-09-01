@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.bacon.holders.BeatTriggerKey.trigger;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static com.bacon.utils.StreamUtils.concatLists;
+import static java.util.Collections.emptyList;
 
 @Component
 @Slf4j
@@ -43,10 +46,13 @@ public class TriggeredEffectsResolver {
     }
 
     private StateTransitionCondition resolveSingle(GameInfoHolder holder, EffectTrigger trigger, boolean active) {
+        int beatNum = holder.infoHelper.currentBeatNumber(holder);
+
         Player player = active ? holder.beatInfoHolder.activePlayer : holder.beatInfoHolder.reactivePlayer;
         List<CardEffect> effects = active
                 ? holder.beatInfoHolder.activePlayerPair.triggeredEffects(trigger)
                 : holder.beatInfoHolder.reactivePlayerPair.triggeredEffects(trigger);
+        effects.addAll(holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, player), emptyList()));
 
         effects.forEach(effect -> resolveEffect(holder, player, effect));
         return EMPTY;
@@ -54,8 +60,16 @@ public class TriggeredEffectsResolver {
 
     //used when there is no active/reactive players set yet
     private StateTransitionCondition resolveBoth(GameInfoHolder holder, EffectTrigger trigger) {
-        List<CardEffect> firstPlayerEffects = holder.beatInfoHolder.firstPlayerPair.triggeredEffects(trigger);
-        List<CardEffect> secondPlayerEffects = holder.beatInfoHolder.secondPlayerPair.triggeredEffects(trigger);
+        int beatNum = holder.infoHelper.currentBeatNumber(holder);
+
+        List<CardEffect> firstPlayerEffects = concatLists(
+                holder.beatInfoHolder.firstPlayerPair.triggeredEffects(trigger),
+                holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerOne), emptyList())
+        );
+        List<CardEffect> secondPlayerEffects = concatLists(
+                holder.beatInfoHolder.secondPlayerPair.triggeredEffects(trigger),
+                holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerTwo), emptyList())
+        );
 
         firstPlayerEffects.forEach(effect -> resolveEffect(holder, holder.playerOne, effect));
         secondPlayerEffects.forEach(effect -> resolveEffect(holder, holder.playerTwo, effect));
