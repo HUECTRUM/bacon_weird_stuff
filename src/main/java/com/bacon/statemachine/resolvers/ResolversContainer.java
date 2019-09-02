@@ -23,4 +23,6 @@ public class ResolversContainer {
     public TriggeredEffectsResolver effectsResolver;
     @Autowired
     public StunCheckResolver stunCheckResolver;
+    @Autowired
+    public AnteResolver anteResolver;
 }

@@ -50,12 +50,34 @@ public enum GameStates implements GameState {
     BEAT_START {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REVEAL);
+            return of(EMPTY, ACTIVE_ANTE);
         }
 
         @Override
         public StateTransitionCondition transition(GameInfoHolder holder) {
             return holder.resolversContainer.pairSelectionResolver.selectPairs(holder);
+        }
+    },
+    ACTIVE_ANTE {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_ANTE);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.anteResolver.ante(holder, true);
+        }
+    },
+    REACTIVE_ANTE {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REVEAL);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.anteResolver.ante(holder, false);
         }
     },
     REVEAL {

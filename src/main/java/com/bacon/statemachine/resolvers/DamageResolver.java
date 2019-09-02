@@ -17,16 +17,19 @@ import static java.lang.Math.max;
 @Slf4j
 public class DamageResolver {
     public StateTransitionCondition resolveDamage(GameInfoHolder holder, boolean active) {
+        int beatNum = holder.infoHelper.currentBeatNumber(holder);
+
         AttackPair attackPair = active
                 ? holder.beatInfoHolder.activePlayerPair : holder.beatInfoHolder.reactivePlayerPair;
         AttackPair defendintPair = active
                 ? holder.beatInfoHolder.reactivePlayerPair : holder.beatInfoHolder.activePlayerPair;
         Player damageTaking = damageTakingPlayer(holder, active);
+        Player damageDealing = damageDealingPlayer(holder, active);
 
-        int damageDealt = max(attackPair.power() - defendintPair.soak(), 0);
+        int damageDealt = max(attackPair.power(damageDealing, beatNum) - defendintPair.soak(damageTaking, beatNum), 0);
         damageTaking.health -= damageDealt;
 
-        setStunConditions(holder.beatInfoHolder, damageDealt, defendintPair, active);
+        setStunConditions(holder.beatInfoHolder, damageDealt, defendintPair, damageTaking, active, beatNum);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
 
@@ -42,8 +45,17 @@ public class DamageResolver {
                 : (firstPlayerActive ? holder.playerOne : holder.playerTwo);
     }
 
-    private void setStunConditions(BeatInfoHolder holder, int damageDealt, AttackPair defendingPair, boolean active) {
-        if (damageDealt <= defendingPair.stunGuard()) {
+    private Player damageDealingPlayer(GameInfoHolder holder, boolean active) {
+        boolean firstPlayerActive = holder.beatInfoHolder.activePlayer == holder.playerOne;
+        return active
+                ? (firstPlayerActive ? holder.playerOne : holder.playerTwo)
+                : (firstPlayerActive ? holder.playerTwo : holder.playerOne);
+    }
+
+    private void setStunConditions(
+            BeatInfoHolder holder, int damageDealt, AttackPair defendingPair,
+            Player defendingPlayer, boolean active, int beatNum) {
+        if (damageDealt <= defendingPair.stunGuard(defendingPlayer, beatNum)) {
             return;
         }
 

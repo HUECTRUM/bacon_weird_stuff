@@ -12,9 +12,11 @@ public class Recycler {
         gameInfoHolder.playerOne.discardTwo = gameInfoHolder.playerOne.discardOne;
         gameInfoHolder.playerTwo.discardTwo = gameInfoHolder.playerTwo.discardOne;
 
-        gameInfoHolder.playerOne.discardOne = gameInfoHolder.beatInfoHolder.firstPlayerPair.cards;
-        gameInfoHolder.playerTwo.discardOne = gameInfoHolder.beatInfoHolder.secondPlayerPair.cards;
+        gameInfoHolder.playerOne.discardOne = gameInfoHolder.playerOne.currentBeatPair.cards;
+        gameInfoHolder.playerTwo.discardOne = gameInfoHolder.playerTwo.currentBeatPair.cards;
 
+        //todo: a separate state for game "cleaning" itself up after a beat?
+        gameInfoHolder.prevBeats.add(gameInfoHolder.beatInfoHolder);
         return EMPTY;
     }
 }

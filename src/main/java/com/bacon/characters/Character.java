@@ -15,6 +15,8 @@ public interface Character {
     String name();
     String displayName();
 
+    UniqueAbility ua();
+
     default List<Card> basesKit() {
         return concatLists(bases(), COMMON_BASES);
     }

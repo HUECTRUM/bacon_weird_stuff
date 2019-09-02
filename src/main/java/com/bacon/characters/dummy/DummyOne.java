@@ -1,6 +1,7 @@
 package com.bacon.characters.dummy;
 
 import com.bacon.characters.Character;
+import com.bacon.characters.UniqueAbility;
 import com.bacon.gameobjects.cards.Card;
 
 import java.util.List;
@@ -39,5 +40,10 @@ public class DummyOne implements Character {
     @Override
     public String displayName() {
         return "DM";
+    }
+
+    @Override
+    public UniqueAbility ua() {
+        return new DummyOneUa();
     }
 }

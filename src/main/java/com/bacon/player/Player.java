@@ -1,5 +1,7 @@
 package com.bacon.player;
 
+import com.bacon.attacks.AttackPair;
+import com.bacon.attacks.AttackPairBonus;
 import com.bacon.characters.Character;
 import com.bacon.gameobjects.cards.Card;
 import lombok.AllArgsConstructor;
@@ -9,7 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.bacon.utils.StreamUtils.filterList;
 import static java.util.Collections.EMPTY_LIST;
@@ -30,6 +34,10 @@ public class Player {
     public List<Card> discardOne;
     public List<Card> discardTwo;
 
+    public AttackPair currentBeatPair; //todo: history
+
+    public Map<Integer, List<AttackPairBonus>> bonuses;
+
     public List<Card> availableBases() {
         return filterOutDiscards(character.basesKit());
     }
@@ -49,6 +57,10 @@ public class Player {
         return filterList(cards, card -> !discardOne.contains(card) && !discardTwo.contains(card));
     }
 
+    public void attachBonus(int beatNum, AttackPairBonus bonus) {
+        bonuses.putIfAbsent(beatNum, EMPTY_LIST);
+        bonuses.get(beatNum).add(bonus);
+    }
 
     //constructors
     public static Player fromCharacter(Character character) {
@@ -58,6 +70,7 @@ public class Player {
                 .character(character)
                 .discardOne(new ArrayList<>(EMPTY_LIST))
                 .discardTwo(new ArrayList<>(EMPTY_LIST))
+                .bonuses(new HashMap<>())
                 .build();
     }
 }
