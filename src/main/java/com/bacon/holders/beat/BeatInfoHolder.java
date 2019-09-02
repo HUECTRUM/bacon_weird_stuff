@@ -16,9 +16,6 @@ public class BeatInfoHolder {
     public Player activePlayer;
     public Player reactivePlayer;
 
-    public AttackPair firstPlayerPair;
-    public AttackPair secondPlayerPair;
-
     //hit & damage conditions
     public boolean activePlayerHit = true;
     public boolean reactivePlayerHit = true;
@@ -32,6 +29,7 @@ public class BeatInfoHolder {
 
     public ClashInfoHolder clashInfoHolder = new ClashInfoHolder();
 
+    //todo: move to Player?
     public void cardsPlayed(List<Card> cards, boolean first) {
         if (first) {
             clashInfoHolder.firstPlayerBasesPlayed.addAll(cards);

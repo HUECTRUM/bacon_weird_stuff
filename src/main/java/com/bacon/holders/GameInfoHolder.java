@@ -66,8 +66,8 @@ public class GameInfoHolder {
             log.info("Players not yet set");
         }
         if (beatInfoHolder != null) {
-            log.info("First player pair {} ", beatInfoHolder.firstPlayerPair);
-            log.info("Second player pair {}", beatInfoHolder.secondPlayerPair);
+            log.info("First player pair {} ", playerOne.currentBeatPair);
+            log.info("Second player pair {}", playerTwo.currentBeatPair);
         }
         log.info("Prev beat num {}", infoHelper.lastBeatNumber(this));
         log.info("----------------------------------");

@@ -63,11 +63,11 @@ public class TriggeredEffectsResolver {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
         List<CardEffect> firstPlayerEffects = concatLists(
-                holder.beatInfoHolder.firstPlayerPair.triggeredEffects(trigger),
+                holder.playerOne.currentBeatPair.triggeredEffects(trigger),
                 holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerOne), emptyList())
         );
         List<CardEffect> secondPlayerEffects = concatLists(
-                holder.beatInfoHolder.secondPlayerPair.triggeredEffects(trigger),
+                holder.playerTwo.currentBeatPair.triggeredEffects(trigger),
                 holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerTwo), emptyList())
         );
 

@@ -1,5 +1,6 @@
 package com.bacon.player;
 
+import com.bacon.attacks.AttackPair;
 import com.bacon.attacks.AttackPairBonus;
 import com.bacon.characters.Character;
 import com.bacon.gameobjects.cards.Card;
@@ -32,6 +33,8 @@ public class Player {
 
     public List<Card> discardOne;
     public List<Card> discardTwo;
+
+    public AttackPair currentBeatPair; //todo: history
 
     public Map<Integer, List<AttackPairBonus>> bonuses;
 
