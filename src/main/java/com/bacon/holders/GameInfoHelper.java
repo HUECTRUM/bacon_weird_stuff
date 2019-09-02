@@ -26,4 +26,9 @@ public class GameInfoHelper {
                 ? (randomizer.coinFlip() ? holder.playerOne : holder.playerTwo)
                 : holder.prevBeats.get(holder.prevBeats.size() - 1).activePlayer;
     }
+
+    public Player previousBeatReactive(GameInfoHolder holder) {
+        Player active = previousBeatActive(holder);
+        return active.equals(holder.playerOne) ? holder.playerTwo : holder.playerOne;
+    }
 }
