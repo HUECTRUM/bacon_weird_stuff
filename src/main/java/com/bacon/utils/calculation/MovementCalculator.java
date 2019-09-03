@@ -38,7 +38,7 @@ public class MovementCalculator {
     }
 
     public static Direction pullDirection(GameInfoHolder holder, Player player) {
-        return pullDirection(holder, player);
+        return retreatDirection(holder, player);
     }
 
     private static int findIndex(GameInfoHolder holder, IntPredicate filterFunc) {

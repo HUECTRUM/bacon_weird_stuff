@@ -12,7 +12,6 @@ import java.util.Map;
 
 import static com.bacon.gameobjects.enums.CardType.BASE;
 import static com.bacon.gameobjects.triggers.EffectTrigger.*;
-import static com.bacon.utils.CardInitUtils.EMPTY_EFFECTS_MAP;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
@@ -20,7 +19,7 @@ import static java.util.Collections.singletonList;
 import static java.util.Map.of;
 
 public class Grasp {
-    private static Map<EffectTrigger, List<CardEffect>> DRIVE_EFFECTS_MAP = new HashMap<>(of(
+    private static Map<EffectTrigger, List<CardEffect>> GRASP_EFFECTS_MAP = new HashMap<>(of(
             REVEAL, new ArrayList<CardEffect>(EMPTY_LIST),
             SOB, new ArrayList<CardEffect>(EMPTY_LIST),
             BA, new ArrayList<CardEffect>(EMPTY_LIST),
@@ -41,6 +40,6 @@ public class Grasp {
             .priority(valueOf(5))
             .stunGuard(0)
             .soak(0)
-            .cardEffects(EMPTY_EFFECTS_MAP)
+            .cardEffects(GRASP_EFFECTS_MAP)
             .build();
 }
