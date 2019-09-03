@@ -11,6 +11,10 @@ public class GameInfoHelper {
     private Randomizer randomizer;
 
     //todo: inject holder
+    public Player opponent(GameInfoHolder holder, Player player) {
+        return player.equals(holder.playerOne) ? holder.playerTwo : holder.playerOne;
+    }
+
     public int lastBeatNumber(GameInfoHolder holder) {
         return holder.prevBeats.isEmpty()
                 ? 0

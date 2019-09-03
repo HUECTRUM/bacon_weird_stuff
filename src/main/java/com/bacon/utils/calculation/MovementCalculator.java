@@ -33,6 +33,14 @@ public class MovementCalculator {
         return advanceDirection(holder, player) == LEFT ? RIGHT : LEFT;
     }
 
+    public static Direction pushDirection(GameInfoHolder holder, Player player) {
+        return advanceDirection(holder, player);
+    }
+
+    public static Direction pullDirection(GameInfoHolder holder, Player player) {
+        return pullDirection(holder, player);
+    }
+
     private static int findIndex(GameInfoHolder holder, IntPredicate filterFunc) {
         return IntStream.range(0, holder.field.spaces.size())
                 .filter(filterFunc)
@@ -42,6 +50,7 @@ public class MovementCalculator {
     }
 
     //choices selection
+    //todo: code duplication
     public static int maxAvailableAdvance(GameInfoHolder holder, Player player) {
         int index = findPlayerIndex(holder, player);
         Direction advanceDirection = advanceDirection(holder, player);
@@ -52,5 +61,17 @@ public class MovementCalculator {
         int index = findPlayerIndex(holder, player);
         Direction retreatDirection = retreatDirection(holder, player);
         return retreatDirection == LEFT ? index : 6 - index;
+    }
+
+    public static int maxAvailablePush(GameInfoHolder holder, Player player) {
+        int index = findOpponentIndex(holder, player);
+        Direction direction = pushDirection(holder, player);
+        return direction == LEFT ? index : 6 - index;
+    }
+
+    public static int maxAvailablePull(GameInfoHolder holder, Player player) {
+        int index = findOpponentIndex(holder, player);
+        Direction direction = pullDirection(holder, player);
+        return direction == LEFT ? index - 1 : 5 - index;
     }
 }
