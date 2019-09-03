@@ -26,7 +26,7 @@ public class AnteResolver {
         int choice = selector.anteChoice(holder, antePlayer, choices);
         log.info("Ante for player {} choice ind {} from {}", antePlayer.playerId, choice, choices);
 
-        antePlayer.character.ua().applySelection(holder, choice);
+        antePlayer.character.ua().applySelection(holder, antePlayer, choice);
         return EMPTY;
     }
 }

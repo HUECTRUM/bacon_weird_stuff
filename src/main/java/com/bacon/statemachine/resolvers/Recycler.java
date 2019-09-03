@@ -17,6 +17,8 @@ public class Recycler {
 
         //todo: a separate state for game "cleaning" itself up after a beat?
         gameInfoHolder.prevBeats.add(gameInfoHolder.beatInfoHolder);
+        gameInfoHolder.playerOne.damageDealt = gameInfoHolder.playerOne.damageTaken =
+                gameInfoHolder.playerTwo.damageDealt = gameInfoHolder.playerTwo.damageTaken = 0;
         return EMPTY;
     }
 }

@@ -28,6 +28,7 @@ public class DamageResolver {
 
         int damageDealt = max(attackPair.power(damageDealing, beatNum) - defendintPair.soak(damageTaking, beatNum), 0);
         damageTaking.health -= damageDealt;
+        damageDealing.damageDealt = damageTaking.damageTaken = damageDealt;
 
         setStunConditions(holder.beatInfoHolder, damageDealt, defendintPair, damageTaking, active, beatNum);
         log.info("Attack hit. New health for damage taking player {} is {}",

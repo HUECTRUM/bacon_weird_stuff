@@ -34,7 +34,10 @@ public class Player {
     public List<Card> discardOne;
     public List<Card> discardTwo;
 
-    public AttackPair currentBeatPair; //todo: history
+    //todo: history & separate class
+    public AttackPair currentBeatPair;
+    public int damageDealt;
+    public int damageTaken;
 
     public Map<Integer, List<AttackPairBonus>> bonuses;
 
