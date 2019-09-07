@@ -14,10 +14,12 @@ import static java.util.Arrays.stream;
 import static java.util.Map.of;
 
 public class CardInitUtils {
+    //todo: init from trigger values
     public static Map<EffectTrigger, List<CardEffect>> EMPTY_EFFECTS_MAP = new HashMap<>(of(
             REVEAL, new ArrayList<>(),
             SOB, new ArrayList<>(),
             BA, new ArrayList<>(),
+            BEFORE_RANGE_CHECK, new ArrayList<>(),
             OH, new ArrayList<>(),
             OD, new ArrayList<>(),
             AA, new ArrayList<>(),
