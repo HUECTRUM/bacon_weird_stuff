@@ -26,7 +26,7 @@ public class Reaver {
     public static final Card REAVER = Card
             .builder()
             .cardType(STYLE)
-            .name("Unleashed")
+            .name("Reaver")
             .minRange(0)
             .maxRange(1)
             .power(0)

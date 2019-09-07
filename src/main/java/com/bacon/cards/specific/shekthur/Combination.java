@@ -23,7 +23,7 @@ public class Combination {
             triggeredEffect(BEFORE_DAMAGE, new CominationISoak())
     );
 
-    public static final Card JUGULAR = Card
+    public static final Card COMBINATION = Card
             .builder()
             .cardType(STYLE)
             .name("Combination")
