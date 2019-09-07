@@ -1,6 +1,7 @@
 package com.bacon.statemachine.resolvers;
 
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import org.springframework.stereotype.Component;
 
@@ -12,22 +13,15 @@ import static com.bacon.utils.FieldUtils.playerDist;
 public class RangeChecker {
     public StateTransitionCondition checkRange(GameInfoHolder holder, boolean active) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
-        if (active) {
-            holder.beatInfoHolder.activePlayerHit &= checkDist(
-                    holder.beatInfoHolder.activePlayerPair.minRange(holder.beatInfoHolder.activePlayer, beatNum),
-                    holder.beatInfoHolder.activePlayerPair.maxRange(holder.beatInfoHolder.activePlayer, beatNum),
-                    holder
-            );
-        } else {
-            holder.beatInfoHolder.reactivePlayerHit &= checkDist(
-                    holder.beatInfoHolder.reactivePlayerPair.minRange(holder.beatInfoHolder.reactivePlayer, beatNum),
-                    holder.beatInfoHolder.reactivePlayerPair.maxRange(holder.beatInfoHolder.reactivePlayer, beatNum),
-                    holder
-            );
-        }
+        Player player = active ? holder.beatInfoHolder.activePlayer : holder.beatInfoHolder.reactivePlayer;
 
-        boolean hit = active ? holder.beatInfoHolder.activePlayerHit : holder.beatInfoHolder.reactivePlayerHit;
-        return hit ? EMPTY : MISS;
+        player.beatHolder.attackHit &= checkDist(
+                player.beatHolder.currentBeatPair.minRange(player, beatNum),
+                player.beatHolder.currentBeatPair.maxRange(player, beatNum),
+                holder
+        );
+
+        return player.beatHolder.attackHit ? EMPTY : MISS;
     }
 
     private boolean checkDist(Integer minRange, Integer maxRange, GameInfoHolder holder) {

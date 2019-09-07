@@ -23,10 +23,15 @@ public class AnteResolver {
                 ? holder.infoHelper.previousBeatActive(holder) : holder.infoHelper.previousBeatReactive(holder);
 
         List<?> choices = antePlayer.character.ua().anteSelections(holder);
-        int choice = selector.anteChoice(holder, antePlayer, choices);
+
+        if (choices.size() == 0) {
+            return EMPTY;
+        }
+
+        int choice = choices.size() > 1 ? selector.anteChoice(holder, antePlayer, choices) : 0;
         log.info("Ante for player {} choice ind {} from {}", antePlayer.playerId, choice, choices);
 
-        antePlayer.character.ua().applySelection(holder, choice);
+        antePlayer.character.ua().applySelection(holder, antePlayer, choice);
         return EMPTY;
     }
 }

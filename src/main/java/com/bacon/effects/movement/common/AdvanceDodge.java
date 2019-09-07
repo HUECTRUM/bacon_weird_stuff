@@ -52,10 +52,6 @@ public class AdvanceDodge implements CardEffect {
     }
 
     private void dodgeProc(Player player, GameInfoHolder gameInfoHolder) {
-        if (!player.equals(gameInfoHolder.beatInfoHolder.reactivePlayer)) {
-            gameInfoHolder.beatInfoHolder.reactivePlayerHit = false;
-        } else {
-            gameInfoHolder.beatInfoHolder.activePlayerHit = false;
-        }
+        gameInfoHolder.infoHelper.opponent(gameInfoHolder, player).beatHolder.attackHit = false;
     }
 }

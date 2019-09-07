@@ -63,11 +63,11 @@ public class TriggeredEffectsResolver {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
         List<CardEffect> firstPlayerEffects = concatLists(
-                holder.playerOne.currentBeatPair.triggeredEffects(trigger),
+                holder.playerOne.beatHolder.currentBeatPair.triggeredEffects(trigger),
                 holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerOne), emptyList())
         );
         List<CardEffect> secondPlayerEffects = concatLists(
-                holder.playerTwo.currentBeatPair.triggeredEffects(trigger),
+                holder.playerTwo.beatHolder.currentBeatPair.triggeredEffects(trigger),
                 holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, holder.playerTwo), emptyList())
         );
 
@@ -81,7 +81,9 @@ public class TriggeredEffectsResolver {
         log.info("Effect choices available for effect {}: {}", effect, choices);
 
         if (!choices.isEmpty()) {
-            int index = choiceSelector.choose(holder, player, effect, choices);
+            //do not use selectors in case there are no choices
+            int index = choices.size() == 1
+                    ? 0 :choiceSelector.choose(holder, player, effect, choices);
             effect.apply(player, holder, index);
         }
     }

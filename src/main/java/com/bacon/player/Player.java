@@ -1,7 +1,7 @@
 package com.bacon.player;
 
-import com.bacon.attacks.AttackPair;
 import com.bacon.attacks.AttackPairBonus;
+import com.bacon.attacks.AttackPairBonusType;
 import com.bacon.characters.Character;
 import com.bacon.gameobjects.cards.Card;
 import lombok.AllArgsConstructor;
@@ -15,8 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.bacon.utils.StreamUtils.count;
 import static com.bacon.utils.StreamUtils.filterList;
-import static java.util.Collections.EMPTY_LIST;
+import static java.util.Collections.singletonList;
 
 @Data
 @AllArgsConstructor
@@ -34,9 +35,17 @@ public class Player {
     public List<Card> discardOne;
     public List<Card> discardTwo;
 
-    public AttackPair currentBeatPair; //todo: history
+    public PlayerBeatHolder beatHolder;
+    public List<PlayerBeatHolder> prevBeats;
 
     public Map<Integer, List<AttackPairBonus>> bonuses;
+
+    public boolean hasBonus(int beatNumber, AttackPairBonusType type) {
+        return count(
+                bonuses.getOrDefault(beatNumber, new ArrayList<>()),
+                b -> b.type == type
+        ) > 0;
+    }
 
     public List<Card> availableBases() {
         return filterOutDiscards(character.basesKit());
@@ -58,7 +67,7 @@ public class Player {
     }
 
     public void attachBonus(int beatNum, AttackPairBonus bonus) {
-        bonuses.putIfAbsent(beatNum, EMPTY_LIST);
+        bonuses.putIfAbsent(beatNum, new ArrayList<>());
         bonuses.get(beatNum).add(bonus);
     }
 
@@ -68,9 +77,11 @@ public class Player {
                 .playerId(character.displayName() + (counter++))
                 .health(20)
                 .character(character)
-                .discardOne(new ArrayList<>(EMPTY_LIST))
-                .discardTwo(new ArrayList<>(EMPTY_LIST))
+                .discardOne(new ArrayList<>())
+                .discardTwo(new ArrayList<>())
                 .bonuses(new HashMap<>())
+                .prevBeats(new ArrayList<>(singletonList(new PlayerBeatHolder())))
+                .beatHolder(new PlayerBeatHolder())
                 .build();
     }
 }

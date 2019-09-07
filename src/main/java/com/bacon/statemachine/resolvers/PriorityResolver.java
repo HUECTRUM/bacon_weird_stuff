@@ -26,25 +26,25 @@ public class PriorityResolver {
             return CLASHED_OUT;
         }
 
-        BigDecimal firstPlayerPrio = holder.playerOne.currentBeatPair.totalPriority(holder.playerOne, beatNum);
-        BigDecimal secondPlayerPrio = holder.playerTwo.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
+        BigDecimal firstPlayerPrio = holder.playerOne.beatHolder.currentBeatPair.totalPriority(holder.playerOne, beatNum);
+        BigDecimal secondPlayerPrio = holder.playerTwo.beatHolder.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
 
         boolean firstPlayerFaster = firstPlayerPrio.compareTo(secondPlayerPrio) >= 0;
         beatInfoHolder.activePlayer = firstPlayerFaster? holder.playerOne : holder.playerTwo;
         beatInfoHolder.reactivePlayer = firstPlayerFaster ? holder.playerTwo : holder.playerOne;
 
         beatInfoHolder.activePlayerPair =
-                firstPlayerFaster ? holder.playerOne.currentBeatPair : holder.playerTwo.currentBeatPair;
+                firstPlayerFaster ? holder.playerOne.beatHolder.currentBeatPair : holder.playerTwo.beatHolder.currentBeatPair;
         beatInfoHolder.reactivePlayerPair =
-                firstPlayerFaster ? holder.playerTwo.currentBeatPair : holder.playerOne.currentBeatPair;
+                firstPlayerFaster ? holder.playerTwo.beatHolder.currentBeatPair : holder.playerOne.beatHolder.currentBeatPair;
         return EMPTY;
     }
 
     private boolean resolveClashes(GameInfoHolder holder, BeatInfoHolder beatInfoHolder) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
-        BigDecimal firstPlayerPrio = holder.playerOne.currentBeatPair.totalPriority(holder.playerOne, beatNum);
-        BigDecimal secondPlayerPrio = holder.playerTwo.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
+        BigDecimal firstPlayerPrio = holder.playerOne.beatHolder.currentBeatPair.totalPriority(holder.playerOne, beatNum);
+        BigDecimal secondPlayerPrio = holder.playerTwo.beatHolder.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
 
         while (firstPlayerPrio.compareTo(secondPlayerPrio) == 0) {
             boolean clashResolved = clashResolver.resolveClash(holder);
@@ -52,8 +52,8 @@ public class PriorityResolver {
                 return false;
             }
 
-            firstPlayerPrio = holder.playerOne.currentBeatPair.totalPriority(holder.playerOne, beatNum);
-            secondPlayerPrio = holder.playerTwo.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
+            firstPlayerPrio = holder.playerOne.beatHolder.currentBeatPair.totalPriority(holder.playerOne, beatNum);
+            secondPlayerPrio = holder.playerTwo.beatHolder.currentBeatPair.totalPriority(holder.playerTwo, beatNum);
         }
         return true;
     }

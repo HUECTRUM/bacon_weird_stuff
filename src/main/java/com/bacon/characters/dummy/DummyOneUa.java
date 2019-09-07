@@ -2,6 +2,7 @@ package com.bacon.characters.dummy;
 
 import com.bacon.characters.UniqueAbility;
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.player.Player;
 
 import java.util.List;
 
@@ -14,7 +15,12 @@ public class DummyOneUa implements UniqueAbility {
     }
 
     @Override
-    public void applySelection(GameInfoHolder holder, int index) {
+    public void applySelection(GameInfoHolder holder, Player player, int index) {
 
+    }
+
+    @Override
+    public String toString() {
+        return "DummyOneUa{}";
     }
 }

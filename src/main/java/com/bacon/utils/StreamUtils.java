@@ -18,6 +18,10 @@ public class StreamUtils {
         return list.stream().filter(filterFunction).collect(toList());
     }
 
+    public static <T> long count(List<T> list, Predicate<? super T> filterFunction) {
+        return list.stream().filter(filterFunction).count();
+    }
+
     public static <T> List<T> concatLists(List<T> firstList, List<T> secondList) {
         return concat(firstList.stream(), secondList.stream()).collect(toList());
     }
