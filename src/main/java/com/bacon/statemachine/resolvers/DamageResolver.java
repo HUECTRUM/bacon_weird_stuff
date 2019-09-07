@@ -2,7 +2,6 @@ package com.bacon.statemachine.resolvers;
 
 import com.bacon.attacks.AttackPair;
 import com.bacon.holders.GameInfoHolder;
-import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +20,16 @@ public class DamageResolver {
 
         AttackPair attackPair = active
                 ? holder.beatInfoHolder.activePlayerPair : holder.beatInfoHolder.reactivePlayerPair;
-        AttackPair defendintPair = active
+        AttackPair defendingPair = active
                 ? holder.beatInfoHolder.reactivePlayerPair : holder.beatInfoHolder.activePlayerPair;
         Player damageTaking = damageTakingPlayer(holder, active);
         Player damageDealing = damageDealingPlayer(holder, active);
 
-        int damageDealt = max(attackPair.power(damageDealing, beatNum) - defendintPair.soak(damageTaking, beatNum), 0);
+        int damageDealt = max(attackPair.power(damageDealing, beatNum) - defendingPair.soak(damageTaking, beatNum), 0);
         damageTaking.health -= damageDealt;
-        damageDealing.damageDealt = damageTaking.damageTaken = damageDealt;
+        damageDealing.beatHolder.damageDealt = damageTaking.beatHolder.damageTaken = damageDealt;
 
-        setStunConditions(holder.beatInfoHolder, damageDealt, defendintPair, damageTaking, active, beatNum);
+        setStunConditions(damageDealt, defendingPair, damageTaking, beatNum);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
 
@@ -53,17 +52,7 @@ public class DamageResolver {
                 : (firstPlayerActive ? holder.playerTwo : holder.playerOne);
     }
 
-    private void setStunConditions(
-            BeatInfoHolder holder, int damageDealt, AttackPair defendingPair,
-            Player defendingPlayer, boolean active, int beatNum) {
-        if (damageDealt <= defendingPair.stunGuard(defendingPlayer, beatNum)) {
-            return;
-        }
-
-        if (active) {
-            holder.reactivePlayerStunned = true;
-        } else {
-            holder.activePlayerStunned = true;
-        }
+    private void setStunConditions(int damageDealt, AttackPair defendingPair, Player defendingPlayer, int beatNum) {
+        defendingPlayer.beatHolder.stunned = damageDealt > defendingPair.stunGuard(defendingPlayer, beatNum);
     }
 }

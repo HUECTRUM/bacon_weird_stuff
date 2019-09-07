@@ -16,17 +16,11 @@ public class BeatInfoHolder {
     public Player activePlayer;
     public Player reactivePlayer;
 
-    //hit & damage conditions
-    public boolean activePlayerHit = true;
-    public boolean reactivePlayerHit = true;
-
-    public boolean activePlayerStunned = false;
-    public boolean reactivePlayerStunned = false;
-
     //just for convenience: avoids comparing activePlayer to playerOne all the time
     public AttackPair activePlayerPair;
     public AttackPair reactivePlayerPair;
 
+    //todo: move to Player?
     public ClashInfoHolder clashInfoHolder = new ClashInfoHolder();
 
     //todo: move to Player?

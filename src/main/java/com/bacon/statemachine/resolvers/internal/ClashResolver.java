@@ -23,8 +23,8 @@ public class ClashResolver {
     public boolean resolveClash(GameInfoHolder holder) {
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
         log.info("A clash has occurred. Pairs p1 {} p2 {}",
-                mapList(holder.playerOne.currentBeatPair.cards, card -> card.name),
-                mapList(holder.playerTwo.currentBeatPair.cards, card -> card.name)
+                mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
+                mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
 
         Card firstPlayerBase = clashBaseSelector.selectBase(holder.playerOne, holder);
@@ -34,18 +34,18 @@ public class ClashResolver {
             return false;
         }
 
-        Card firstPlayerStyle = getFirst(filterList(holder.playerOne.currentBeatPair.cards, card -> card.cardType == STYLE));
-        Card secondPlayerStyle = getFirst(filterList(holder.playerTwo.currentBeatPair.cards, card -> card.cardType == STYLE));
+        Card firstPlayerStyle = getFirst(filterList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.cardType == STYLE));
+        Card secondPlayerStyle = getFirst(filterList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.cardType == STYLE));
 
-        holder.playerOne.currentBeatPair = fromCards(asList(firstPlayerStyle, firstPlayerBase));
-        holder.playerTwo.currentBeatPair = fromCards(asList(secondPlayerStyle, secondPlayerBase));
+        holder.playerOne.beatHolder.currentBeatPair = fromCards(asList(firstPlayerStyle, firstPlayerBase));
+        holder.playerTwo.beatHolder.currentBeatPair = fromCards(asList(secondPlayerStyle, secondPlayerBase));
 
         beatInfoHolder.cardsPlayed(of(firstPlayerBase), true);
         beatInfoHolder.cardsPlayed(of(secondPlayerBase), false);
 
         log.info("Bases changed after clash. Player one pair {} player two pair {}",
-                mapList(holder.playerOne.currentBeatPair.cards, card -> card.name),
-                mapList(holder.playerTwo.currentBeatPair.cards, card -> card.name)
+                mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
+                mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
         return true;
     }

@@ -19,6 +19,6 @@ public enum ShekthurUaRegain implements CardEffect {
     @Override
     public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
         ShekthurUa ua = (ShekthurUa) player.character.ua();
-        ua.gainTokens(player.damageDealt);
+        ua.gainTokens(player.beatHolder.damageDealt);
     }
 }

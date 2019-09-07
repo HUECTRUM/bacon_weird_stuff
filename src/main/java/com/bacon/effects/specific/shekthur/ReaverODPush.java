@@ -20,7 +20,7 @@ public class ReaverODPush implements CardEffect {
 
     @Override
     public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
-        int spaces = min(player.damageDealt, maxAvailablePush(gameInfoHolder, player));
+        int spaces = min(player.beatHolder.damageDealt, maxAvailablePush(gameInfoHolder, player));
         Player movePlayer = gameInfoHolder.infoHelper.opponent(gameInfoHolder, player);
 
         move(gameInfoHolder, movePlayer, pushDirection(gameInfoHolder, player), spaces);

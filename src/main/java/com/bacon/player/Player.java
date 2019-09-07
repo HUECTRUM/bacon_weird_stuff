@@ -1,6 +1,5 @@
 package com.bacon.player;
 
-import com.bacon.attacks.AttackPair;
 import com.bacon.attacks.AttackPairBonus;
 import com.bacon.characters.Character;
 import com.bacon.gameobjects.cards.Card;
@@ -35,9 +34,8 @@ public class Player {
     public List<Card> discardTwo;
 
     //todo: history & separate class
-    public AttackPair currentBeatPair;
-    public int damageDealt;
-    public int damageTaken;
+    public PlayerBeatHolder beatHolder;
+    public List<PlayerBeatHolder> prevBeats;
 
     public Map<Integer, List<AttackPairBonus>> bonuses;
 
@@ -71,9 +69,10 @@ public class Player {
                 .playerId(character.displayName() + (counter++))
                 .health(20)
                 .character(character)
-                .discardOne(new ArrayList<>(EMPTY_LIST))
-                .discardTwo(new ArrayList<>(EMPTY_LIST))
+                .discardOne(new ArrayList<>())
+                .discardTwo(new ArrayList<>())
                 .bonuses(new HashMap<>())
+                .prevBeats(new ArrayList<>())
                 .build();
     }
 }
