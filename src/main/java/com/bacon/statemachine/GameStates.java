@@ -166,12 +166,23 @@ public enum GameStates implements GameState {
     ACTIVE_PLAYER_OH {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
+            return of(EMPTY, ACITIVE_PLAYER_BEFORE_DAMAGE);
         }
 
         @Override
         public StateTransitionCondition transition(GameInfoHolder holder) {
             return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OH, ACTIVE);
+        }
+    },
+    ACITIVE_PLAYER_BEFORE_DAMAGE {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, ACTIVE_PLAYER_DAMAGE);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.BEFORE_DAMAGE, ACTIVE);
         }
     },
     ACTIVE_PLAYER_DAMAGE {
@@ -275,12 +286,23 @@ public enum GameStates implements GameState {
     REACTIVE_PLAYER_OH {
         @Override
         public Map<StateTransitionCondition, GameState> nextStates() {
-            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
+            return of(EMPTY, REACTIVE_PLAYER_BEFORE_DAMAGE);
         }
 
         @Override
         public StateTransitionCondition transition(GameInfoHolder holder) {
             return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.OH, REACTIVE);
+        }
+    },
+    REACTIVE_PLAYER_BEFORE_DAMAGE {
+        @Override
+        public Map<StateTransitionCondition, GameState> nextStates() {
+            return of(EMPTY, REACTIVE_PLAYER_DAMAGE);
+        }
+
+        @Override
+        public StateTransitionCondition transition(GameInfoHolder holder) {
+            return holder.resolversContainer.effectsResolver.resolveEffects(holder, EffectTrigger.BEFORE_DAMAGE, REACTIVE);
         }
     },
     REACTIVE_PLAYER_DAMAGE {

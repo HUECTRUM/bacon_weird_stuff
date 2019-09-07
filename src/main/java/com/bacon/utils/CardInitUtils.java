@@ -21,6 +21,7 @@ public class CardInitUtils {
             BA, new ArrayList<>(),
             BEFORE_RANGE_CHECK, new ArrayList<>(),
             OH, new ArrayList<>(),
+            BEFORE_DAMAGE, new ArrayList<>(),
             OD, new ArrayList<>(),
             AA, new ArrayList<>(),
             EOB, new ArrayList<>()
