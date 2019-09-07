@@ -1,6 +1,6 @@
 package com.bacon.cards.specific.shekthur;
 
-import com.bacon.effects.movement.common.Advance;
+import com.bacon.effects.movement.common.Retreat;
 import com.bacon.effects.specific.shekthur.UnleashedEob;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static com.bacon.gameobjects.cards.CardTriggeredEffect.triggeredEffect;
 import static com.bacon.gameobjects.enums.CardType.STYLE;
-import static com.bacon.gameobjects.triggers.EffectTrigger.BA;
+import static com.bacon.gameobjects.triggers.EffectTrigger.AA;
 import static com.bacon.gameobjects.triggers.EffectTrigger.EOB;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
@@ -19,7 +19,7 @@ import static java.util.Arrays.asList;
 
 public class Unleashed {
     private static Map<EffectTrigger, List<CardEffect>> UNLEASHED_EFFECTS = effectsMap(
-            triggeredEffect(BA, new Advance(asList(1, 2))),
+            triggeredEffect(AA, new Retreat(asList(1, 2))),
             triggeredEffect(EOB, new UnleashedEob())
     );
 

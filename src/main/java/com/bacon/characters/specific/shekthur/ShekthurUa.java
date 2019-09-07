@@ -20,7 +20,7 @@ public class ShekthurUa implements UniqueAbility {
 
     @Override
     public List<Integer> anteSelections(GameInfoHolder holder) {
-        return range(0, tokens)
+        return range(0, tokens + 1)
                 .boxed()
                 .collect(toList());
     }

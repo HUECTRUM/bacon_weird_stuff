@@ -10,14 +10,14 @@ import java.util.Map;
 
 import static com.bacon.gameobjects.cards.CardTriggeredEffect.triggeredEffect;
 import static com.bacon.gameobjects.enums.CardType.BASE;
-import static com.bacon.gameobjects.triggers.EffectTrigger.BA;
+import static com.bacon.gameobjects.triggers.EffectTrigger.OH;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Arrays.asList;
 
 public class Grasp {
     private static Map<EffectTrigger, List<CardEffect>> GRASP_EFFECTS_MAP = effectsMap(
-            triggeredEffect(BA, new MoveOpponent(asList(-1, 1)))
+            triggeredEffect(OH, new MoveOpponent(asList(-1, 1)))
     );
 
     public static final Card GRASP = Card
