@@ -17,7 +17,6 @@ import java.util.Map;
 
 import static com.bacon.utils.StreamUtils.count;
 import static com.bacon.utils.StreamUtils.filterList;
-import static java.util.Collections.EMPTY_LIST;
 
 @Data
 @AllArgsConstructor
@@ -67,7 +66,7 @@ public class Player {
     }
 
     public void attachBonus(int beatNum, AttackPairBonus bonus) {
-        bonuses.putIfAbsent(beatNum, EMPTY_LIST);
+        bonuses.putIfAbsent(beatNum, new ArrayList<>());
         bonuses.get(beatNum).add(bonus);
     }
 
@@ -81,6 +80,7 @@ public class Player {
                 .discardTwo(new ArrayList<>())
                 .bonuses(new HashMap<>())
                 .prevBeats(new ArrayList<>())
+                .beatHolder(new PlayerBeatHolder())
                 .build();
     }
 }

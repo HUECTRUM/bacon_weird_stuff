@@ -12,6 +12,7 @@ import java.util.Map;
 import static com.bacon.gameobjects.triggers.EffectTrigger.*;
 import static java.util.Arrays.stream;
 import static java.util.Map.of;
+import static java.util.stream.Collectors.toMap;
 
 public class CardInitUtils {
     //todo: init from trigger values
@@ -28,8 +29,15 @@ public class CardInitUtils {
     ));
 
     public static Map<EffectTrigger, List<CardEffect>> effectsMap(CardTriggeredEffect ...effects) {
-        Map<EffectTrigger, List<CardEffect>> map = new HashMap<>(EMPTY_EFFECTS_MAP);
+        Map<EffectTrigger, List<CardEffect>> map = deepCopy(EMPTY_EFFECTS_MAP);
         stream(effects).forEach(e -> map.get(e.effectTrigger).add(e.cardEffect));
         return map;
+    }
+
+    private static Map<EffectTrigger, List<CardEffect>> deepCopy(Map<EffectTrigger, List<CardEffect>> map) {
+        return map
+                .entrySet()
+                .stream()
+                .collect(toMap(e -> e.getKey(), e -> new ArrayList(e.getValue())));
     }
 }

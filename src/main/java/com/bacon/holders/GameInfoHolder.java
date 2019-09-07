@@ -20,7 +20,6 @@ import java.util.Map;
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
 import static com.bacon.utils.StreamUtils.mapList;
-import static java.util.Collections.emptyList;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -56,7 +55,7 @@ public class GameInfoHolder {
     }
 
     public void addEffect(BeatTriggerKey key, CardEffect effect) {
-        additionalEffects.putIfAbsent(key, emptyList());
+        additionalEffects.putIfAbsent(key, new ArrayList<>());
         additionalEffects.get(key).add(effect);
     }
 

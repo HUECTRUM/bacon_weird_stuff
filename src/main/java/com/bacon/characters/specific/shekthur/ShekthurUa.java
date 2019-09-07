@@ -11,6 +11,7 @@ import static com.bacon.attacks.AttackPairBonusType.PRIORITY;
 import static com.bacon.gameobjects.triggers.EffectTrigger.OD;
 import static com.bacon.holders.BeatTriggerKey.trigger;
 import static java.lang.Math.min;
+import static java.math.BigDecimal.valueOf;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
@@ -32,7 +33,7 @@ public class ShekthurUa implements UniqueAbility {
 
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
-        player.attachBonus(beatNum, of(PRIORITY, tokensAnted));
+        player.attachBonus(beatNum, of(PRIORITY, valueOf(tokensAnted)));
         holder.addEffect(trigger(beatNum, OD, player), ShekthurUaRegain.EFFECT);
     }
 
