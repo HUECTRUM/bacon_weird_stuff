@@ -40,4 +40,11 @@ public class ShekthurUa implements UniqueAbility {
     public void gainTokens(int gain) {
         tokens = min(tokens + gain, 5);
     }
+
+    @Override
+    public String toString() {
+        return "ShekthurUa{" +
+                "tokens=" + tokens +
+                '}';
+    }
 }

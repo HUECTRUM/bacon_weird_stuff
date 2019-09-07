@@ -18,4 +18,9 @@ public class DummyOneUa implements UniqueAbility {
     public void applySelection(GameInfoHolder holder, Player player, int index) {
 
     }
+
+    @Override
+    public String toString() {
+        return "DummyOneUa{}";
+    }
 }

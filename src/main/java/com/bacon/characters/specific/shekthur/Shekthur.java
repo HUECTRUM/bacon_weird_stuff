@@ -16,6 +16,8 @@ import static com.google.common.collect.ImmutableList.of;
 import static java.util.Arrays.asList;
 
 public class Shekthur implements Character {
+    private UniqueAbility ua = new ShekthurUa();
+
     @Override
     public List<Card> bases() {
         return of(BRAND);
@@ -44,6 +46,6 @@ public class Shekthur implements Character {
 
     @Override
     public UniqueAbility ua() {
-        return new ShekthurUa();
+        return ua;
     }
 }

@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static com.bacon.utils.StreamUtils.count;
 import static com.bacon.utils.StreamUtils.filterList;
+import static java.util.Collections.singletonList;
 
 @Data
 @AllArgsConstructor
@@ -79,7 +80,7 @@ public class Player {
                 .discardOne(new ArrayList<>())
                 .discardTwo(new ArrayList<>())
                 .bonuses(new HashMap<>())
-                .prevBeats(new ArrayList<>())
+                .prevBeats(new ArrayList<>(singletonList(new PlayerBeatHolder())))
                 .beatHolder(new PlayerBeatHolder())
                 .build();
     }

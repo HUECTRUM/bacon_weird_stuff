@@ -20,6 +20,7 @@ import java.util.Map;
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
 import static com.bacon.utils.StreamUtils.mapList;
+import static java.util.Collections.singletonList;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -41,7 +42,8 @@ public class GameInfoHolder {
     public Map<BeatTriggerKey, List<CardEffect>> additionalEffects = new HashMap<>();
 
     public BeatInfoHolder beatInfoHolder;
-    public List<BeatInfoHolder> prevBeats = new ArrayList<>();
+    //init with a single one for beat 0
+    public List<BeatInfoHolder> prevBeats = new ArrayList<>(singletonList(new BeatInfoHolder()));
 
     public void run() {
         while (state != GAME_END) {
@@ -79,8 +81,8 @@ public class GameInfoHolder {
     }
 
     private void logPlayer(Player player, String name) {
-        log.info("Player {} id {} name {} health {}",
-                name, player.playerId, player.character.displayName(), player.health);
+        log.info("Player {} id {} name {} health {} ua {}",
+                name, player.playerId, player.character.displayName(), player.health, player.character.ua());
         log.info("Player {} d1 {} d2 {}",
                 name, mapList(player.discardOne, card -> card.name), mapList(player.discardTwo, card -> card.name));
     }
