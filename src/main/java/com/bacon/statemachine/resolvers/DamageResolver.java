@@ -7,6 +7,7 @@ import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import static com.bacon.attacks.AttackPairBonusType.*;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.PLAYER_DEAD;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
@@ -25,11 +26,12 @@ public class DamageResolver {
         Player damageTaking = damageTakingPlayer(holder, active);
         Player damageDealing = damageDealingPlayer(holder, active);
 
-        int damageDealt = max(attackPair.power(damageDealing, beatNum) - defendingPair.soak(damageTaking, beatNum), 0);
+        int effectiveSoak = damageDealing.hasBonus(beatNum, ISOAK) ? 0 : defendingPair.soak(damageTaking, beatNum);
+        int damageDealt = max(attackPair.power(damageDealing, beatNum) - effectiveSoak, 0);
         damageTaking.health -= damageDealt;
         damageDealing.beatHolder.damageDealt = damageTaking.beatHolder.damageTaken = damageDealt;
 
-        setStunConditions(damageDealt, defendingPair, damageTaking, beatNum);
+        setStunConditions(damageDealt, defendingPair, damageDealing, damageTaking, beatNum);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
 
@@ -52,7 +54,12 @@ public class DamageResolver {
                 : (firstPlayerActive ? holder.playerTwo : holder.playerOne);
     }
 
-    private void setStunConditions(int damageDealt, AttackPair defendingPair, Player defendingPlayer, int beatNum) {
-        defendingPlayer.beatHolder.stunned = damageDealt > defendingPair.stunGuard(defendingPlayer, beatNum);
+    private void setStunConditions(int damageDealt, AttackPair defendingPair, Player attackingPlayer, Player defendingPlayer, int beatNum) {
+        if (defendingPlayer.hasBonus(beatNum, SI)) {
+            return;
+        }
+
+        int effectiveSG = attackingPlayer.hasBonus(beatNum, ISG) ? 0 : defendingPair.stunGuard(defendingPlayer, beatNum);
+        defendingPlayer.beatHolder.stunned |= damageDealt > effectiveSG;
     }
 }

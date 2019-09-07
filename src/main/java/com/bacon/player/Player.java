@@ -1,6 +1,7 @@
 package com.bacon.player;
 
 import com.bacon.attacks.AttackPairBonus;
+import com.bacon.attacks.AttackPairBonusType;
 import com.bacon.characters.Character;
 import com.bacon.gameobjects.cards.Card;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.bacon.utils.StreamUtils.count;
 import static com.bacon.utils.StreamUtils.filterList;
 import static java.util.Collections.EMPTY_LIST;
 
@@ -37,6 +39,13 @@ public class Player {
     public List<PlayerBeatHolder> prevBeats;
 
     public Map<Integer, List<AttackPairBonus>> bonuses;
+
+    public boolean hasBonus(int beatNumber, AttackPairBonusType type) {
+        return count(
+                bonuses.getOrDefault(beatNumber, new ArrayList<>()),
+                b -> b.type == type
+        ) > 0;
+    }
 
     public List<Card> availableBases() {
         return filterOutDiscards(character.basesKit());
