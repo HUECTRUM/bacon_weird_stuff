@@ -28,8 +28,7 @@ public class Grasp {
             AA, new ArrayList<CardEffect>(EMPTY_LIST),
             EOB, new ArrayList<CardEffect>(EMPTY_LIST)
     ));
-
-    //TODO: EFFECTS
+    
     public static final Card GRASP = Card
             .builder()
             .cardType(BASE)

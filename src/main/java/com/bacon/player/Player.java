@@ -33,7 +33,6 @@ public class Player {
     public List<Card> discardOne;
     public List<Card> discardTwo;
 
-    //todo: history & separate class
     public PlayerBeatHolder beatHolder;
     public List<PlayerBeatHolder> prevBeats;
 
