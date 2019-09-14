@@ -2,21 +2,23 @@ package com.bacon.statemachine.resolvers;
 
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
+import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.player.PlayerBeatHolder;
 import com.bacon.selectors.pairs.PairSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static com.bacon.utils.StreamUtils.mapList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
 @Slf4j
+@Scope(value = SCOPE_PROTOTYPE)
 public class PairSelectionResolver {
-    @Autowired
-    private PairSelector pairSelector;
+    public SelectorHolder<PairSelector> pairSelectors = new SelectorHolder<>();
 
     public StateTransitionCondition selectPairs(GameInfoHolder gameInfoHolder) {
         //TODO: beat internal start state
@@ -27,8 +29,10 @@ public class PairSelectionResolver {
         gameInfoHolder.beatInfoHolder.beatNumber = gameInfoHolder.infoHelper.lastBeatNumber(gameInfoHolder) + 1;
         BeatInfoHolder beatInfoHolder = gameInfoHolder.beatInfoHolder;
 
-        gameInfoHolder.playerOne.beatHolder.currentBeatPair = pairSelector.selectPair(gameInfoHolder.playerOne);
-        gameInfoHolder.playerTwo.beatHolder.currentBeatPair = pairSelector.selectPair(gameInfoHolder.playerTwo);
+        gameInfoHolder.playerOne.beatHolder.currentBeatPair =
+                pairSelectors.get(gameInfoHolder.playerOne, gameInfoHolder).selectPair(gameInfoHolder.playerOne);
+        gameInfoHolder.playerTwo.beatHolder.currentBeatPair =
+                pairSelectors.get(gameInfoHolder.playerTwo, gameInfoHolder).selectPair(gameInfoHolder.playerTwo);
 
         beatInfoHolder.cardsPlayed(gameInfoHolder.playerOne.beatHolder.currentBeatPair.cards, true);
         beatInfoHolder.cardsPlayed(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards, false);

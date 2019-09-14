@@ -15,7 +15,7 @@ import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPT
 @Component
 public class PriorityResolver {
     @Autowired
-    private ClashResolver clashResolver;
+    public ClashResolver clashResolver;
 
     public StateTransitionCondition resolvePriority(GameInfoHolder holder) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);

@@ -3,9 +3,10 @@ package com.bacon.statemachine.resolvers.internal;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
+import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.selectors.clash.ClashBaseSelector;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import static com.bacon.attacks.AttackPair.fromCards;
@@ -13,12 +14,13 @@ import static com.bacon.gameobjects.enums.CardType.STYLE;
 import static com.bacon.utils.StreamUtils.*;
 import static java.util.Arrays.asList;
 import static java.util.List.of;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
 @Slf4j
+@Scope(value = SCOPE_PROTOTYPE)
 public class ClashResolver {
-    @Autowired
-    private ClashBaseSelector clashBaseSelector;
+    public SelectorHolder<ClashBaseSelector> clashBaseSelectors = new SelectorHolder<>();
 
     public boolean resolveClash(GameInfoHolder holder) {
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
@@ -27,8 +29,8 @@ public class ClashResolver {
                 mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
 
-        Card firstPlayerBase = clashBaseSelector.selectBase(holder.playerOne, holder);
-        Card secondPlayerBase = clashBaseSelector.selectBase(holder.playerTwo, holder);
+        Card firstPlayerBase = clashBaseSelectors.get(holder.playerOne, holder).selectBase(holder.playerOne, holder);
+        Card secondPlayerBase = clashBaseSelectors.get(holder.playerTwo, holder).selectBase(holder.playerTwo, holder);
 
         if (firstPlayerBase == null || secondPlayerBase == null) {
             return false;
