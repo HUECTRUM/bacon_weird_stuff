@@ -8,21 +8,24 @@ import com.bacon.selectors.choices.ChoiceSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.bacon.holders.BeatTriggerKey.trigger;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static com.bacon.utils.StreamUtils.concatLists;
 import static java.util.Collections.emptyList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
 @Slf4j
+@Scope(value = SCOPE_PROTOTYPE)
 public class TriggeredEffectsResolver {
-    @Autowired
-    private ChoiceSelector choiceSelector;
+    public Map<Player, ChoiceSelector> choiceSelectors = new HashMap<>();
 
     public StateTransitionCondition resolveEffects(GameInfoHolder holder, EffectTrigger trigger, EffectResolveMode mode) {
         switch (mode) {
@@ -83,7 +86,7 @@ public class TriggeredEffectsResolver {
         if (!choices.isEmpty()) {
             //do not use selectors in case there are no choices
             int index = choices.size() == 1
-                    ? 0 :choiceSelector.choose(holder, player, effect, choices);
+                    ? 0 : choiceSelectors.get(player).choose(holder, player, effect, choices);
             effect.apply(player, holder, index);
         }
     }
