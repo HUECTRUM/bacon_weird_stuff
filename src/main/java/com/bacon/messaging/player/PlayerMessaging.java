@@ -1,5 +1,6 @@
 package com.bacon.messaging.player;
 
+import com.bacon.messaging.player.messageparser.ParsedState;
 import com.bacon.messaging.player.selectors.MessagingSelectorContainer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,12 @@ public class PlayerMessaging {
     private MessagingState state;
     private Object value;
 
-    private BlockingQueue<String> messageQueue = new ArrayBlockingQueue<>(1000);
+    public BlockingQueue<String> messageQueue = new ArrayBlockingQueue<>(1000);
 
     @SneakyThrows
     public PlayerMessaging() {
         selectorContainer = new MessagingSelectorContainer(this);
+        MessageHub.INSTANCE.register(this);
         threadQueueJob();
     }
 
@@ -29,30 +31,30 @@ public class PlayerMessaging {
                 .start();
     }
 
-
+    @SneakyThrows
     private void startQueueJob() {
         while (true) {
             log.info("Waiting for a message");
-            try {
-                processMsg(messageQueue.take());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            processMsg(messageQueue.take());
         }
     }
 
     @SneakyThrows
-    public <T> T await(MessagingState newState) {
+    public synchronized  <T> T await(MessagingState newState) {
         state = newState;
-        value.wait();
+        wait();
         return (T) value;
     }
 
-    private void processMsg(String msg) {
+    private synchronized void processMsg(String msg) {
         if (state == null || state == NORMAL) {
             return;
         }
-        value = state.messageParser.parse(msg);
-        value.notifyAll();
+
+        ParsedState parsed = state.messageParser.parse(msg);
+        if (parsed.parsed) {
+            value = parsed.value;
+            notifyAll();
+        }
     }
 }

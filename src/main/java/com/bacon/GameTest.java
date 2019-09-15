@@ -1,5 +1,6 @@
 package com.bacon;
 
+import com.bacon.ioc.MessagingPlayerMode;
 import com.bacon.ioc.RandomPlayerMode;
 import com.bacon.service.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +16,11 @@ public class GameTest {
    private GameService gameService;
    @Autowired
    private RandomPlayerMode randomMode;
+   @Autowired
+   private MessagingPlayerMode messagingPlayerMode;
 
     @EventListener(ApplicationReadyEvent.class)
     public void startGame() {
-        gameService.createGame(randomMode, randomMode).run();
+        gameService.createGame(messagingPlayerMode, randomMode).run();
     }
 }

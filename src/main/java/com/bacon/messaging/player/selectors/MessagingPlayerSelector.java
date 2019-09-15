@@ -6,6 +6,7 @@ import com.bacon.selectors.player.PlayerSelector;
 import lombok.AllArgsConstructor;
 
 import static com.bacon.messaging.player.MessagingState.AWAIT_PLAYER;
+import static com.bacon.player.Player.fromCharacter;
 
 @AllArgsConstructor
 public class MessagingPlayerSelector implements PlayerSelector {
@@ -13,6 +14,6 @@ public class MessagingPlayerSelector implements PlayerSelector {
 
     @Override
     public Player selectPlayer() {
-        return messaging.await(AWAIT_PLAYER);
+        return fromCharacter(messaging.await(AWAIT_PLAYER));
     }
 }
