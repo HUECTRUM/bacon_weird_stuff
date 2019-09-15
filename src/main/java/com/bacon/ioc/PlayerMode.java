@@ -8,8 +8,10 @@ import com.bacon.selectors.discards.DiscardSelector;
 import com.bacon.selectors.pairs.PairSelector;
 import com.bacon.selectors.player.PlayerSelector;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class PlayerMode {
     public ClashBaseSelector clashBaseSelector;
     public AnteSelector anteSelector;

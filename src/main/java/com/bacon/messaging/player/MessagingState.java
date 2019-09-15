@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum MessagingState {
+    NORMAL(null),
     AWAIT_CLASH(new BaseParser()),
     AWAIT_ANTE(new IntegerParser()),
     AWAIT_PLAYER(new CharacterParser()),
