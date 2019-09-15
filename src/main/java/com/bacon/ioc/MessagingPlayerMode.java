@@ -1,19 +1,18 @@
 package com.bacon.ioc;
 
 import com.bacon.messaging.player.PlayerMessaging;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-public class MessagingPlayerMode extends PlayerMode {
-    @Autowired
-    private ApplicationContext context;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
+public class MessagingPlayerMode extends PlayerMode {
     public MessagingPlayerMode() {
         super();
 
-        PlayerMessaging messaging = context.getBean(PlayerMessaging.class);
+        PlayerMessaging messaging = new PlayerMessaging();
         super.clashBaseSelector = messaging.selectorContainer.clashSelector;
         super.anteSelector = messaging.selectorContainer.anteSelector;
         super.playerSelector = messaging.selectorContainer.playerSelector;
