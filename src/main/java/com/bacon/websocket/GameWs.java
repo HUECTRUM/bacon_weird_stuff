@@ -1,6 +1,5 @@
 package com.bacon.websocket;
 
-import com.bacon.configuration.WebsocketConfigurator;
 import com.bacon.messaging.player.MessageHub;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 
-@ServerEndpoint(value="/game", configurator = WebsocketConfigurator.class)
+@ServerEndpoint(value="/game")
 @Service
 @Slf4j
 public class GameWs {
