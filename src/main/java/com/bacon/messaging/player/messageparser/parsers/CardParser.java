@@ -12,7 +12,7 @@ public class CardParser implements MessageParser<Card> {
     public ParsedState<Card> parse(String msg) {
         return CARD_DB
                 .stream()
-                .filter(card -> card.name.equals(msg))
+                .filter(card -> card.name.toLowerCase().equals(msg.toLowerCase()))
                 .findAny()
                 .map(card -> parsed(card, true))
                 .orElse(parsed(null, false));
