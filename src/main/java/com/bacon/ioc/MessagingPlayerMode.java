@@ -10,6 +10,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(value = SCOPE_PROTOTYPE)
 public class MessagingPlayerMode extends PlayerMode {
     public MessagingPlayerMode() {
+        //todo: seems like a hack
         super();
 
         PlayerMessaging messaging = new PlayerMessaging();
