@@ -1,5 +1,7 @@
 package com.bacon.messaging.player;
 
+import com.bacon.events.EventEmitter;
+import com.bacon.messaging.player.listener.MessagingListener;
 import com.bacon.messaging.player.messageparser.ParsedState;
 import com.bacon.messaging.player.selectors.MessagingSelectorContainer;
 import lombok.SneakyThrows;
@@ -21,6 +23,7 @@ public class PlayerMessaging {
     @SneakyThrows
     public PlayerMessaging() {
         selectorContainer = new MessagingSelectorContainer(this);
+        EventEmitter.INSTANCE.register(new MessagingListener());
         MessageHub.INSTANCE.register(this);
         threadQueueJob();
     }

@@ -6,25 +6,26 @@ import org.springframework.stereotype.Service;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 
 @ServerEndpoint(value="/game")
 @Service
 @Slf4j
 public class GameWs {
     @OnOpen
-    public void onOpen(Session session) throws IOException {
+    public void onOpen(Session session) {
+        WsSender.INSTANCE.activeSession = session;
         log.info("Session opened");
     }
 
     @OnMessage
-    public void onMessage(String message, Session session) throws IOException {
+    public void onMessage(String message, Session session) {
         log.info("Received message {}", message);
         MessageHub.INSTANCE.message(message);
     }
 
     @OnClose
-    public void onClose(Session session) throws IOException {
+    public void onClose(Session session) {
+        WsSender.INSTANCE.activeSession = null;
         log.info("Session closed");
     }
 
