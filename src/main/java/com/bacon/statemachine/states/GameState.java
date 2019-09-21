@@ -1,12 +1,13 @@
 package com.bacon.statemachine.states;
 
 import com.bacon.holders.GameInfoHolder;
+import com.bacon.statemachine.GameStates;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 
 import java.util.Map;
 
 public interface GameState {
-    Map<StateTransitionCondition, GameState> nextStates();
+    Map<StateTransitionCondition, GameStates> nextStates();
 
-    StateTransitionCondition transition(GameInfoHolder holder);
+    StateTransitionCondition transitionInternal(GameInfoHolder holder);
 }

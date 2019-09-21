@@ -1,12 +1,16 @@
 package com.bacon.utils.helper;
 
 import com.bacon.effects.movement.common.Direction;
+import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.bacon.effects.movement.common.Direction.LEFT;
+import static com.bacon.events.EventType.BOARD_CHANGED;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.utils.calculation.MovementCalculator.findPlayerIndex;
+import static java.util.List.of;
 
 @Slf4j
 public class MovementHelper {
@@ -21,5 +25,7 @@ public class MovementHelper {
 
         holder.field.spaces.set(index, null);
         holder.field.spaces.set(endIndex, player.playerId);
+
+        EventEmitter.INSTANCE.emit(event(BOARD_CHANGED, of(holder.field)));
     }
 }

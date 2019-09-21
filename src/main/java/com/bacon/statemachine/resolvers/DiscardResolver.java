@@ -1,5 +1,6 @@
 package com.bacon.statemachine.resolvers;
 
+import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.ioc.selector.SelectorHolder;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.bacon.events.EventType.*;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -32,6 +35,12 @@ public class DiscardResolver {
 
         log.info("Discard state routine ended. Players one {} two {}",
                 holder.playerOne, holder.playerTwo);
+
+        EventEmitter.INSTANCE.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne));
+        EventEmitter.INSTANCE.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo));
+        EventEmitter.INSTANCE.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne));
+        EventEmitter.INSTANCE.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo));
+
         return EMPTY;
     }
 }

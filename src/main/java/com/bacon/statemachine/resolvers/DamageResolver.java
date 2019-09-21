@@ -1,13 +1,18 @@
 package com.bacon.statemachine.resolvers;
 
 import com.bacon.attacks.AttackPair;
+import com.bacon.events.EventEmitter;
+import com.bacon.events.EventType;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static com.bacon.attacks.AttackPairBonusType.*;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.PLAYER_DEAD;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
@@ -34,6 +39,11 @@ public class DamageResolver {
         setStunConditions(damageDealt, defendingPair, damageDealing, damageTaking, beatNum);
         log.info("Attack hit. New health for damage taking player {} is {}",
                 damageTaking.playerId, damageTaking.health);
+
+        EventEmitter.INSTANCE.emit(event(
+                damageTaking == holder.playerOne ? EventType.P1_DAMAGE : EventType.P2_DAMAGE,
+                List.of(damageDealt, damageTaking.health)
+        ));
 
         return damageTaking.health <= 0
                 ? PLAYER_DEAD

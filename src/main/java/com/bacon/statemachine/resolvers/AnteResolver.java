@@ -1,5 +1,6 @@
 package com.bacon.statemachine.resolvers;
 
+import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.player.Player;
@@ -11,7 +12,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.bacon.events.EventType.P1_ANTE;
+import static com.bacon.events.EventType.P2_ANTE;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.List.of;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -34,6 +39,8 @@ public class AnteResolver {
         log.info("Ante for player {} choice ind {} from {}", antePlayer.playerId, choice, choices);
 
         antePlayer.character.ua().applySelection(holder, antePlayer, choice);
+
+        EventEmitter.INSTANCE.emit(event(antePlayer == holder.playerOne ? P1_ANTE : P2_ANTE, of(choices.get(choice))));
         return EMPTY;
     }
 }

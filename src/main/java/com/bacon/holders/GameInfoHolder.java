@@ -4,9 +4,9 @@ import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.field.Field;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
+import com.bacon.statemachine.GameStates;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.ResolversContainer;
-import com.bacon.statemachine.states.GameState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -32,7 +32,7 @@ public class GameInfoHolder {
     @Autowired
     public GameInfoHelper infoHelper;
 
-    private GameState state = START;
+    private GameStates state = START;
 
     public Player playerOne;
     public Player playerTwo;
