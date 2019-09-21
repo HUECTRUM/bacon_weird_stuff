@@ -77,12 +77,23 @@ public enum GameStates implements GameState {
     REACTIVE_ANTE(null) {
         @Override
         public Map<StateTransitionCondition, GameStates> nextStates() {
-            return of(EMPTY, REVEAL);
+            return of(EMPTY, PRE_REVEAL);
         }
 
         @Override
         public StateTransitionCondition transitionInternal(GameInfoHolder holder) {
             return holder.resolversContainer.anteResolver.ante(holder, false);
+        }
+    },
+    PRE_REVEAL(null) {
+        @Override
+        public Map<StateTransitionCondition, GameStates> nextStates() {
+            return of(EMPTY, REVEAL);
+        }
+
+        @Override
+        public StateTransitionCondition transitionInternal(GameInfoHolder holder) {
+            return holder.resolversContainer.preRevealResolver.resolve(holder);
         }
     },
     REVEAL(EventType.REVEAL) {

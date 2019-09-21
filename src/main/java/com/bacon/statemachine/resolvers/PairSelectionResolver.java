@@ -11,12 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import static com.bacon.events.EventType.P1_PAIR_SELECTED;
-import static com.bacon.events.EventType.P2_PAIR_SELECTED;
+import static com.bacon.events.EventType.PAIRS_SELECTED;
 import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
 import static com.bacon.utils.StreamUtils.mapList;
-import static java.util.List.of;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -47,8 +45,7 @@ public class PairSelectionResolver {
                 mapList(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
 
-        EventEmitter.INSTANCE.emit(event(P1_PAIR_SELECTED, of(gameInfoHolder.playerOne.beatHolder.currentBeatPair.cards)));
-        EventEmitter.INSTANCE.emit(event(P2_PAIR_SELECTED, of(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards)));
+        EventEmitter.INSTANCE.emit(event(PAIRS_SELECTED, null));
         return EMPTY;
     }
 }

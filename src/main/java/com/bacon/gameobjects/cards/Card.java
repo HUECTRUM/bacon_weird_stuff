@@ -2,6 +2,8 @@ package com.bacon.gameobjects.cards;
 
 import com.bacon.gameobjects.enums.CardType;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import com.bacon.json.serializers.CardSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonSerialize(using = CardSerializer.class)
 public class Card {
     public CardType cardType;
     public String name;

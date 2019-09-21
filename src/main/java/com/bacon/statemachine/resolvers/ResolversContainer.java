@@ -29,4 +29,6 @@ public class ResolversContainer {
     public StunCheckResolver stunCheckResolver;
     @Autowired
     public AnteResolver anteResolver;
+    @Autowired
+    public PreRevealResolver preRevealResolver;
 }
