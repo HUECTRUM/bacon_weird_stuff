@@ -1,5 +1,6 @@
 package com.bacon.statemachine.resolvers;
 
+import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.selectors.player.PlayerSelector;
@@ -8,7 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static com.bacon.events.EventType.P1_CHAR_SELECTED;
+import static com.bacon.events.EventType.P2_CHAR_SELECTED;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.List.of;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
@@ -28,6 +33,12 @@ public class CharacterSelectionResolver {
         );
 
         log.info("Player select finished. Field {}", gameInfoHolder.field);
+
+        EventEmitter.INSTANCE.emit(event(P1_CHAR_SELECTED,
+                of(gameInfoHolder.playerOne.playerId, gameInfoHolder.playerOne.character.name())));
+        EventEmitter.INSTANCE.emit(event(P2_CHAR_SELECTED,
+                of(gameInfoHolder.playerTwo.playerId, gameInfoHolder.playerTwo.character.name())));
+
         return EMPTY;
     }
 }
