@@ -1,6 +1,7 @@
 package com.bacon.characters.specific.shekthur;
 
 import com.bacon.characters.UniqueAbility;
+import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 
@@ -8,15 +9,24 @@ import java.util.List;
 
 import static com.bacon.attacks.AttackPairBonus.of;
 import static com.bacon.attacks.AttackPairBonusType.PRIORITY;
+import static com.bacon.events.EventType.P1_UA_CHANGE;
+import static com.bacon.events.EventType.P2_UA_CHANGE;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.gameobjects.triggers.EffectTrigger.OD;
 import static com.bacon.holders.BeatTriggerKey.trigger;
 import static java.lang.Math.min;
 import static java.math.BigDecimal.valueOf;
+import static java.util.List.of;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class ShekthurUa implements UniqueAbility {
     public int tokens = 3;
+
+    @Override
+    public String description() {
+        return String.format("Shekthur UA %s tokens", tokens);
+    }
 
     @Override
     public List<Integer> anteSelections(GameInfoHolder holder) {
@@ -35,6 +45,8 @@ public class ShekthurUa implements UniqueAbility {
 
         player.attachBonus(beatNum, of(PRIORITY, valueOf(tokensAnted)));
         holder.addEffect(trigger(beatNum, OD, player), ShekthurUaRegain.EFFECT);
+
+        EventEmitter.INSTANCE.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
     }
 
     public void gainTokens(int gain) {

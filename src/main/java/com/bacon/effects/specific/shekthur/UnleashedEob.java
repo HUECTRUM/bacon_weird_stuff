@@ -1,6 +1,7 @@
 package com.bacon.effects.specific.shekthur;
 
 import com.bacon.characters.specific.shekthur.ShekthurUa;
+import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
@@ -9,6 +10,9 @@ import java.util.List;
 
 import static com.bacon.attacks.AttackPairBonus.of;
 import static com.bacon.attacks.AttackPairBonusType.POWER;
+import static com.bacon.events.EventType.P1_UA_CHANGE;
+import static com.bacon.events.EventType.P2_UA_CHANGE;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.utils.ChoiceUtils.NO_CHOICES;
 
 public class UnleashedEob implements CardEffect {
@@ -29,5 +33,10 @@ public class UnleashedEob implements CardEffect {
 
         ua.gainTokens(2);
         player.attachBonus(beatNum + 1, of(POWER, 1));
+
+        EventEmitter.INSTANCE.emit(event(
+                player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
+                List.of(player.character.ua().description())
+        ));
     }
 }

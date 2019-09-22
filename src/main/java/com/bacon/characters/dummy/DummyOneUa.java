@@ -10,6 +10,11 @@ import static java.util.Collections.singletonList;
 
 public class DummyOneUa implements UniqueAbility {
     @Override
+    public String description() {
+        return "Dummy one ua";
+    }
+
+    @Override
     public List<?> anteSelections(GameInfoHolder holder) {
         return singletonList("");
     }

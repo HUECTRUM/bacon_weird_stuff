@@ -1,6 +1,7 @@
 package com.bacon.effects.specific.shekthur;
 
 import com.bacon.characters.specific.shekthur.ShekthurUa;
+import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
@@ -8,8 +9,12 @@ import com.bacon.player.Player;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.bacon.events.EventType.P1_UA_CHANGE;
+import static com.bacon.events.EventType.P2_UA_CHANGE;
+import static com.bacon.events.GameEvent.event;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static java.util.List.of;
 import static java.util.stream.Collectors.toList;
 
 public class BrandAA implements CardEffect {
@@ -38,5 +43,10 @@ public class BrandAA implements CardEffect {
         ua.tokens -= tokensSpent;
         player.health = min(player.health + tokensSpent, 20);
         opponent.health = max(opponent.health - tokensSpent, 1);
+
+        EventEmitter.INSTANCE.emit(event(
+                player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
+                of(player.character.ua().description())
+        ));
     }
 }
