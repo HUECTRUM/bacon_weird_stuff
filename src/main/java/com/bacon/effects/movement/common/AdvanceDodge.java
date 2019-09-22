@@ -23,6 +23,11 @@ public class AdvanceDodge implements CardEffect {
     public List<Integer> choices;
 
     @Override
+    public String effectName() {
+        return "Dodge";
+    }
+
+    @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
         List<Integer> advances = filterList(choices, choice -> choice > 0 && abs(choice) <= advanceMax);

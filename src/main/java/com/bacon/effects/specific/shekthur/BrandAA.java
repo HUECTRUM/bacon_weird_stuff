@@ -14,6 +14,11 @@ import static java.util.stream.Collectors.toList;
 
 public class BrandAA implements CardEffect {
     @Override
+    public String effectName() {
+        return "Brand AA lifesteal";
+    }
+
+    @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         ShekthurUa ua = (ShekthurUa) player.character.ua();
         return IntStream

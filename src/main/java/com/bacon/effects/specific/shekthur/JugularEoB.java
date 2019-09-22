@@ -11,6 +11,11 @@ import static com.bacon.utils.ChoiceUtils.NO_CHOICES;
 
 public class JugularEoB implements CardEffect {
     @Override
+    public String effectName() {
+        return "Jugular EOB token gain";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }

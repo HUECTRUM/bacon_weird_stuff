@@ -14,6 +14,11 @@ import static java.math.BigDecimal.valueOf;
 
 public class CominationISoak implements CardEffect {
     @Override
+    public String effectName() {
+        return "Combination ISoak";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }

@@ -1,8 +1,11 @@
 package com.bacon.events;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public enum EventEmitter {
     INSTANCE;
 
@@ -17,6 +20,7 @@ public enum EventEmitter {
     }
 
     public void emit(GameEvent event) {
+        log.info("Emitting event {}", event);
         listeners.forEach(listener -> listener.onEvent(event));
     }
 }

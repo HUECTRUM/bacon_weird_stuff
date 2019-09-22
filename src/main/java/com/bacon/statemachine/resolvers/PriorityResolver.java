@@ -1,5 +1,7 @@
 package com.bacon.statemachine.resolvers;
 
+import com.bacon.events.EventEmitter;
+import com.bacon.events.GameEvent;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+import static com.bacon.events.EventType.PRIORITY_ACTIVE;
 import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.List.of;
 
 @Component
 public class PriorityResolver {
@@ -37,6 +41,8 @@ public class PriorityResolver {
                 firstPlayerFaster ? holder.playerOne.beatHolder.currentBeatPair : holder.playerTwo.beatHolder.currentBeatPair;
         beatInfoHolder.reactivePlayerPair =
                 firstPlayerFaster ? holder.playerTwo.beatHolder.currentBeatPair : holder.playerOne.beatHolder.currentBeatPair;
+
+        EventEmitter.INSTANCE.emit(GameEvent.event(PRIORITY_ACTIVE, of(beatInfoHolder.activePlayer.playerId)));
         return EMPTY;
     }
 

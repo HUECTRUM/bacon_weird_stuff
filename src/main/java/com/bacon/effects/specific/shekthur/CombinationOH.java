@@ -12,6 +12,11 @@ import static com.bacon.utils.ChoiceUtils.NO_CHOICES;
 
 public class CombinationOH implements CardEffect {
     @Override
+    public String effectName() {
+        return "Combination OH power bonus";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }

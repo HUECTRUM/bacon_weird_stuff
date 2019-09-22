@@ -11,6 +11,11 @@ import static com.bacon.utils.FieldUtils.playerDist;
 
 public class CombinationBeforeRangeMiss implements CardEffect {
     @Override
+    public String effectName() {
+        return "Combination 3+ range miss";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }

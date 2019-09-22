@@ -14,6 +14,11 @@ import static java.lang.Math.min;
 
 public class ReaverODPush implements CardEffect {
     @Override
+    public String effectName() {
+        return "Reaver OD push";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }

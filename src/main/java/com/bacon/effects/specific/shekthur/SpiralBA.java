@@ -19,6 +19,11 @@ public class SpiralBA implements CardEffect {
     private List<Integer> advanceValues = asList(0, 1, 2, 3);
 
     @Override
+    public String effectName() {
+        return "Spiral BA advance";
+    }
+
+    @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
         return filterList(advanceValues, value -> value <= advanceMax);

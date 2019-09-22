@@ -12,6 +12,11 @@ public enum ShekthurUaRegain implements CardEffect {
     EFFECT;
 
     @Override
+    public String effectName() {
+        return "Shekthur UA token gain";
+    }
+
+    @Override
     public List<?> choices(Player player, GameInfoHolder gameInfoHolder) {
         return NO_CHOICES;
     }
