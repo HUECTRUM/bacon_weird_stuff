@@ -8,6 +8,7 @@ import java.util.List;
 import static com.bacon.events.EventType.BOARD_CHANGED;
 import static com.bacon.events.GameEvent.event;
 import static java.util.Arrays.asList;
+import static java.util.List.of;
 
 @Component
 public class Field {
@@ -20,6 +21,6 @@ public class Field {
         spaces.set(ONE_STARTING_POSITION, playerOne);
         spaces.set(TWO_STARTING_POSITION, playerTwo);
 
-        EventEmitter.INSTANCE.emit(event(BOARD_CHANGED, spaces));
+        EventEmitter.INSTANCE.emit(event(BOARD_CHANGED, of(this)));
     }
 }
