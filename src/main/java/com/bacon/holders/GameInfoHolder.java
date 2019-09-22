@@ -45,7 +45,7 @@ public class GameInfoHolder {
     //init with a single one for beat 0
     public List<BeatInfoHolder> prevBeats = new ArrayList<>(singletonList(new BeatInfoHolder()));
 
-    public void run() {
+    public void runActions() {
         while (state != GAME_END) {
             log.info("State {}", state);
             StateTransitionCondition condition = state.transition(this);
@@ -54,6 +54,10 @@ public class GameInfoHolder {
             state = state.nextStates().get(condition);
         }
         log.info("Game ended");
+    }
+
+    public void run() {
+        new Thread(this::runActions).start();
     }
 
     public void addEffect(BeatTriggerKey key, CardEffect effect) {
