@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import static com.bacon.events.EventType.*;
 import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static java.util.List.of;
 
 @Component
 public class Recycler {
@@ -22,6 +23,9 @@ public class Recycler {
         EventEmitter.INSTANCE.emit(event(P1_D2_DISCARD_CHANGED, gameInfoHolder.playerOne.discardTwo));
         EventEmitter.INSTANCE.emit(event(P2_D1_DISCARD_CHANGED, gameInfoHolder.playerTwo.discardOne));
         EventEmitter.INSTANCE.emit(event(P2_D2_DISCARD_CHANGED, gameInfoHolder.playerTwo.discardTwo));
+
+        EventEmitter.INSTANCE.emit(event(P1_PAIR_REVEALED, of()));
+        EventEmitter.INSTANCE.emit(event(P2_PAIR_REVEALED, of()));
 
         //todo: a separate state for game "cleaning" itself up after a beat
         gameInfoHolder.prevBeats.add(gameInfoHolder.beatInfoHolder);
