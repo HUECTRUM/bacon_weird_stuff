@@ -1,5 +1,6 @@
 package com.bacon.statemachine.resolvers.internal;
 
+import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.holders.beat.BeatInfoHolder;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import static com.bacon.attacks.AttackPair.fromCards;
+import static com.bacon.events.EventType.*;
+import static com.bacon.events.GameEvent.event;
 import static com.bacon.gameobjects.enums.CardType.STYLE;
 import static com.bacon.utils.StreamUtils.*;
 import static java.util.Arrays.asList;
@@ -23,6 +26,8 @@ public class ClashResolver {
     public SelectorHolder<ClashBaseSelector> clashBaseSelectors = new SelectorHolder<>();
 
     public boolean resolveClash(GameInfoHolder holder) {
+        EventEmitter.INSTANCE.emit(event(CLASH_BASE_SELECT, null));
+
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
         log.info("A clash has occurred. Pairs p1 {} p2 {}",
                 mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
@@ -49,6 +54,9 @@ public class ClashResolver {
                 mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
                 mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
+        EventEmitter.INSTANCE.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards)));
+        EventEmitter.INSTANCE.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards)));
+
         return true;
     }
 }
