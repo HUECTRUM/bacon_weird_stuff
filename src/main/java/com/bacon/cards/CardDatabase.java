@@ -11,6 +11,12 @@ import static com.bacon.cards.common.bases.Grasp.GRASP;
 import static com.bacon.cards.common.bases.Shot.SHOT;
 import static com.bacon.cards.common.bases.Strike.STRIKE;
 import static com.bacon.cards.common.styles.Switch.SWITCH;
+import static com.bacon.cards.specific.cadenza.Battery.BATTERY;
+import static com.bacon.cards.specific.cadenza.Clockwork.CLOCKWORK;
+import static com.bacon.cards.specific.cadenza.Grapnel.GRAPNEL;
+import static com.bacon.cards.specific.cadenza.Hydraulic.HYDRAULIC;
+import static com.bacon.cards.specific.cadenza.Mechanical.MECHANICAL;
+import static com.bacon.cards.specific.cadenza.Press.PRESS;
 import static com.bacon.cards.specific.dummy.dummyone.DummyOneBase.DUMMY_ONE_BASE;
 import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleFive.DUMMY_ONE_STYLE_FIVE;
 import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleFour.DUMMY_ONE_STYLE_FOUR;
@@ -30,6 +36,7 @@ public class CardDatabase {
     public static List<Card> CARD_DB = asList(
             BURST, SHOT, STRIKE, DRIVE, GRASP, DODGE, SWITCH,
             DUMMY_ONE_STYLE_ONE, DUMMY_ONE_STYLE_TWO, DUMMY_ONE_STYLE_THREE, DUMMY_ONE_STYLE_FOUR, DUMMY_ONE_STYLE_FIVE, DUMMY_ONE_BASE,
-            UNLEASHED, REAVER, COMBINATION, JUGULAR, SPIRAL, BRAND
+            UNLEASHED, REAVER, COMBINATION, JUGULAR, SPIRAL, BRAND,
+            BATTERY, CLOCKWORK, GRAPNEL, HYDRAULIC, MECHANICAL, PRESS
     );
 }

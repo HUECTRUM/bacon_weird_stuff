@@ -28,7 +28,7 @@ public class MoveOpponent implements CardEffect {
     @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int pushMax = maxAvailablePush(gameInfoHolder, player);
-        List<Integer> pushes = filterList(choices, choice -> choice > 0 && abs(choice) <= pushMax);
+        List<Integer> pushes = filterList(choices, choice -> choice >= 0 && abs(choice) <= pushMax);
 
         int pullMax = maxAvailablePull(gameInfoHolder, player);
         List<Integer> pulls = filterList(choices, choice -> choice < 0 && abs(choice) <= pullMax);

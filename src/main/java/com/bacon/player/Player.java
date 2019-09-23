@@ -10,10 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.bacon.utils.StreamUtils.count;
 import static com.bacon.utils.StreamUtils.filterList;
@@ -69,6 +66,19 @@ public class Player {
     public void attachBonus(int beatNum, AttackPairBonus bonus) {
         bonuses.putIfAbsent(beatNum, new ArrayList<>());
         bonuses.get(beatNum).add(bonus);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return playerId.equals(player.playerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerId);
     }
 
     //constructors
