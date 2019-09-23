@@ -12,4 +12,8 @@ public class AttackPairBonus {
     public static AttackPairBonus of(AttackPairBonusType type, Object value) {
         return new AttackPairBonus(type, value);
     }
+
+    public static AttackPairBonus of(AttackPairBonusType type) {
+        return new AttackPairBonus(type, null);
+    }
 }

@@ -13,9 +13,13 @@ import java.util.List;
 
 import static com.bacon.attacks.AttackPairBonusType.*;
 import static com.bacon.events.GameEvent.event;
+import static com.bacon.gameobjects.triggers.EffectTrigger.ON_DAMAGE_DEALT;
+import static com.bacon.gameobjects.triggers.EffectTrigger.ON_DAMAGE_TAKEN;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.NO_DAMAGE;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.PLAYER_DEAD;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
+import static com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode.ACTIVE;
+import static com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode.REACTIVE;
 import static java.lang.Math.max;
 
 @Component
@@ -36,14 +40,15 @@ public class DamageResolver {
         damageTaking.health -= damageDealt;
         damageDealing.beatHolder.damageDealt = damageTaking.beatHolder.damageTaken = damageDealt;
 
-        setStunConditions(damageDealt, defendingPair, damageDealing, damageTaking, beatNum);
-        log.info("Attack hit. New health for damage taking player {} is {}",
-                damageTaking.playerId, damageTaking.health);
-
         EventEmitter.INSTANCE.emit(event(
                 damageTaking == holder.playerOne ? EventType.P1_DAMAGE : EventType.P2_DAMAGE,
                 List.of(damageDealt, damageTaking.health)
         ));
+
+        resolveEffects(damageDealing, damageTaking, damageDealt, holder);
+        setStunConditions(damageDealt, defendingPair, damageDealing, damageTaking, beatNum);
+        log.info("Attack hit. New health for damage taking player {} is {}",
+                damageTaking.playerId, damageTaking.health);
 
         return damageTaking.health <= 0
                 ? PLAYER_DEAD
@@ -71,5 +76,24 @@ public class DamageResolver {
 
         int effectiveSG = attackingPlayer.hasBonus(beatNum, ISG) ? 0 : defendingPair.stunGuard(defendingPlayer, beatNum);
         defendingPlayer.beatHolder.stunned |= damageDealt > effectiveSG;
+    }
+
+    //TODO: Separate game states
+    private void resolveEffects(Player damageDealing, Player damageTaking, int damage, GameInfoHolder holder) {
+        if (damage <= 0) {
+            return;
+        }
+
+        TriggeredEffectsResolver resolver = holder.resolversContainer.effectsResolver;
+        resolver.resolveEffects(
+                holder,
+                ON_DAMAGE_DEALT,
+                damageDealing.equals(holder.beatInfoHolder.activePlayer) ? ACTIVE : REACTIVE
+        );
+        resolver.resolveEffects(
+                holder,
+                ON_DAMAGE_TAKEN,
+                damageTaking.equals(holder.beatInfoHolder.activePlayer) ? ACTIVE : REACTIVE
+        );
     }
 }

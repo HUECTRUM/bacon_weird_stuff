@@ -16,6 +16,6 @@ public class DummyPlayerSelector implements PlayerSelector {
     public Player selectPlayer() {
         ++choiceNum;
         log.info("Player select called");
-        return choiceNum % 2 == 0 ? fromCharacter(new Shekthur()) : fromCharacter(new DummyOne());
+        return choiceNum % 2 == 1 ? fromCharacter(new Shekthur()) : fromCharacter(new DummyOne());
     }
 }
