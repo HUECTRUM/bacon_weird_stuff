@@ -6,6 +6,7 @@ import com.bacon.holders.GameInfoHolder;
 import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.player.Player;
 import com.bacon.selectors.choices.ChoiceSelector;
+import com.bacon.selectors.effectorder.EffectOrderSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.internal.helper.EffectResolveMode;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(value = SCOPE_PROTOTYPE)
 public class TriggeredEffectsResolver {
     public SelectorHolder<ChoiceSelector> choiceSelectors = new SelectorHolder<>();
+    public SelectorHolder<EffectOrderSelector> effectOrderSelectorSelectors = new SelectorHolder<>();
 
     public StateTransitionCondition resolveEffects(GameInfoHolder holder, EffectTrigger trigger, EffectResolveMode mode) {
         switch (mode) {
@@ -56,7 +58,14 @@ public class TriggeredEffectsResolver {
                 : holder.beatInfoHolder.reactivePlayerPair.triggeredEffects(trigger);
         effects.addAll(holder.additionalEffects.getOrDefault(trigger(beatNum, trigger, player), emptyList()));
 
-        effects.forEach(effect -> resolveEffect(holder, player, effect));
+        if (effects.size() > 1) {
+            effectOrderSelectorSelectors.get(player, holder)
+                    .effectOrder(player, holder, effects)
+                    .forEach(ind -> resolveEffect(holder, player, effects.get(ind)));
+        } else {
+            effects.forEach(effect -> resolveEffect(holder, player, effect));
+        }
+
         return EMPTY;
     }
 

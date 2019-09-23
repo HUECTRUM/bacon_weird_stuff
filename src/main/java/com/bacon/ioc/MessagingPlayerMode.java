@@ -20,5 +20,6 @@ public class MessagingPlayerMode extends PlayerMode {
         super.discardSelector = messaging.selectorContainer.discardSelector;
         super.pairSelector = messaging.selectorContainer.pairSelector;
         super.choiceSelector = messaging.selectorContainer.choiceSelector;
+        super.effectOrderSelector = messaging.selectorContainer.effectOrderSelector;
     }
 }

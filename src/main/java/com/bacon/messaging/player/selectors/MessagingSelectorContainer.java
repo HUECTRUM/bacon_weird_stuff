@@ -10,6 +10,7 @@ public class MessagingSelectorContainer {
     public MessagingDiscardSelector discardSelector;
     public MessagingPairSelector pairSelector;
     public MessagingPlayerSelector playerSelector;
+    public MessagingEffectOrderSelector effectOrderSelector;
 
     public MessagingSelectorContainer(PlayerMessaging playerMessaging) {
         anteSelector = new MessagingAnteSelector(playerMessaging);
@@ -18,5 +19,6 @@ public class MessagingSelectorContainer {
         discardSelector = new MessagingDiscardSelector(playerMessaging);
         pairSelector = new MessagingPairSelector(playerMessaging);
         playerSelector = new MessagingPlayerSelector(playerMessaging);
+        effectOrderSelector = new MessagingEffectOrderSelector(playerMessaging);
     }
 }

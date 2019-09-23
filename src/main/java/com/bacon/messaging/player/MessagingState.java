@@ -12,7 +12,8 @@ public enum MessagingState {
     AWAIT_PLAYER(new CharacterParser()),
     AWAIT_DISCARDS(new DiscardParser()),
     AWAIT_PAIR(new AttackPairParser()),
-    AWAIT_CHOICE(new IntegerParser());
+    AWAIT_CHOICE(new IntegerParser()),
+    AWAIT_EFFECT_ORDER(new IntegerListParser());
 
     public MessageParser messageParser;
 }

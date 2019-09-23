@@ -4,6 +4,7 @@ import com.bacon.selectors.ante.RandomAnteSelector;
 import com.bacon.selectors.choices.RandomChoiceSelector;
 import com.bacon.selectors.clash.RandomBaseSelector;
 import com.bacon.selectors.discards.RandomDiscardSelector;
+import com.bacon.selectors.effectorder.SequentialEffectOrderSelector;
 import com.bacon.selectors.pairs.RandomPairSelector;
 import com.bacon.selectors.player.DummyPlayerSelector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ public class RandomPlayerMode extends PlayerMode {
             DummyPlayerSelector playerSelector,
             RandomDiscardSelector discardSelector,
             RandomPairSelector pairSelector,
-            RandomChoiceSelector choiceSelector
+            RandomChoiceSelector choiceSelector,
+            SequentialEffectOrderSelector effectOrderSelecor
     ) {
-        super(clashBaseSelector, anteSelector, playerSelector, discardSelector, pairSelector, choiceSelector);
+        super(clashBaseSelector, anteSelector, playerSelector, discardSelector,
+                pairSelector, choiceSelector, effectOrderSelecor);
     }
 }

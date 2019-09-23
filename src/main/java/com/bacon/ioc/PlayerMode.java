@@ -5,6 +5,7 @@ import com.bacon.selectors.ante.AnteSelector;
 import com.bacon.selectors.choices.ChoiceSelector;
 import com.bacon.selectors.clash.ClashBaseSelector;
 import com.bacon.selectors.discards.DiscardSelector;
+import com.bacon.selectors.effectorder.EffectOrderSelector;
 import com.bacon.selectors.pairs.PairSelector;
 import com.bacon.selectors.player.PlayerSelector;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public abstract class PlayerMode {
     public DiscardSelector discardSelector;
     public PairSelector pairSelector;
     public ChoiceSelector choiceSelector;
+    public EffectOrderSelector effectOrderSelector;
 
     public void inject(GameInfoHolder holder, int order) {
         //todo: reflection?
@@ -34,5 +36,7 @@ public abstract class PlayerMode {
                 .pairSelectionResolver.pairSelectors.orderedModes.put(order, pairSelector);
         holder.resolversContainer
                 .effectsResolver.choiceSelectors.orderedModes.put(order, choiceSelector);
+        holder.resolversContainer
+                .effectsResolver.effectOrderSelectorSelectors.orderedModes.put(order, effectOrderSelector);
     }
 }
