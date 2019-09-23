@@ -22,7 +22,7 @@ public class Retreat implements CardEffect {
 
     @Override
     public String effectName() {
-        return "Retreat";
+        return String.format("Retreat %s", choices);
     }
 
     @Override

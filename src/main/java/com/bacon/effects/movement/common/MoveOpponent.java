@@ -22,7 +22,7 @@ public class MoveOpponent implements CardEffect {
 
     @Override
     public String effectName() {
-        return "Move opponent";
+        return String.format("Move opponent %s", choices);
     }
 
     @Override

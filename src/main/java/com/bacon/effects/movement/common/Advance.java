@@ -23,7 +23,7 @@ public class Advance implements CardEffect {
 
     @Override
     public String effectName() {
-        return "Advance";
+        return String.format("Advance %s", choices);
     }
 
     @Override
