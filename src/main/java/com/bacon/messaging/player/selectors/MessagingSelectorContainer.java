@@ -1,9 +1,11 @@
 package com.bacon.messaging.player.selectors;
 
 import com.bacon.messaging.player.PlayerMessaging;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MessagingSelectorContainer {
-    //todo: selectors list
     public MessagingAnteSelector anteSelector;
     public MessagingChoiceSelector choiceSelector;
     public MessagingClashSelector clashSelector;
@@ -12,6 +14,7 @@ public class MessagingSelectorContainer {
     public MessagingPlayerSelector playerSelector;
     public MessagingEffectOrderSelector effectOrderSelector;
 
+    @Autowired
     public MessagingSelectorContainer(PlayerMessaging playerMessaging) {
         anteSelector = new MessagingAnteSelector(playerMessaging);
         choiceSelector = new MessagingChoiceSelector(playerMessaging);

@@ -1,19 +1,16 @@
 package com.bacon.messaging.player;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-//todo: ioc container-handled
-public enum MessageHub {
-    INSTANCE;
-
-    private PlayerMessaging messaging;
-
-    public void register(PlayerMessaging playerMessaging) {
-        messaging = playerMessaging;
-    }
+@Component
+public class MessageHub {
+    @Autowired
+    private PlayerMessaging playerMessaging;
 
     @SneakyThrows
     public void message(String msg) {
-        messaging.messageQueue.put(msg);
+        playerMessaging.messageQueue.put(msg);
     }
 }

@@ -14,29 +14,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class PlayerMode {
-    public ClashBaseSelector clashBaseSelector;
-    public AnteSelector anteSelector;
-    public PlayerSelector playerSelector;
-    public DiscardSelector discardSelector;
-    public PairSelector pairSelector;
-    public ChoiceSelector choiceSelector;
-    public EffectOrderSelector effectOrderSelector;
+    abstract ClashBaseSelector clashBaseSelector();
+    abstract AnteSelector anteSelector();
+    abstract PlayerSelector playerSelector();
+    abstract DiscardSelector discardSelector();
+    abstract PairSelector pairSelector();
+    abstract ChoiceSelector choiceSelector();
+    abstract EffectOrderSelector effectOrderSelector();
 
     public void inject(GameInfoHolder holder, int order) {
         //todo: reflection?
         holder.resolversContainer.priorityResolver
-                .clashResolver.clashBaseSelectors.orderedModes.put(order, clashBaseSelector);
+                .clashResolver.clashBaseSelectors.orderedModes.put(order, clashBaseSelector());
         holder.resolversContainer
-                .anteResolver.selectors.orderedModes.put(order, anteSelector);
+                .anteResolver.selectors.orderedModes.put(order, anteSelector());
         holder.resolversContainer
-                .characterSelectionResolver.playerSelectors.orderedModes.put(order, playerSelector);
+                .characterSelectionResolver.playerSelectors.orderedModes.put(order, playerSelector());
         holder.resolversContainer
-                .discardResolver.discardSelectors.orderedModes.put(order, discardSelector);
+                .discardResolver.discardSelectors.orderedModes.put(order, discardSelector());
         holder.resolversContainer
-                .pairSelectionResolver.pairSelectors.orderedModes.put(order, pairSelector);
+                .pairSelectionResolver.pairSelectors.orderedModes.put(order, pairSelector());
         holder.resolversContainer
-                .effectsResolver.choiceSelectors.orderedModes.put(order, choiceSelector);
+                .effectsResolver.choiceSelectors.orderedModes.put(order, choiceSelector());
         holder.resolversContainer
-                .effectsResolver.effectOrderSelectorSelectors.orderedModes.put(order, effectOrderSelector);
+                .effectsResolver.effectOrderSelectorSelectors.orderedModes.put(order, effectOrderSelector());
     }
 }

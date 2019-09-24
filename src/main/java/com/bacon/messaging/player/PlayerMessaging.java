@@ -3,9 +3,10 @@ package com.bacon.messaging.player;
 import com.bacon.events.EventEmitter;
 import com.bacon.messaging.player.listener.MessagingListener;
 import com.bacon.messaging.player.messageparser.ParsedState;
-import com.bacon.messaging.player.selectors.MessagingSelectorContainer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -13,8 +14,11 @@ import java.util.concurrent.BlockingQueue;
 import static com.bacon.messaging.player.MessagingState.NORMAL;
 
 @Slf4j
+@Component
 public class PlayerMessaging {
-    public final MessagingSelectorContainer selectorContainer;
+    @Autowired
+    private MessagingListener listener;
+
     private MessagingState state;
     private Object value;
 
@@ -22,9 +26,7 @@ public class PlayerMessaging {
 
     @SneakyThrows
     public PlayerMessaging() {
-        selectorContainer = new MessagingSelectorContainer(this);
-        EventEmitter.INSTANCE.register(new MessagingListener());
-        MessageHub.INSTANCE.register(this);
+        EventEmitter.INSTANCE.register(listener);
         threadQueueJob();
     }
 
