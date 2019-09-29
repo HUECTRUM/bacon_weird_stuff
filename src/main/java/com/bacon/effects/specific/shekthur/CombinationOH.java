@@ -3,13 +3,18 @@ package com.bacon.effects.specific.shekthur;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.bacon.attacks.AttackPairBonus.of;
 import static com.bacon.attacks.AttackPairBonusType.POWER;
 import static com.bacon.utils.ChoiceUtils.NO_CHOICES;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class CombinationOH implements CardEffect {
     @Override
     public String effectName() {

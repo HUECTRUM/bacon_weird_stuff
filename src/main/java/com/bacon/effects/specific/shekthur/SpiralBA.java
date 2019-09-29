@@ -3,6 +3,11 @@ package com.bacon.effects.specific.shekthur;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import com.bacon.utils.calculation.MovementCalculator;
+import com.bacon.utils.helper.MovementHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,12 +15,17 @@ import static com.bacon.attacks.AttackPairBonus.of;
 import static com.bacon.attacks.AttackPairBonusType.POWER;
 import static com.bacon.utils.FieldUtils.playerDist;
 import static com.bacon.utils.StreamUtils.filterList;
-import static com.bacon.utils.calculation.MovementCalculator.advanceDirection;
-import static com.bacon.utils.calculation.MovementCalculator.maxAvailableAdvance;
-import static com.bacon.utils.helper.MovementHelper.move;
 import static java.util.Arrays.asList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class SpiralBA implements CardEffect {
+    @Autowired
+    private MovementHelper movementHelper;
+    @Autowired
+    private MovementCalculator movementCalculator;
+
     private List<Integer> advanceValues = asList(0, 1, 2, 3);
 
     @Override
@@ -25,7 +35,7 @@ public class SpiralBA implements CardEffect {
 
     @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
-        int advanceMax = maxAvailableAdvance(gameInfoHolder, player);
+        int advanceMax = movementCalculator.maxAvailableAdvance(gameInfoHolder, player);
         return filterList(advanceValues, value -> value <= advanceMax);
     }
 
@@ -38,10 +48,10 @@ public class SpiralBA implements CardEffect {
             return;
         }
 
-        move(
+        movementHelper.move(
                 gameInfoHolder,
                 player,
-                advanceDirection(gameInfoHolder, player),
+                movementCalculator.advanceDirection(gameInfoHolder, player),
                 spaces >= playerDist(gameInfoHolder) ? spaces + 1 : spaces
         );
 

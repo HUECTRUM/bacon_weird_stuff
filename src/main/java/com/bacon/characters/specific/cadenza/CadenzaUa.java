@@ -32,7 +32,7 @@ public class CadenzaUa implements UniqueAbility {
     @Override
     public void applySelection(GameInfoHolder holder, Player player, int index) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
-        holder.addEffect(trigger(beatNum, ON_DAMAGE_TAKEN, player), CadenzaUaTokenSpend.EFFECT);
+        holder.addEffect(trigger(beatNum, ON_DAMAGE_TAKEN, player), new CadenzaUaTokenSpend());
 
         if (index == 0) {
             return;

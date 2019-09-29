@@ -5,6 +5,8 @@ import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,7 +16,10 @@ import static com.bacon.events.EventType.P1_UA_CHANGE;
 import static com.bacon.events.EventType.P2_UA_CHANGE;
 import static com.bacon.events.GameEvent.event;
 import static com.bacon.utils.ChoiceUtils.NO_CHOICES;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class UnleashedEob implements CardEffect {
     @Override
     public String effectName() {
