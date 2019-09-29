@@ -3,6 +3,9 @@ package com.bacon.characters.dummy;
 import com.bacon.characters.Character;
 import com.bacon.characters.UniqueAbility;
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,8 +17,14 @@ import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleThree.DUMMY_O
 import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleTwo.DUMMY_ONE_STYLE_TWO;
 import static com.google.common.collect.ImmutableList.of;
 import static java.util.Arrays.asList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class DummyOne implements Character {
+    @Autowired
+    private DummyOneUa dummyOneUa;
+
     @Override
     public List<Card> bases() {
         return of(DUMMY_ONE_BASE);
@@ -44,6 +53,6 @@ public class DummyOne implements Character {
 
     @Override
     public UniqueAbility ua() {
-        return new DummyOneUa();
+        return dummyOneUa;
     }
 }

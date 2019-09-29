@@ -4,6 +4,8 @@ import com.bacon.characters.UniqueAbility;
 import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -15,7 +17,10 @@ import static com.bacon.events.GameEvent.event;
 import static com.bacon.gameobjects.triggers.EffectTrigger.ON_DAMAGE_TAKEN;
 import static com.bacon.holders.BeatTriggerKey.trigger;
 import static java.util.List.of;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class CadenzaUa implements UniqueAbility {
     public int tokens = 3;
 

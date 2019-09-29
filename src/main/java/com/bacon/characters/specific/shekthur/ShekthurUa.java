@@ -4,6 +4,8 @@ import com.bacon.characters.UniqueAbility;
 import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -19,7 +21,10 @@ import static java.math.BigDecimal.valueOf;
 import static java.util.List.of;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class ShekthurUa implements UniqueAbility {
     public int tokens = 3;
 
