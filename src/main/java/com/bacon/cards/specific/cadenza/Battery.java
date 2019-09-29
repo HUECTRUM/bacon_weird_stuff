@@ -4,6 +4,10 @@ import com.bacon.effects.specific.cadenza.BatteryPrioBoost;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -13,13 +17,19 @@ import static com.bacon.gameobjects.enums.CardType.STYLE;
 import static com.bacon.gameobjects.triggers.EffectTrigger.EOB;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class Battery {
-    private static Map<EffectTrigger, List<CardEffect>> BATTERY_EFFECTS = effectsMap(
-            triggeredEffect(EOB, new BatteryPrioBoost())
+    @Autowired
+    private ObjectProvider<BatteryPrioBoost> batteryPrioBoostProvider;
+
+    private Map<EffectTrigger, List<CardEffect>> BATTERY_EFFECTS = effectsMap(
+            triggeredEffect(EOB, batteryPrioBoostProvider.getObject())
     );
 
-    public static final Card BATTERY = Card
+    public final Card BATTERY = Card
             .builder()
             .cardType(STYLE)
             .name("Battery")

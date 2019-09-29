@@ -29,7 +29,7 @@ public class Advance implements CardEffect {
     @Autowired
     private MovementCalculator movementCalculator;
 
-    public List<Integer> choices;
+    public final List<Integer> choices;
 
     @Override
     public String effectName() {

@@ -1,13 +1,18 @@
 package com.bacon.cards.specific.dummy.dummyone;
 
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import static com.bacon.gameobjects.enums.CardType.BASE;
 import static com.bacon.utils.CardInitUtils.EMPTY_EFFECTS_MAP;
 import static java.math.BigDecimal.valueOf;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class DummyOneBase {
-    public static final Card DUMMY_ONE_BASE = Card
+    public final Card DUMMY_ONE_BASE = Card
             .builder()
             .cardType(BASE)
             .name("Dummy1UB")

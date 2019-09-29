@@ -6,6 +6,10 @@ import com.bacon.effects.specific.shekthur.CominationISoak;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -15,15 +19,25 @@ import static com.bacon.gameobjects.enums.CardType.STYLE;
 import static com.bacon.gameobjects.triggers.EffectTrigger.*;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class Combination {
-    private static Map<EffectTrigger, List<CardEffect>> COMBINATION_EFFECTS = effectsMap(
-            triggeredEffect(BEFORE_RANGE_CHECK, new CombinationBeforeRangeMiss()),
-            triggeredEffect(OH, new CombinationOH()),
-            triggeredEffect(BEFORE_DAMAGE, new CominationISoak())
+    @Autowired
+    private ObjectProvider<CombinationBeforeRangeMiss> combinationBeforeRangeMissProvider;
+    @Autowired
+    private ObjectProvider<CombinationOH> combinationOHProvider;
+    @Autowired
+    private ObjectProvider<CominationISoak> combinationISoakProvider;
+
+    private Map<EffectTrigger, List<CardEffect>> COMBINATION_EFFECTS = effectsMap(
+            triggeredEffect(BEFORE_RANGE_CHECK, combinationBeforeRangeMissProvider.getObject()),
+            triggeredEffect(OH, combinationOHProvider.getObject()),
+            triggeredEffect(BEFORE_DAMAGE, combinationISoakProvider.getObject())
     );
 
-    public static final Card COMBINATION = Card
+    public final Card COMBINATION = Card
             .builder()
             .cardType(STYLE)
             .name("Combination")

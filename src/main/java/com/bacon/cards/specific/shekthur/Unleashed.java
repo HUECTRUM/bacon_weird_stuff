@@ -5,6 +5,10 @@ import com.bacon.effects.specific.shekthur.UnleashedEob;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -15,15 +19,23 @@ import static com.bacon.gameobjects.triggers.EffectTrigger.AA;
 import static com.bacon.gameobjects.triggers.EffectTrigger.EOB;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
-import static java.util.Arrays.asList;
+import static java.util.List.of;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class Unleashed {
-    private static Map<EffectTrigger, List<CardEffect>> UNLEASHED_EFFECTS = effectsMap(
-            triggeredEffect(AA, new Retreat(asList(1, 2))),
-            triggeredEffect(EOB, new UnleashedEob())
+    @Autowired
+    private ObjectProvider<Retreat> retreatProvider;
+    @Autowired
+    private ObjectProvider<UnleashedEob> unleashedEobProvider;
+
+    private Map<EffectTrigger, List<CardEffect>> UNLEASHED_EFFECTS = effectsMap(
+            triggeredEffect(AA, retreatProvider.getObject(of(1, 2))),
+            triggeredEffect(EOB, unleashedEobProvider.getObject())
     );
 
-    public static final Card UNLEASHED = Card
+    public final Card UNLEASHED = Card
             .builder()
             .cardType(STYLE)
             .name("Unleashed")

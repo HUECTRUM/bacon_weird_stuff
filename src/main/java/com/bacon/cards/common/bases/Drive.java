@@ -4,6 +4,10 @@ import com.bacon.effects.movement.common.Advance;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.triggers.EffectTrigger;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -14,13 +18,19 @@ import static com.bacon.gameobjects.triggers.EffectTrigger.BA;
 import static com.bacon.utils.CardInitUtils.effectsMap;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Arrays.asList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
 public class Drive {
-    private static Map<EffectTrigger, List<CardEffect>> DRIVE_EFFECTS_MAP = effectsMap(
-            triggeredEffect(BA, new Advance(asList(1, 2)))
+    @Autowired
+    private ObjectProvider<Advance> advanceProvider;
+
+    private Map<EffectTrigger, List<CardEffect>> DRIVE_EFFECTS_MAP = effectsMap(
+            triggeredEffect(BA, advanceProvider.getObject(asList(1, 2)))
     );
 
-    public static final Card DRIVE = Card
+    public final Card DRIVE = Card
             .builder()
             .cardType(BASE)
             .name("Drive")
