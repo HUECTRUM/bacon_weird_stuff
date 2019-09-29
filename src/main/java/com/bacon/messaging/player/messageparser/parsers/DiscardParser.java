@@ -3,6 +3,8 @@ package com.bacon.messaging.player.messageparser.parsers;
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.messaging.player.messageparser.MessageParser;
 import com.bacon.messaging.player.messageparser.ParsedState;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,8 +12,10 @@ import static com.bacon.messaging.player.messageparser.ParsedState.parsed;
 import static com.bacon.utils.StreamUtils.mapList;
 import static java.util.Arrays.asList;
 
+@Component
 public class DiscardParser implements MessageParser<List<List<Card>>> {
-    private CardParser cardParser = new CardParser();
+    @Autowired
+    private CardParser cardParser;
 
     @Override
     public ParsedState<List<List<Card>>> parse(String msg) {

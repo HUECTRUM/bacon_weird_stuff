@@ -1,6 +1,6 @@
 package com.bacon.ioc;
 
-import com.bacon.messaging.player.PlayerMessaging;
+import com.bacon.messaging.player.selectors.*;
 import com.bacon.selectors.ante.AnteSelector;
 import com.bacon.selectors.choices.ChoiceSelector;
 import com.bacon.selectors.clash.ClashBaseSelector;
@@ -18,40 +18,52 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(value = SCOPE_PROTOTYPE)
 public class MessagingPlayerMode extends PlayerMode {
     @Autowired
-    private PlayerMessaging messaging;
+    private MessagingAnteSelector anteSelector;
+    @Autowired
+    private MessagingChoiceSelector choiceSelector;
+    @Autowired
+    private MessagingClashSelector clashSelector;
+    @Autowired
+    private MessagingDiscardSelector discardSelector;
+    @Autowired
+    private MessagingEffectOrderSelector effectOrderSelector;
+    @Autowired
+    private MessagingPairSelector pairSelector;
+    @Autowired
+    private MessagingPlayerSelector playerSelector;
 
     @Override
     ClashBaseSelector clashBaseSelector() {
-        return messaging.selectorContainer.clashSelector;
+        return clashSelector;
     }
 
     @Override
     AnteSelector anteSelector() {
-        return messaging.selectorContainer.anteSelector;
+        return anteSelector;
     }
 
     @Override
     PlayerSelector playerSelector() {
-        return messaging.selectorContainer.playerSelector;
+        return playerSelector;
     }
 
     @Override
     DiscardSelector discardSelector() {
-        return messaging.selectorContainer.discardSelector;
+        return discardSelector;
     }
 
     @Override
     PairSelector pairSelector() {
-        return messaging.selectorContainer.pairSelector;
+        return pairSelector;
     }
 
     @Override
     ChoiceSelector choiceSelector() {
-        return messaging.selectorContainer.choiceSelector;
+        return choiceSelector;
     }
 
     @Override
     EffectOrderSelector effectOrderSelector() {
-        return messaging.selectorContainer.effectOrderSelector;
+        return effectOrderSelector;
     }
 }

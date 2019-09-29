@@ -8,9 +8,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public enum EventEmitter {
-    INSTANCE;
-
+public class EventEmitter {
     List<EventListener> listeners = new ArrayList<>();
 
     public void register(EventListener listener) {
