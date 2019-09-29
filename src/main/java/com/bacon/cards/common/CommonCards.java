@@ -1,20 +1,33 @@
 package com.bacon.cards.common;
 
+import com.bacon.cards.common.bases.*;
+import com.bacon.cards.common.styles.Switch;
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.cards.common.bases.Burst.BURST;
-import static com.bacon.cards.common.bases.Dodge.DODGE;
-import static com.bacon.cards.common.bases.Drive.DRIVE;
-import static com.bacon.cards.common.bases.Grasp.GRASP;
-import static com.bacon.cards.common.bases.Shot.SHOT;
-import static com.bacon.cards.common.bases.Strike.STRIKE;
-import static com.bacon.cards.common.styles.Switch.SWITCH;
 import static com.google.common.collect.ImmutableList.of;
 import static java.util.Arrays.asList;
 
+@Component
 public class CommonCards {
-   public static List<Card> COMMON_BASES = asList(BURST, SHOT, STRIKE, DRIVE, GRASP, DODGE);
-   public static List<Card> COMMON_STYLES = of(SWITCH);
+   @Autowired
+   private Burst burst;
+   @Autowired
+   private Shot shot;
+   @Autowired
+   private Strike strike;
+   @Autowired
+   private Drive drive;
+   @Autowired
+   private Grasp grasp;
+   @Autowired
+   private Dodge dodge;
+   @Autowired
+   private Switch switchCard;
+
+   public List<Card> COMMON_BASES = asList(burst.BURST, shot.SHOT, strike.STRIKE, drive.DRIVE, grasp.GRASP, dodge.DODGE);
+   public List<Card> COMMON_STYLES = of(switchCard.SWITCH);
 }
