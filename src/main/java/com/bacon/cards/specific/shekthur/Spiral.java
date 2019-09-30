@@ -25,20 +25,24 @@ public class Spiral {
     @Autowired
     private ObjectProvider<SpiralBA> spiralBAProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> SPIRAL_EFFECTS = effectsMap(
-            triggeredEffect(BA, spiralBAProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> spiralEffects() {
+        return effectsMap(
+                triggeredEffect(BA, spiralBAProvider.getObject())
+        );
+    }
 
-    public final Card SPIRAL = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Spiral")
-            .minRange(0)
-            .maxRange(0)
-            .power(0)
-            .priority(valueOf(-1))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(SPIRAL_EFFECTS)
-            .build();
+    public Card spiral() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Spiral")
+                .minRange(0)
+                .maxRange(0)
+                .power(0)
+                .priority(valueOf(-1))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(spiralEffects())
+                .build();
+    }
 }

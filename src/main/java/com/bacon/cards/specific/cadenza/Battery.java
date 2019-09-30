@@ -25,20 +25,24 @@ public class Battery {
     @Autowired
     private ObjectProvider<BatteryPrioBoost> batteryPrioBoostProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> BATTERY_EFFECTS = effectsMap(
-            triggeredEffect(EOB, batteryPrioBoostProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> batteryEffects() {
+        return effectsMap(
+                triggeredEffect(EOB, batteryPrioBoostProvider.getObject())
+        );
+    }
 
-    public final Card BATTERY = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Battery")
-            .minRange(0)
-            .maxRange(0)
-            .power(1)
-            .priority(valueOf(-1))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(BATTERY_EFFECTS)
-            .build();
+    public Card battery() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Battery")
+                .minRange(0)
+                .maxRange(0)
+                .power(1)
+                .priority(valueOf(-1))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(batteryEffects())
+                .build();
+    }
 }

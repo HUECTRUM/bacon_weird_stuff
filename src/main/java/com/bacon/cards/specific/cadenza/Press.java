@@ -25,21 +25,25 @@ public class Press {
     @Autowired
     private ObjectProvider<PressDamageBoost> pressDamageBoostProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> PRESS_EFFECTS = effectsMap(
-            triggeredEffect(BEFORE_RANGE_CHECK, pressDamageBoostProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> pressEffects() {
+        return effectsMap(
+                triggeredEffect(BEFORE_RANGE_CHECK, pressDamageBoostProvider.getObject())
+        );
+    }
 
-    public final Card PRESS = Card
-            .builder()
-            .cardType(BASE)
-            .name("Press")
-            .minRange(1)
-            .maxRange(2)
-            .power(1)
-            .priority(valueOf(-0))
-            .stunGuard(6)
-            .soak(0)
-            .cardEffects(PRESS_EFFECTS)
-            .build();
+    public Card press() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Press")
+                .minRange(1)
+                .maxRange(2)
+                .power(1)
+                .priority(valueOf(-0))
+                .stunGuard(6)
+                .soak(0)
+                .cardEffects(pressEffects())
+                .build();
+    }
 }
 

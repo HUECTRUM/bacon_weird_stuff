@@ -25,20 +25,24 @@ public class Dodge {
     @Autowired
     private ObjectProvider<AdvanceDodge> advanceDodgeProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> DODGE_EFFECTS_MAP = effectsMap(
-            triggeredEffect(SOB, advanceDodgeProvider.getObject(List.of(1, 2, 3, -1, -2, -3)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> dodgeEffects() {
+        return effectsMap(
+                triggeredEffect(SOB, advanceDodgeProvider.getObject(List.of(1, 2, 3, -1, -2, -3)))
+        );
+    }
 
-    public final Card DODGE = Card
-            .builder()
-            .cardType(BASE)
-            .name("Dodge")
-            .minRange(null)
-            .maxRange(null)
-            .power(0)
-            .priority(valueOf(3))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(DODGE_EFFECTS_MAP)
-            .build();
+    public Card dodge() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Dodge")
+                .minRange(null)
+                .maxRange(null)
+                .power(0)
+                .priority(valueOf(3))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(dodgeEffects())
+                .build();
+    }
 }

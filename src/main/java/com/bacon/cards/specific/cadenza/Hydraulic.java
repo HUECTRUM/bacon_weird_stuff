@@ -26,20 +26,24 @@ public class Hydraulic {
     @Autowired
     private ObjectProvider<Advance> advanceProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> HYDRAULIC_EFFECTS = effectsMap(
-            triggeredEffect(BA, advanceProvider.getObject(of(1)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> hydraulicEffects() {
+        return effectsMap(
+                triggeredEffect(BA, advanceProvider.getObject(of(1)))
+        );
+    }
 
-    public final Card HYDRAULIC = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Hydraulic")
-            .minRange(0)
-            .maxRange(0)
-            .power(2)
-            .priority(valueOf(-1))
-            .stunGuard(0)
-            .soak(1)
-            .cardEffects(HYDRAULIC_EFFECTS)
-            .build();
+    public Card hydraulic() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Hydraulic")
+                .minRange(0)
+                .maxRange(0)
+                .power(2)
+                .priority(valueOf(-1))
+                .stunGuard(0)
+                .soak(1)
+                .cardEffects(hydraulicEffects())
+                .build();
+    }
 }

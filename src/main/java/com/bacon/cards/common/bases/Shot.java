@@ -12,16 +12,18 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class Shot {
-    public final Card SHOT = Card
-            .builder()
-            .cardType(BASE)
-            .name("Shot")
-            .minRange(1)
-            .maxRange(4)
-            .power(3)
-            .priority(valueOf(2))
-            .stunGuard(2)
-            .soak(0)
-            .cardEffects(EMPTY_EFFECTS_MAP)
-            .build();
+    public Card shot() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Shot")
+                .minRange(1)
+                .maxRange(4)
+                .power(3)
+                .priority(valueOf(2))
+                .stunGuard(2)
+                .soak(0)
+                .cardEffects(EMPTY_EFFECTS_MAP)
+                .build();
+    }
 }

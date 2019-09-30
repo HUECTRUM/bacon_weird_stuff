@@ -12,16 +12,18 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class DummyOneStyleTwo {
-    public final Card DUMMY_ONE_STYLE_TWO = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Dummy1Style2")
-            .minRange(1)
-            .maxRange(3)
-            .power(0)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(EMPTY_EFFECTS_MAP)
-            .build();
+    public Card dummyOneStyleTwo() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Dummy1Style2")
+                .minRange(1)
+                .maxRange(3)
+                .power(0)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(EMPTY_EFFECTS_MAP)
+                .build();
+    }
 }

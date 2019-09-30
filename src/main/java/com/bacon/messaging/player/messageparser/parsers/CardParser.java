@@ -16,7 +16,7 @@ public class CardParser implements MessageParser<Card> {
 
     @Override
     public ParsedState<Card> parse(String msg) {
-        return cardDatabase.CARD_DB
+        return cardDatabase.cardDb()
                 .stream()
                 .filter(card -> card.name.toLowerCase().equals(msg.toLowerCase()))
                 .findAny()

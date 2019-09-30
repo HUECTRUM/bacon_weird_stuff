@@ -30,21 +30,25 @@ public class Unleashed {
     @Autowired
     private ObjectProvider<UnleashedEob> unleashedEobProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> UNLEASHED_EFFECTS = effectsMap(
-            triggeredEffect(AA, retreatProvider.getObject(of(1, 2))),
-            triggeredEffect(EOB, unleashedEobProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> unleashedEffects() {
+        return effectsMap(
+                triggeredEffect(AA, retreatProvider.getObject(of(1, 2))),
+                triggeredEffect(EOB, unleashedEobProvider.getObject())
+        );
+    }
 
-    public final Card UNLEASHED = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Unleashed")
-            .minRange(0)
-            .maxRange(1)
-            .power(-1)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(UNLEASHED_EFFECTS)
-            .build();
+    public Card unleashed() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Unleashed")
+                .minRange(0)
+                .maxRange(1)
+                .power(-1)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(unleashedEffects())
+                .build();
+    }
 }

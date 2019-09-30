@@ -12,16 +12,18 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class Clockwork {
-    public final Card CLOCKWORK = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Clockwork")
-            .minRange(0)
-            .maxRange(0)
-            .power(3)
-            .priority(valueOf(-3))
-            .stunGuard(0)
-            .soak(3)
-            .cardEffects(EMPTY_EFFECTS_MAP)
-            .build();
+    public Card clockwork() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Clockwork")
+                .minRange(0)
+                .maxRange(0)
+                .power(3)
+                .priority(valueOf(-3))
+                .stunGuard(0)
+                .soak(3)
+                .cardEffects(EMPTY_EFFECTS_MAP)
+                .build();
+    }
 }

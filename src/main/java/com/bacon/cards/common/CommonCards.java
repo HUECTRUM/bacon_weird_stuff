@@ -28,6 +28,6 @@ public class CommonCards {
    @Autowired
    private Switch switchCard;
 
-   public List<Card> COMMON_BASES = asList(burst.BURST, shot.SHOT, strike.STRIKE, drive.DRIVE, grasp.GRASP, dodge.DODGE);
-   public List<Card> COMMON_STYLES = of(switchCard.SWITCH);
+   public List<Card> COMMON_BASES = asList(burst.burst(), shot.shot(), strike.strike(), drive.drive(), grasp.grasp(), dodge.dodge());
+   public List<Card> COMMON_STYLES = of(switchCard.switchCard());
 }

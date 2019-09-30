@@ -26,20 +26,24 @@ public class Grasp {
     @Autowired
     private ObjectProvider<MoveOpponent> moveOpponentProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> GRASP_EFFECTS_MAP = effectsMap(
-            triggeredEffect(OH, moveOpponentProvider.getObject(of(-1, 1)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> graspEffects() {
+        return effectsMap(
+                triggeredEffect(OH, moveOpponentProvider.getObject(of(-1, 1)))
+        );
+    }
 
-    public final Card GRASP = Card
-            .builder()
-            .cardType(BASE)
-            .name("Grasp")
-            .minRange(1)
-            .maxRange(1)
-            .power(2)
-            .priority(valueOf(5))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(GRASP_EFFECTS_MAP)
-            .build();
+    public Card grasp() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Grasp")
+                .minRange(1)
+                .maxRange(1)
+                .power(2)
+                .priority(valueOf(5))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(graspEffects())
+                .build();
+    }
 }

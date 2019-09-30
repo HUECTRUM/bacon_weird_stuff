@@ -33,12 +33,12 @@ public class Cadenza extends Character {
 
     @Override
     public List<Card> bases() {
-        return of(press.PRESS);
+        return of(press.press());
     }
 
     @Override
     public List<Card> styles() {
-        return of(battery.BATTERY, clockwork.CLOCKWORK, grapnel.GRAPNEL, hydraulic.HYDRAULIC, mechanical.MECHANICAL);
+        return of(battery.battery(), clockwork.clockwork(), grapnel.grapnel(), hydraulic.hydraulic(), mechanical.mechanical());
     }
 
     @Override

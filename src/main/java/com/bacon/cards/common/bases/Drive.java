@@ -26,20 +26,24 @@ public class Drive {
     @Autowired
     private ObjectProvider<Advance> advanceProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> DRIVE_EFFECTS_MAP = effectsMap(
-            triggeredEffect(BA, advanceProvider.getObject(asList(1, 2)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> driveEffects() {
+        return effectsMap(
+                triggeredEffect(BA, advanceProvider.getObject(asList(1, 2)))
+        );
+    }
 
-    public final Card DRIVE = Card
-            .builder()
-            .cardType(BASE)
-            .name("Drive")
-            .minRange(1)
-            .maxRange(1)
-            .power(3)
-            .priority(valueOf(4))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(DRIVE_EFFECTS_MAP)
-            .build();
+    public Card drive() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Drive")
+                .minRange(1)
+                .maxRange(1)
+                .power(3)
+                .priority(valueOf(4))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(driveEffects())
+                .build();
+    }
 }

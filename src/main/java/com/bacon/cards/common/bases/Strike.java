@@ -12,16 +12,18 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class Strike {
-    public final Card STRIKE = Card
-            .builder()
-            .cardType(BASE)
-            .name("Strike")
-            .minRange(1)
-            .maxRange(1)
-            .power(4)
-            .priority(valueOf(3))
-            .stunGuard(5)
-            .soak(0)
-            .cardEffects(EMPTY_EFFECTS_MAP)
-            .build();
+    public Card strike() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Strike")
+                .minRange(1)
+                .maxRange(1)
+                .power(4)
+                .priority(valueOf(3))
+                .stunGuard(5)
+                .soak(0)
+                .cardEffects(EMPTY_EFFECTS_MAP)
+                .build();
+    }
 }

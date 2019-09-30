@@ -26,20 +26,24 @@ public class Mechanical {
     @Autowired
     private ObjectProvider<Advance> advanceProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> MECHANICAL_EFFECTS = effectsMap(
-            triggeredEffect(EOB, advanceProvider.getObject(of(0, 1, 2, 3)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> mechanicalEffects() {
+        return effectsMap(
+                triggeredEffect(EOB, advanceProvider.getObject(of(0, 1, 2, 3)))
+        );
+    }
 
-    public final Card MECHANICAL = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Mechanical")
-            .minRange(0)
-            .maxRange(0)
-            .power(2)
-            .priority(valueOf(-2))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(MECHANICAL_EFFECTS)
-            .build();
+    public Card mechanical() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Mechanical")
+                .minRange(0)
+                .maxRange(0)
+                .power(2)
+                .priority(valueOf(-2))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(mechanicalEffects())
+                .build();
+    }
 }

@@ -34,17 +34,17 @@ public class DummyOne extends Character {
 
     @Override
     public List<Card> bases() {
-        return of(dummyOneBase.DUMMY_ONE_BASE);
+        return of(dummyOneBase.dummyOneBase());
     }
 
     @Override
     public List<Card> styles() {
         return asList(
-                dummyOneStyleOne.DUMMY_ONE_STYLE_ONE,
-                dummyOneStyleTwo.DUMMY_ONE_STYLE_TWO,
-                dummyOneStyleThree.DUMMY_ONE_STYLE_THREE,
-                dummyOneStyleFour.DUMMY_ONE_STYLE_FOUR,
-                dummyOneStyleFive.DUMMY_ONE_STYLE_FIVE
+                dummyOneStyleOne.dummyOneStyleOne(),
+                dummyOneStyleTwo.dummyOneStyleTwo(),
+                dummyOneStyleThree.dummyOneStyleThree(),
+                dummyOneStyleFour.dummyOneStyleFour(),
+                dummyOneStyleFive.dummyOneStyleFive()
         );
     }
 

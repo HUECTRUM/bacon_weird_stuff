@@ -12,16 +12,18 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class Switch {
-    public final Card SWITCH = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Switch")
-            .minRange(0)
-            .maxRange(0)
-            .power(0)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(EMPTY_EFFECTS_MAP)
-            .build();
+    public Card switchCard() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Switch")
+                .minRange(0)
+                .maxRange(0)
+                .power(0)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(EMPTY_EFFECTS_MAP)
+                .build();
+    }
 }

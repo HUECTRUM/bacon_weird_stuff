@@ -31,22 +31,26 @@ public class Combination {
     @Autowired
     private ObjectProvider<CominationISoak> combinationISoakProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> COMBINATION_EFFECTS = effectsMap(
-            triggeredEffect(BEFORE_RANGE_CHECK, combinationBeforeRangeMissProvider.getObject()),
-            triggeredEffect(OH, combinationOHProvider.getObject()),
-            triggeredEffect(BEFORE_DAMAGE, combinationISoakProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> combinationEffects() {
+        return effectsMap(
+                triggeredEffect(BEFORE_RANGE_CHECK, combinationBeforeRangeMissProvider.getObject()),
+                triggeredEffect(OH, combinationOHProvider.getObject()),
+                triggeredEffect(BEFORE_DAMAGE, combinationISoakProvider.getObject())
+        );
+    }
 
-    public final Card COMBINATION = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Combination")
-            .minRange(0)
-            .maxRange(0)
-            .power(2)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(COMBINATION_EFFECTS)
-            .build();
+    public Card combination() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Combination")
+                .minRange(0)
+                .maxRange(0)
+                .power(2)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(combinationEffects())
+                .build();
+    }
 }

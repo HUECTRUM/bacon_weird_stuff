@@ -26,20 +26,24 @@ public class Burst {
     @Autowired
     private ObjectProvider<Retreat> retreatProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> BURST_EFFECTS_MAP = effectsMap(
-        triggeredEffect(SOB, retreatProvider.getObject(of(1, 2)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> burstEffects() {
+        return effectsMap(
+                triggeredEffect(SOB, retreatProvider.getObject(of(1, 2)))
+        );
+    }
 
-    public final Card BURST = Card
-            .builder()
-            .cardType(BASE)
-            .name("Burst")
-            .minRange(2)
-            .maxRange(3)
-            .power(3)
-            .priority(valueOf(1))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(BURST_EFFECTS_MAP)
-            .build();
+    public Card burst() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Burst")
+                .minRange(2)
+                .maxRange(3)
+                .power(3)
+                .priority(valueOf(1))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(burstEffects())
+                .build();
+    }
 }

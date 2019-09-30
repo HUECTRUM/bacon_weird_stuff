@@ -30,21 +30,25 @@ public class Reaver {
     @Autowired
     private ObjectProvider<ReaverODPush> reaverODPushProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> REAVER_EFFECTS = effectsMap(
-            triggeredEffect(OD, reaverODPushProvider.getObject()),
-            triggeredEffect(EOB, advanceProvider.getObject(of(1, 2)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> reaverEffects() {
+        return effectsMap(
+                triggeredEffect(OD, reaverODPushProvider.getObject()),
+                triggeredEffect(EOB, advanceProvider.getObject(of(1, 2)))
+        );
+    }
 
-    public final Card REAVER = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Reaver")
-            .minRange(0)
-            .maxRange(1)
-            .power(0)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(REAVER_EFFECTS)
-            .build();
+    public Card reaver() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Reaver")
+                .minRange(0)
+                .maxRange(1)
+                .power(0)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(reaverEffects())
+                .build();
+    }
 }

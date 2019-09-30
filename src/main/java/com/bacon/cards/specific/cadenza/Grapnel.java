@@ -26,20 +26,24 @@ public class Grapnel {
     @Autowired
     private ObjectProvider<MoveOpponent> moveOpponentProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> GRAPNEL_EFFECTS = effectsMap(
-            triggeredEffect(OH, moveOpponentProvider.getObject(of(0, -1, -2, -3)))
-    );
+    private Map<EffectTrigger, List<CardEffect>> grapnelEffects() {
+        return effectsMap(
+                triggeredEffect(OH, moveOpponentProvider.getObject(of(0, -1, -2, -3)))
+        );
+    }
 
-    public final Card GRAPNEL = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Grapnel")
-            .minRange(2)
-            .maxRange(4)
-            .power(0)
-            .priority(valueOf(0))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(GRAPNEL_EFFECTS)
-            .build();
+    public Card grapnel() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Grapnel")
+                .minRange(2)
+                .maxRange(4)
+                .power(0)
+                .priority(valueOf(0))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(grapnelEffects())
+                .build();
+    }
 }

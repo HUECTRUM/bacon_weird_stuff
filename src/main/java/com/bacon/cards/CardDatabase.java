@@ -67,11 +67,13 @@ public class CardDatabase {
     private Press press;
 
     //todo: another way?
-    public List<Card> CARD_DB = asList(
-            burst.BURST, shot.SHOT, strike.STRIKE, drive.DRIVE, grasp.GRASP, dodge.DODGE, switchCard.SWITCH,
-            dummyOneStyleOne.DUMMY_ONE_STYLE_ONE, dummyOneStyleTwo.DUMMY_ONE_STYLE_TWO, dummyOneStyleThree.DUMMY_ONE_STYLE_THREE,
-            dummyOneStyleFour.DUMMY_ONE_STYLE_FOUR, dummyOneStyleFive.DUMMY_ONE_STYLE_FIVE, dummyOneBase.DUMMY_ONE_BASE,
-            unleashed.UNLEASHED, reaver.REAVER, combination.COMBINATION, jugular.JUGULAR, spiral.SPIRAL, brand.BRAND,
-            battery.BATTERY, clockwork.CLOCKWORK, grapnel.GRAPNEL, hydraulic.HYDRAULIC, mechanical.MECHANICAL, press.PRESS
-    );
+    public List<Card> cardDb() {
+        return asList(
+                burst.burst(), shot.shot(), strike.strike(), drive.drive(), grasp.grasp(), dodge.dodge(), switchCard.switchCard(),
+                dummyOneStyleOne.dummyOneStyleOne(), dummyOneStyleTwo.dummyOneStyleTwo(), dummyOneStyleThree.dummyOneStyleThree(),
+                dummyOneStyleFour.dummyOneStyleFour(), dummyOneStyleFive.dummyOneStyleFive(), dummyOneBase.dummyOneBase(),
+                unleashed.unleashed(), reaver.reaver(), combination.combination(), jugular.jugular(), spiral.spiral(), brand.brand(),
+                battery.battery(), clockwork.clockwork(), grapnel.grapnel(), hydraulic.hydraulic(), mechanical.mechanical(), press.press()
+        );
+    }
 }

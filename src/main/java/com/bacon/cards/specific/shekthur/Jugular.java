@@ -30,21 +30,25 @@ public class Jugular {
     @Autowired
     private ObjectProvider<JugularEoB> jugularEobProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> JUGULAR_EFFECTS = effectsMap(
-            triggeredEffect(OH, moveOpponentProvider.getObject(of(-1, 1))),
-            triggeredEffect(EOB, jugularEobProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> jugularEffects() {
+        return effectsMap(
+                triggeredEffect(OH, moveOpponentProvider.getObject(of(-1, 1))),
+                triggeredEffect(EOB, jugularEobProvider.getObject())
+        );
+    }
 
-    public final Card JUGULAR = Card
-            .builder()
-            .cardType(STYLE)
-            .name("Jugular")
-            .minRange(0)
-            .maxRange(0)
-            .power(1)
-            .priority(valueOf(2))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(JUGULAR_EFFECTS)
-            .build();
+    public Card jugular() {
+        return Card
+                .builder()
+                .cardType(STYLE)
+                .name("Jugular")
+                .minRange(0)
+                .maxRange(0)
+                .power(1)
+                .priority(valueOf(2))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(jugularEffects())
+                .build();
+    }
 }

@@ -29,21 +29,25 @@ public class Brand {
     @Autowired
     private ObjectProvider<BrandISG> brandISGProvider;
 
-    private Map<EffectTrigger, List<CardEffect>> BRAND_EFFECTS = effectsMap(
-            triggeredEffect(BEFORE_DAMAGE, brandISGProvider.getObject()),
-            triggeredEffect(AA, brandAAProvider.getObject())
-    );
+    private Map<EffectTrigger, List<CardEffect>> brandEffects() {
+        return effectsMap(
+                triggeredEffect(BEFORE_DAMAGE, brandISGProvider.getObject()),
+                triggeredEffect(AA, brandAAProvider.getObject())
+        );
+    }
 
-    public final Card BRAND = Card
-            .builder()
-            .cardType(BASE)
-            .name("Brand")
-            .minRange(1)
-            .maxRange(2)
-            .power(3)
-            .priority(valueOf(2))
-            .stunGuard(0)
-            .soak(0)
-            .cardEffects(BRAND_EFFECTS)
-            .build();
+    public Card brand() {
+        return Card
+                .builder()
+                .cardType(BASE)
+                .name("Brand")
+                .minRange(1)
+                .maxRange(2)
+                .power(3)
+                .priority(valueOf(2))
+                .stunGuard(0)
+                .soak(0)
+                .cardEffects(brandEffects())
+                .build();
+    }
 }

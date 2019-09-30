@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 public abstract class PlayerMode {
     abstract ClashBaseSelector clashBaseSelector();
     abstract AnteSelector anteSelector();

@@ -34,17 +34,17 @@ public class Shekthur extends Character {
 
     @Override
     public List<Card> bases() {
-        return of(brand.BRAND);
+        return of(brand.brand());
     }
 
     @Override
     public List<Card> styles() {
         return asList(
-                unleashed.UNLEASHED,
-                reaver.REAVER,
-                combination.COMBINATION,
-                jugular.JUGULAR,
-                spiral.SPIRAL
+                unleashed.unleashed(),
+                reaver.reaver(),
+                combination.combination(),
+                jugular.jugular(),
+                spiral.spiral()
         );
     }
 
