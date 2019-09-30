@@ -26,10 +26,10 @@ public abstract class Character {
     public abstract UniqueAbility ua();
 
     public List<Card> basesKit() {
-        return concatLists(bases(), commonCards.COMMON_BASES);
+        return concatLists(bases(), commonCards.commonBases());
     }
 
     public List<Card> stylesKit() {
-        return concatLists(styles(), commonCards.COMMON_STYLES);
+        return concatLists(styles(), commonCards.commonStyles());
     }
 }
