@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -28,12 +29,6 @@ public class PlayerMessaging {
     private ThreadLocal<Object> lock = new ThreadLocal<>();
 
     public BlockingQueue<String> messageQueue = new ArrayBlockingQueue<>(1000);
-
-    @SneakyThrows
-    public PlayerMessaging() {
-        eventEmitter.register(listener);
-        threadQueueJob();
-    }
 
     @SneakyThrows
     private void threadQueueJob() {
@@ -66,5 +61,12 @@ public class PlayerMessaging {
             value.set(parsed.value);
             lock.notifyAll();
         }
+    }
+
+    @SneakyThrows
+    @PostConstruct
+    public void initMessaging() {
+        eventEmitter.register(listener);
+        threadQueueJob();
     }
 }
