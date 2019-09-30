@@ -19,6 +19,8 @@ import static java.util.List.of;
 public class MovementHelper {
     @Autowired
     private MovementCalculator movementCalculator;
+    @Autowired
+    private EventEmitter emitter;
 
     public void move(GameInfoHolder holder, Player player, Direction direction, int spaces) {
         int index = movementCalculator.findPlayerIndex(holder, player);
@@ -32,6 +34,6 @@ public class MovementHelper {
         holder.field.spaces.set(index, null);
         holder.field.spaces.set(endIndex, player.playerId);
 
-        EventEmitter.INSTANCE.emit(event(BOARD_CHANGED, of(holder.field)));
+        emitter.emit(event(BOARD_CHANGED, of(holder.field)));
     }
 }

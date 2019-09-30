@@ -4,6 +4,7 @@ import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class ShekthurUaRegain implements CardEffect {
+    @Autowired
+    private EventEmitter emitter;
+
     @Override
     public String effectName() {
         return "Shekthur UA token gain";
@@ -34,7 +38,7 @@ public class ShekthurUaRegain implements CardEffect {
         ShekthurUa ua = (ShekthurUa) player.character.ua();
         ua.gainTokens(player.beatHolder.damageDealt);
 
-        EventEmitter.INSTANCE.emit(event(
+        emitter.emit(event(
                 player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
                 of(player.character.ua().description())
         ));

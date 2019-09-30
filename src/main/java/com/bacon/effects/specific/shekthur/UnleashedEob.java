@@ -5,6 +5,7 @@ import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class UnleashedEob implements CardEffect {
+    @Autowired
+    private EventEmitter emitter;
+
     @Override
     public String effectName() {
         return "Unleashed EOB";
@@ -39,7 +43,7 @@ public class UnleashedEob implements CardEffect {
         ua.gainTokens(2);
         player.attachBonus(beatNum + 1, of(POWER, 1));
 
-        EventEmitter.INSTANCE.emit(event(
+        emitter.emit(event(
                 player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
                 List.of(player.character.ua().description())
         ));

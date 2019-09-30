@@ -4,6 +4,7 @@ import com.bacon.characters.UniqueAbility;
 import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class CadenzaUa implements UniqueAbility {
+    @Autowired
+    private EventEmitter emitter;
+
     public int tokens = 3;
 
     @Override
@@ -46,6 +50,6 @@ public class CadenzaUa implements UniqueAbility {
         tokens -= 1;
         player.attachBonus(beatNum, of(ISG));
 
-        EventEmitter.INSTANCE.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
     }
 }

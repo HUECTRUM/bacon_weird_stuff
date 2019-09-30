@@ -4,6 +4,7 @@ import com.bacon.characters.UniqueAbility;
 import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class ShekthurUa implements UniqueAbility {
+    @Autowired
+    private EventEmitter emitter;
+
     public int tokens = 3;
 
     @Override
@@ -51,7 +55,7 @@ public class ShekthurUa implements UniqueAbility {
         player.attachBonus(beatNum, of(PRIORITY, valueOf(tokensAnted)));
         holder.addEffect(trigger(beatNum, OD, player), new ShekthurUaRegain());
 
-        EventEmitter.INSTANCE.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
     }
 
     public void gainTokens(int gain) {

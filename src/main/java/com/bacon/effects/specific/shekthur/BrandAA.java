@@ -5,6 +5,7 @@ import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class BrandAA implements CardEffect {
+    @Autowired
+    private EventEmitter emitter;
+
     @Override
     public String effectName() {
         return "Brand AA lifesteal";
@@ -49,7 +53,7 @@ public class BrandAA implements CardEffect {
         player.health = min(player.health + tokensSpent, 20);
         opponent.health = max(opponent.health - tokensSpent, 1);
 
-        EventEmitter.INSTANCE.emit(event(
+        emitter.emit(event(
                 player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
                 of(player.character.ua().description())
         ));

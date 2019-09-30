@@ -4,6 +4,7 @@ import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.gameobjects.field.Field;
 import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.player.Player;
+import com.bacon.statemachine.GameStateHolder;
 import com.bacon.statemachine.GameStates;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import com.bacon.statemachine.resolvers.ResolversContainer;
@@ -31,6 +32,8 @@ public class GameInfoHolder {
     public ResolversContainer resolversContainer;
     @Autowired
     public GameInfoHelper infoHelper;
+    @Autowired
+    private GameStateHolder stateHolder;
 
     private GameStates state = START;
 
@@ -48,7 +51,7 @@ public class GameInfoHolder {
     public void runActions() {
         while (state != GAME_END) {
             log.info("State {}", state);
-            StateTransitionCondition condition = state.transition(this);
+            StateTransitionCondition condition = stateHolder.transition(this);
 
             logGameInfo();
             state = state.nextStates().get(condition);

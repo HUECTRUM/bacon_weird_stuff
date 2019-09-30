@@ -5,6 +5,7 @@ import com.bacon.events.EventEmitter;
 import com.bacon.gameobjects.cards.CardEffect;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class CadenzaUaTokenSpend implements CardEffect {
+    @Autowired
+    private EventEmitter emitter;
+
     @Override
     public String effectName() {
         return "Cadenza UA token spend";
@@ -41,6 +45,6 @@ public class CadenzaUaTokenSpend implements CardEffect {
         ua.tokens -= 1;
         player.attachBonus(holder.infoHelper.currentBeatNumber(holder), AttackPairBonus.of(STUNGUARD, 9000));
 
-        EventEmitter.INSTANCE.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(ua.description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(ua.description())));
     }
 }

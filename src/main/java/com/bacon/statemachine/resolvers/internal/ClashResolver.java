@@ -7,6 +7,7 @@ import com.bacon.holders.beat.BeatInfoHolder;
 import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.selectors.clash.ClashBaseSelector;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,13 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Slf4j
 @Scope(value = SCOPE_PROTOTYPE)
 public class ClashResolver {
+    @Autowired
+    private EventEmitter emitter;
+
     public SelectorHolder<ClashBaseSelector> clashBaseSelectors = new SelectorHolder<>();
 
     public boolean resolveClash(GameInfoHolder holder) {
-        EventEmitter.INSTANCE.emit(event(CLASH_BASE_SELECT, null));
+        emitter.emit(event(CLASH_BASE_SELECT, null));
 
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
         log.info("A clash has occurred. Pairs p1 {} p2 {}",
@@ -54,8 +58,8 @@ public class ClashResolver {
                 mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
                 mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
-        EventEmitter.INSTANCE.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards)));
-        EventEmitter.INSTANCE.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards)));
+        emitter.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards)));
+        emitter.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards)));
 
         return true;
     }
