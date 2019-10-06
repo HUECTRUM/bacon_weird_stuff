@@ -3,6 +3,7 @@ package com.bacon.messaging.player;
 import com.bacon.events.EventEmitter;
 import com.bacon.messaging.player.listener.MessagingListener;
 import com.bacon.messaging.player.message.GameMessage;
+import com.bacon.messaging.player.messageparser.ParsedState;
 import com.bacon.messaging.player.state.MessagingState;
 import com.bacon.messaging.player.state.NormalMessagingState;
 import lombok.SneakyThrows;
@@ -55,12 +56,12 @@ public class PlayerMessaging {
     }
 
     private synchronized void processMsg(GameMessage msg) {
-        var gameId = msg.gameId;
+        UUID gameId = msg.gameId;
         if (gameId == null || states.get(gameId).equals(normalMessagingState)) {
             return;
         }
 
-        var parsedState = states.get(gameId).messageParser().parse(msg.msg);
+        ParsedState parsedState = states.get(gameId).messageParser().parse(msg.msg);
         if (parsedState.parsed) {
             values.put(gameId, parsedState.value);
             locks.get(gameId).notifyAll();
