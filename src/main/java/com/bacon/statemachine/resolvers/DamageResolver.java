@@ -46,7 +46,8 @@ public class DamageResolver {
 
         emitter.emit(event(
                 damageTaking == holder.playerOne ? EventType.P1_DAMAGE : EventType.P2_DAMAGE,
-                List.of(damageDealt, damageTaking.health)
+                List.of(damageDealt, damageTaking.health),
+                holder.gameId
         ));
 
         resolveEffects(damageDealing, damageTaking, damageDealt, holder);

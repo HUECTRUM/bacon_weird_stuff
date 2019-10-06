@@ -25,7 +25,7 @@ public class MessagingAnteSelector implements AnteSelector {
 
     @Override
     public int anteChoice(GameInfoHolder holder, Player player, List<?> choices) {
-        eventEmitter.emit(event(ANTE_SELECT, choices));
-        return messaging.await(state);
+        eventEmitter.emit(event(ANTE_SELECT, choices, holder.gameId));
+        return messaging.await(state, holder.gameId);
     }
 }

@@ -5,8 +5,8 @@ import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.utils.calculation.MovementCalculator;
 import com.bacon.utils.helper.MovementHelper;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import static java.lang.Math.abs;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 public class MoveOpponent implements CardEffect {

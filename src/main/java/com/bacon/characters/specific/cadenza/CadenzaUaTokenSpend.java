@@ -45,6 +45,6 @@ public class CadenzaUaTokenSpend implements CardEffect {
         ua.tokens -= 1;
         player.attachBonus(holder.infoHelper.currentBeatNumber(holder), AttackPairBonus.of(STUNGUARD, 9000));
 
-        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(ua.description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(ua.description()), holder.gameId));
     }
 }

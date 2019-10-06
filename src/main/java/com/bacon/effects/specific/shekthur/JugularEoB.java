@@ -35,13 +35,14 @@ public class JugularEoB implements CardEffect {
     }
 
     @Override
-    public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
+    public void apply(Player player, GameInfoHolder holder, int choiceIndex) {
         ShekthurUa ua = (ShekthurUa) player.character.ua();
         ua.tokens = 3;
 
         emitter.emit(event(
-                player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
-                of(player.character.ua().description())
+                player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
+                of(player.character.ua().description()),
+                holder.gameId
         ));
     }
 }

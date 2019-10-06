@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
@@ -34,13 +31,15 @@ public class GameInfoHolder {
     public GameInfoHelper infoHelper;
     @Autowired
     private GameStateHolder stateHolder;
+    @Autowired
+    public Field field;
 
-    private GameStates state = START;
+    public UUID gameId = new UUID(0L, 0L);
+
+    public GameStates state = START;
 
     public Player playerOne;
     public Player playerTwo;
-
-    public Field field = new Field();
 
     public Map<BeatTriggerKey, List<CardEffect>> additionalEffects = new HashMap<>();
 
@@ -60,6 +59,7 @@ public class GameInfoHolder {
     }
 
     public void run() {
+        //TODO: This causes a leak. Should be rewritten to stop when the ws connection is closed.
         new Thread(this::runActions).start();
     }
 
@@ -72,6 +72,7 @@ public class GameInfoHolder {
     //TODO: views
     public void logGameInfo() {
         log.info("----------------------------------");
+        log.info("Game id {}", gameId);
         if (playerOne != null && playerTwo != null) {
             logPlayer(playerOne, "one");
             logPlayer(playerTwo, "two");
@@ -92,5 +93,11 @@ public class GameInfoHolder {
                 name, player.playerId, player.character.displayName(), player.health, player.character.ua());
         log.info("Player {} d1 {} d2 {}",
                 name, mapList(player.discardOne, card -> card.name), mapList(player.discardTwo, card -> card.name));
+    }
+
+    public GameInfoHolder initGame(UUID gameId) {
+        this.gameId = gameId;
+        field.gameId = gameId;
+        return this;
     }
 }

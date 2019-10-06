@@ -1,6 +1,7 @@
 package com.bacon.messaging.player.selectors;
 
 import com.bacon.gameobjects.cards.Card;
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.messaging.player.PlayerMessaging;
 import com.bacon.messaging.player.state.AwaitDiscardsMessagingState;
 import com.bacon.player.Player;
@@ -18,7 +19,7 @@ public class MessagingDiscardSelector implements DiscardSelector {
     private AwaitDiscardsMessagingState state;
 
     @Override
-    public List<List<Card>> selectDiscards(Player player) {
-        return messaging.await(state);
+    public List<List<Card>> selectDiscards(Player player, GameInfoHolder holder) {
+        return messaging.await(state, holder.gameId);
     }
 }

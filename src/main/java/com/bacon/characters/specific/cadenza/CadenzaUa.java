@@ -25,6 +25,8 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 public class CadenzaUa implements UniqueAbility {
     @Autowired
     private EventEmitter emitter;
+    @Autowired
+    private CadenzaUaTokenSpend cadenzaUaTokenSpend;
 
     public int tokens = 3;
 
@@ -41,7 +43,7 @@ public class CadenzaUa implements UniqueAbility {
     @Override
     public void applySelection(GameInfoHolder holder, Player player, int index) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
-        holder.addEffect(trigger(beatNum, ON_DAMAGE_TAKEN, player), new CadenzaUaTokenSpend());
+        holder.addEffect(trigger(beatNum, ON_DAMAGE_TAKEN, player), cadenzaUaTokenSpend);
 
         if (index == 0) {
             return;
@@ -50,6 +52,6 @@ public class CadenzaUa implements UniqueAbility {
         tokens -= 1;
         player.attachBonus(beatNum, of(ISG));
 
-        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description()), holder.gameId));
     }
 }

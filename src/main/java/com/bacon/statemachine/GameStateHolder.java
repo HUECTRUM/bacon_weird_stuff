@@ -16,11 +16,10 @@ public class GameStateHolder {
     @Autowired
     private EventEmitter emitter;
 
-    public GameStates state = GameStates.START;
-
     public StateTransitionCondition transition(GameInfoHolder holder) {
+        GameStates state = holder.state;
         if (state.eventType != null) {
-            emitter.emit(event(state.eventType, null));
+            emitter.emit(event(state.eventType, null, holder.gameId));
         }
         return state.transitionInternal(holder);
     }

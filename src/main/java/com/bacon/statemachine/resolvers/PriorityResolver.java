@@ -44,7 +44,7 @@ public class PriorityResolver {
         beatInfoHolder.reactivePlayerPair =
                 firstPlayerFaster ? holder.playerTwo.beatHolder.currentBeatPair : holder.playerOne.beatHolder.currentBeatPair;
 
-        emitter.emit(GameEvent.event(PRIORITY_ACTIVE, of(beatInfoHolder.activePlayer.playerId)));
+        emitter.emit(GameEvent.event(PRIORITY_ACTIVE, of(beatInfoHolder.activePlayer.playerId), holder.gameId));
         return EMPTY;
     }
 

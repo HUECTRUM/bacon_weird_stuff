@@ -1,6 +1,7 @@
 package com.bacon.messaging.player.selectors;
 
 import com.bacon.attacks.AttackPair;
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.messaging.player.PlayerMessaging;
 import com.bacon.messaging.player.state.AwaitPairMessagingState;
 import com.bacon.player.Player;
@@ -16,7 +17,7 @@ public class MessagingPairSelector implements PairSelector {
     private AwaitPairMessagingState state;
 
     @Override
-    public AttackPair selectPair(Player player) {
-        return messaging.await(state);
+    public AttackPair selectPair(Player player, GameInfoHolder holder) {
+        return messaging.await(state, holder.gameId);
     }
 }

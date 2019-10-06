@@ -34,6 +34,6 @@ public class MovementHelper {
         holder.field.spaces.set(index, null);
         holder.field.spaces.set(endIndex, player.playerId);
 
-        emitter.emit(event(BOARD_CHANGED, of(holder.field)));
+        emitter.emit(event(BOARD_CHANGED, of(holder.field), holder.gameId));
     }
 }

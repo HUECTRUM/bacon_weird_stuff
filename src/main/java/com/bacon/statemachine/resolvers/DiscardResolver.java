@@ -28,8 +28,10 @@ public class DiscardResolver {
     public SelectorHolder<DiscardSelector> discardSelectors = new SelectorHolder<>();
 
     public StateTransitionCondition selectDiscards(GameInfoHolder holder) {
-        List<List<Card>> playerOneDiscards = discardSelectors.get(holder.playerOne, holder).selectDiscards(holder.playerOne);
-        List<List<Card>> playerTwoDiscards = discardSelectors.get(holder.playerTwo, holder).selectDiscards(holder.playerTwo);
+        List<List<Card>> playerOneDiscards = discardSelectors.get(holder.playerOne, holder)
+                .selectDiscards(holder.playerOne, holder);
+        List<List<Card>> playerTwoDiscards = discardSelectors.get(holder.playerTwo, holder)
+                .selectDiscards(holder.playerTwo, holder);
 
         holder.playerOne.discardOne.addAll(playerOneDiscards.get(0));
         holder.playerOne.discardTwo.addAll(playerOneDiscards.get(1));
@@ -40,10 +42,11 @@ public class DiscardResolver {
         log.info("Discard state routine ended. Players one {} two {}",
                 holder.playerOne, holder.playerTwo);
 
-        emitter.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne));
-        emitter.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo));
-        emitter.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne));
-        emitter.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo));
+        //TODO: code duplication
+        emitter.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne, holder.gameId));
+        emitter.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo, holder.gameId));
+        emitter.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne, holder.gameId));
+        emitter.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo, holder.gameId));
 
         return EMPTY;
     }

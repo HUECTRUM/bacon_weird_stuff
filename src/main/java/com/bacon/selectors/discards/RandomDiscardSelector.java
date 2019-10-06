@@ -1,6 +1,7 @@
 package com.bacon.selectors.discards;
 
 import com.bacon.gameobjects.cards.Card;
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.random.NumberPair;
 import com.bacon.random.Randomizer;
@@ -22,7 +23,7 @@ public class RandomDiscardSelector implements DiscardSelector {
     private Randomizer randomizer;
 
     @Override
-    public List<List<Card>> selectDiscards(Player player) {
+    public List<List<Card>> selectDiscards(Player player, GameInfoHolder holder) {
         NumberPair basesDiscard = randomizer.randomizeTwoNumbers(player.character.basesKit().size());
         NumberPair stylesDiscard = randomizer.randomizeTwoNumbers(player.character.stylesKit().size());
 

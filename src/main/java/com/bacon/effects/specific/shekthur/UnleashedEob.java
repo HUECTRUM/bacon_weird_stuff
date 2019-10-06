@@ -36,16 +36,17 @@ public class UnleashedEob implements CardEffect {
     }
 
     @Override
-    public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
+    public void apply(Player player, GameInfoHolder holder, int choiceIndex) {
         ShekthurUa ua = (ShekthurUa) player.character.ua();
-        int beatNum = gameInfoHolder.infoHelper.currentBeatNumber(gameInfoHolder);
+        int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
         ua.gainTokens(2);
         player.attachBonus(beatNum + 1, of(POWER, 1));
 
         emitter.emit(event(
-                player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
-                List.of(player.character.ua().description())
+                player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
+                List.of(player.character.ua().description()),
+                holder.gameId
         ));
     }
 }

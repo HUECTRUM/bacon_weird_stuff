@@ -27,7 +27,7 @@ public class MessagingChoiceSelector implements ChoiceSelector {
 
     @Override
     public int choose(GameInfoHolder holder, Player player, CardEffect effect, List<?> choices) {
-        eventEmitter.emit(event(EFFECT_CHOICE, of(effect.effectName(), choices)));
-        return messaging.await(state);
+        eventEmitter.emit(event(EFFECT_CHOICE, of(effect.effectName(), choices), holder.gameId));
+        return messaging.await(state, holder.gameId);
     }
 }
