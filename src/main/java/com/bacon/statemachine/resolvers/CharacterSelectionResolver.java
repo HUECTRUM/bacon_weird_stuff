@@ -26,29 +26,33 @@ public class CharacterSelectionResolver {
     public SelectorHolder<PlayerSelector> playerSelectors = new SelectorHolder<>();
 
     //todo: extract interface for resolvers?
-    public StateTransitionCondition selectPlayers(GameInfoHolder gameInfoHolder) {
-        gameInfoHolder.playerOne = playerSelectors.getByOrder(1).selectPlayer();
-        gameInfoHolder.playerTwo = playerSelectors.getByOrder(2).selectPlayer();
+    public StateTransitionCondition selectPlayers(GameInfoHolder holder) {
+        holder.playerOne = playerSelectors.getByOrder(1).selectPlayer(holder);
+        holder.playerTwo = playerSelectors.getByOrder(2).selectPlayer(holder);
 
-        gameInfoHolder.field.setPlayers(
-                gameInfoHolder.playerOne.playerId,
-                gameInfoHolder.playerTwo.playerId
+        holder.field.setPlayers(
+                holder.playerOne.playerId,
+                holder.playerTwo.playerId
         );
 
-        log.info("Player select finished. Field {}", gameInfoHolder.field);
+        log.info("Player select finished. Field {}", holder.field);
 
         emitter.emit(event(P1_CHAR_SELECTED,
-                of(gameInfoHolder.playerOne.playerId, gameInfoHolder.playerOne.character.name())));
+                of(holder.playerOne.playerId, holder.playerOne.character.name()),
+                holder.gameId));
         emitter.emit(event(P2_CHAR_SELECTED,
-                of(gameInfoHolder.playerTwo.playerId, gameInfoHolder.playerTwo.character.name())));
+                of(holder.playerTwo.playerId, holder.playerTwo.character.name()),
+                holder.gameId));
 
         emitter.emit(event(
                 P1_UA_CHANGE,
-                of(gameInfoHolder.playerOne.character.ua().description())
+                of(holder.playerOne.character.ua().description()),
+                holder.gameId
         ));
         emitter.emit(event(
                 P2_UA_CHANGE,
-                of(gameInfoHolder.playerTwo.character.ua().description())
+                of(holder.playerTwo.character.ua().description()),
+                holder.gameId
         ));
 
         return EMPTY;

@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.bacon.statemachine.GameStates.GAME_END;
 import static com.bacon.statemachine.GameStates.START;
@@ -35,12 +32,14 @@ public class GameInfoHolder {
     @Autowired
     private GameStateHolder stateHolder;
 
+    public UUID gameId = new UUID(0L, 0L);
+
     private GameStates state = START;
 
     public Player playerOne;
     public Player playerTwo;
 
-    public Field field = new Field();
+    public Field field;
 
     public Map<BeatTriggerKey, List<CardEffect>> additionalEffects = new HashMap<>();
 
@@ -92,5 +91,10 @@ public class GameInfoHolder {
                 name, player.playerId, player.character.displayName(), player.health, player.character.ua());
         log.info("Player {} d1 {} d2 {}",
                 name, mapList(player.discardOne, card -> card.name), mapList(player.discardTwo, card -> card.name));
+    }
+
+    public void initGame(UUID gameId) {
+        this.gameId = gameId;
+        this.field = new Field(gameId);
     }
 }

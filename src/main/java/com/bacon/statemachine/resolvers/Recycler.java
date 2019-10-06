@@ -19,29 +19,29 @@ public class Recycler {
     @Autowired
     private EventEmitter emitter;
 
-    public StateTransitionCondition recycle(GameInfoHolder gameInfoHolder) {
-        gameInfoHolder.playerOne.discardTwo = gameInfoHolder.playerOne.discardOne;
-        gameInfoHolder.playerTwo.discardTwo = gameInfoHolder.playerTwo.discardOne;
+    public StateTransitionCondition recycle(GameInfoHolder holder) {
+        holder.playerOne.discardTwo = holder.playerOne.discardOne;
+        holder.playerTwo.discardTwo = holder.playerTwo.discardOne;
 
-        gameInfoHolder.playerOne.discardOne = gameInfoHolder.playerOne.beatHolder.currentBeatPair.cards;
-        gameInfoHolder.playerTwo.discardOne = gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards;
+        holder.playerOne.discardOne = holder.playerOne.beatHolder.currentBeatPair.cards;
+        holder.playerTwo.discardOne = holder.playerTwo.beatHolder.currentBeatPair.cards;
 
-        emitter.emit(event(P1_D1_DISCARD_CHANGED, gameInfoHolder.playerOne.discardOne));
-        emitter.emit(event(P1_D2_DISCARD_CHANGED, gameInfoHolder.playerOne.discardTwo));
-        emitter.emit(event(P2_D1_DISCARD_CHANGED, gameInfoHolder.playerTwo.discardOne));
-        emitter.emit(event(P2_D2_DISCARD_CHANGED, gameInfoHolder.playerTwo.discardTwo));
+        emitter.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne, holder.gameId));
+        emitter.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo, holder.gameId));
+        emitter.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne, holder.gameId));
+        emitter.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo, holder.gameId));
 
-        emitter.emit(event(P1_PAIR_REVEALED, of()));
-        emitter.emit(event(P2_PAIR_REVEALED, of()));
+        emitter.emit(event(P1_PAIR_REVEALED, of(), holder.gameId));
+        emitter.emit(event(P2_PAIR_REVEALED, of(), holder.gameId));
 
         //todo: a separate state for game "cleaning" itself up after a beat
-        gameInfoHolder.prevBeats.add(gameInfoHolder.beatInfoHolder);
-        gameInfoHolder.playerOne.prevBeats.add(gameInfoHolder.playerOne.beatHolder);
-        gameInfoHolder.playerTwo.prevBeats.add(gameInfoHolder.playerTwo.beatHolder);
-        gameInfoHolder.playerOne.beatHolder.damageDealt
-                = gameInfoHolder.playerOne.beatHolder.damageTaken
-                = gameInfoHolder.playerTwo.beatHolder.damageDealt
-                = gameInfoHolder.playerTwo.beatHolder.damageTaken = 0;
+        holder.prevBeats.add(holder.beatInfoHolder);
+        holder.playerOne.prevBeats.add(holder.playerOne.beatHolder);
+        holder.playerTwo.prevBeats.add(holder.playerTwo.beatHolder);
+        holder.playerOne.beatHolder.damageDealt
+                = holder.playerOne.beatHolder.damageTaken
+                = holder.playerTwo.beatHolder.damageDealt
+                = holder.playerTwo.beatHolder.damageTaken = 0;
         return EMPTY;
     }
 }

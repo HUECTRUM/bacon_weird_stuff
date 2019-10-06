@@ -50,6 +50,6 @@ public class CadenzaUa implements UniqueAbility {
         tokens -= 1;
         player.attachBonus(beatNum, of(ISG));
 
-        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description()), holder.gameId));
     }
 }

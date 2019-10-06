@@ -17,7 +17,7 @@ public class MessagingClashSelector implements ClashBaseSelector {
     private AwaitClashMessagingState state;
 
     @Override
-    public Card selectBase(Player player, GameInfoHolder gameInfoHolder) {
-        return messaging.await(state);
+    public Card selectBase(Player player, GameInfoHolder holder) {
+        return messaging.await(state, holder.gameId);
     }
 }

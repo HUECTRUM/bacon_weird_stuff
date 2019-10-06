@@ -26,8 +26,8 @@ public class MessagingEffectOrderSelector implements EffectOrderSelector {
     private EventEmitter eventEmitter;
 
     @Override
-    public List<Integer> effectOrder(Player player, GameInfoHolder gameInfoHolder, List<CardEffect> effects) {
-        eventEmitter.emit(event(EFFECT_ORDER_SELECT, mapList(effects, CardEffect::effectName)));
-        return messaging.await(state);
+    public List<Integer> effectOrder(Player player, GameInfoHolder holder, List<CardEffect> effects) {
+        eventEmitter.emit(event(EFFECT_ORDER_SELECT, mapList(effects, CardEffect::effectName), holder.gameId));
+        return messaging.await(state, holder.gameId);
     }
 }

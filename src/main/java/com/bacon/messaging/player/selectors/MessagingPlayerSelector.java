@@ -1,5 +1,6 @@
 package com.bacon.messaging.player.selectors;
 
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.messaging.player.PlayerMessaging;
 import com.bacon.messaging.player.state.AwaitPlayerMessagingState;
 import com.bacon.player.Player;
@@ -17,7 +18,7 @@ public class MessagingPlayerSelector implements PlayerSelector {
     private AwaitPlayerMessagingState state;
 
     @Override
-    public Player selectPlayer() {
-        return fromCharacter(messaging.await(state));
+    public Player selectPlayer(GameInfoHolder holder) {
+        return fromCharacter(messaging.await(state, holder.gameId));
     }
 }

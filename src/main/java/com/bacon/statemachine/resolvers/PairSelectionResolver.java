@@ -27,29 +27,29 @@ public class PairSelectionResolver {
 
     public SelectorHolder<PairSelector> pairSelectors = new SelectorHolder<>();
 
-    public StateTransitionCondition selectPairs(GameInfoHolder gameInfoHolder) {
+    public StateTransitionCondition selectPairs(GameInfoHolder holder) {
         //TODO: beat internal start state
-        gameInfoHolder.beatInfoHolder = new BeatInfoHolder();
-        gameInfoHolder.playerOne.beatHolder = new PlayerBeatHolder();
-        gameInfoHolder.playerTwo.beatHolder = new PlayerBeatHolder();
+        holder.beatInfoHolder = new BeatInfoHolder();
+        holder.playerOne.beatHolder = new PlayerBeatHolder();
+        holder.playerTwo.beatHolder = new PlayerBeatHolder();
 
-        gameInfoHolder.beatInfoHolder.beatNumber = gameInfoHolder.infoHelper.lastBeatNumber(gameInfoHolder) + 1;
-        BeatInfoHolder beatInfoHolder = gameInfoHolder.beatInfoHolder;
+        holder.beatInfoHolder.beatNumber = holder.infoHelper.lastBeatNumber(holder) + 1;
+        BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
 
-        gameInfoHolder.playerOne.beatHolder.currentBeatPair =
-                pairSelectors.get(gameInfoHolder.playerOne, gameInfoHolder).selectPair(gameInfoHolder.playerOne);
-        gameInfoHolder.playerTwo.beatHolder.currentBeatPair =
-                pairSelectors.get(gameInfoHolder.playerTwo, gameInfoHolder).selectPair(gameInfoHolder.playerTwo);
+        holder.playerOne.beatHolder.currentBeatPair =
+                pairSelectors.get(holder.playerOne, holder).selectPair(holder.playerOne, holder);
+        holder.playerTwo.beatHolder.currentBeatPair =
+                pairSelectors.get(holder.playerTwo, holder).selectPair(holder.playerTwo, holder);
 
-        beatInfoHolder.cardsPlayed(gameInfoHolder.playerOne.beatHolder.currentBeatPair.cards, true);
-        beatInfoHolder.cardsPlayed(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards, false);
+        beatInfoHolder.cardsPlayed(holder.playerOne.beatHolder.currentBeatPair.cards, true);
+        beatInfoHolder.cardsPlayed(holder.playerTwo.beatHolder.currentBeatPair.cards, false);
 
         log.info("Pairs selected. Player one pair {} player two pair {}",
-                mapList(gameInfoHolder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
-                mapList(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
+                mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
+                mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
 
-        emitter.emit(event(PAIRS_SELECTED, null));
+        emitter.emit(event(PAIRS_SELECTED, null, holder.gameId));
         return EMPTY;
     }
 }

@@ -20,7 +20,7 @@ public class GameStateHolder {
 
     public StateTransitionCondition transition(GameInfoHolder holder) {
         if (state.eventType != null) {
-            emitter.emit(event(state.eventType, null));
+            emitter.emit(event(state.eventType, null, holder.gameId));
         }
         return state.transitionInternal(holder);
     }

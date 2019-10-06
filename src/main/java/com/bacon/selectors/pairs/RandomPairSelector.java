@@ -2,6 +2,7 @@ package com.bacon.selectors.pairs;
 
 import com.bacon.attacks.AttackPair;
 import com.bacon.gameobjects.cards.Card;
+import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.random.Randomizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class RandomPairSelector implements PairSelector {
     private Randomizer randomizer;
 
     @Override
-    public AttackPair selectPair(Player player) {
+    public AttackPair selectPair(Player player, GameInfoHolder holder) {
         List<Card> availableBases = player.availableBases();
         List<Card> availableStyles = player.availableStyles();
 

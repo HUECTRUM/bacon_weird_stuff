@@ -55,7 +55,7 @@ public class ShekthurUa implements UniqueAbility {
         player.attachBonus(beatNum, of(PRIORITY, valueOf(tokensAnted)));
         holder.addEffect(trigger(beatNum, OD, player), new ShekthurUaRegain());
 
-        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description())));
+        emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description()), holder.gameId));
     }
 
     public void gainTokens(int gain) {

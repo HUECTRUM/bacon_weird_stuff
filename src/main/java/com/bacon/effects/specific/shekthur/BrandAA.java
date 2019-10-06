@@ -43,19 +43,20 @@ public class BrandAA implements CardEffect {
     }
 
     @Override
-    public void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex) {
-        Player opponent = gameInfoHolder.infoHelper.opponent(gameInfoHolder, player);
+    public void apply(Player player, GameInfoHolder holder, int choiceIndex) {
+        Player opponent = holder.infoHelper.opponent(holder, player);
         ShekthurUa ua = (ShekthurUa) player.character.ua();
 
-        int tokensSpent = choices(player, gameInfoHolder).get(choiceIndex);
+        int tokensSpent = choices(player, holder).get(choiceIndex);
 
         ua.tokens -= tokensSpent;
         player.health = min(player.health + tokensSpent, 20);
         opponent.health = max(opponent.health - tokensSpent, 1);
 
         emitter.emit(event(
-                player.equals(gameInfoHolder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
-                of(player.character.ua().description())
+                player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE,
+                of(player.character.ua().description()),
+                holder.gameId
         ));
     }
 }

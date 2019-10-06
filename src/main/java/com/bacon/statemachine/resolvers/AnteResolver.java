@@ -44,7 +44,7 @@ public class AnteResolver {
 
         antePlayer.character.ua().applySelection(holder, antePlayer, choice);
 
-        emitter.emit(event(antePlayer == holder.playerOne ? P1_ANTE : P2_ANTE, of(choices.get(choice))));
+        emitter.emit(event(antePlayer == holder.playerOne ? P1_ANTE : P2_ANTE, of(choices.get(choice)), holder.gameId));
         return EMPTY;
     }
 }

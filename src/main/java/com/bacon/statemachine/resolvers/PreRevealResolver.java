@@ -18,8 +18,8 @@ public class PreRevealResolver {
     private EventEmitter emitter;
 
     public StateTransitionCondition resolve(GameInfoHolder holder) {
-        emitter.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards)));
-        emitter.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards)));
+        emitter.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards), holder.gameId));
+        emitter.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards), holder.gameId));
         return EMPTY;
     }
 }

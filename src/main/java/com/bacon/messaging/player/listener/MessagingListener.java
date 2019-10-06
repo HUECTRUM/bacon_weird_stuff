@@ -18,6 +18,6 @@ public class MessagingListener implements EventListener {
     @Override
     @SneakyThrows
     public void onEvent(GameEvent event) {
-        sender.sendMessage(MESSAGE_MAPPER.writeValueAsString(event));
+        sender.sendMessage(MESSAGE_MAPPER.writeValueAsString(event), event.gameId);
     }
 }

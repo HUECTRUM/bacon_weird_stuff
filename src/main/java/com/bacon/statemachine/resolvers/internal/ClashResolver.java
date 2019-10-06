@@ -30,7 +30,7 @@ public class ClashResolver {
     public SelectorHolder<ClashBaseSelector> clashBaseSelectors = new SelectorHolder<>();
 
     public boolean resolveClash(GameInfoHolder holder) {
-        emitter.emit(event(CLASH_BASE_SELECT, null));
+        emitter.emit(event(CLASH_BASE_SELECT, null, holder.gameId));
 
         BeatInfoHolder beatInfoHolder = holder.beatInfoHolder;
         log.info("A clash has occurred. Pairs p1 {} p2 {}",
@@ -58,8 +58,8 @@ public class ClashResolver {
                 mapList(holder.playerOne.beatHolder.currentBeatPair.cards, card -> card.name),
                 mapList(holder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
-        emitter.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards)));
-        emitter.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards)));
+        emitter.emit(event(P1_PAIR_REVEALED, of(holder.playerOne.beatHolder.currentBeatPair.cards), holder.gameId));
+        emitter.emit(event(P2_PAIR_REVEALED, of(holder.playerTwo.beatHolder.currentBeatPair.cards), holder.gameId));
 
         return true;
     }
