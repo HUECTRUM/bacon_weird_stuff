@@ -4,10 +4,12 @@ import com.bacon.characters.Character;
 import com.bacon.characters.PlayableCharacters;
 import com.bacon.messaging.player.messageparser.MessageParser;
 import com.bacon.messaging.player.messageparser.ParsedState;
+import org.springframework.stereotype.Component;
 
 import static com.bacon.messaging.player.messageparser.ParsedState.parsed;
 import static java.util.Arrays.stream;
 
+@Component
 public class CharacterParser implements MessageParser<Character> {
     @Override
     public ParsedState<Character> parse(String msg) {

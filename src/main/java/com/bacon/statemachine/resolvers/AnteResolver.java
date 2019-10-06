@@ -7,6 +7,7 @@ import com.bacon.player.Player;
 import com.bacon.selectors.ante.AnteSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Slf4j
 @Scope(value = SCOPE_PROTOTYPE)
 public class AnteResolver {
+    @Autowired
+    private EventEmitter emitter;
+
     public SelectorHolder<AnteSelector> selectors = new SelectorHolder<>();
 
     public StateTransitionCondition ante(GameInfoHolder holder, boolean active) {
@@ -40,7 +44,7 @@ public class AnteResolver {
 
         antePlayer.character.ua().applySelection(holder, antePlayer, choice);
 
-        EventEmitter.INSTANCE.emit(event(antePlayer == holder.playerOne ? P1_ANTE : P2_ANTE, of(choices.get(choice))));
+        emitter.emit(event(antePlayer == holder.playerOne ? P1_ANTE : P2_ANTE, of(choices.get(choice))));
         return EMPTY;
     }
 }

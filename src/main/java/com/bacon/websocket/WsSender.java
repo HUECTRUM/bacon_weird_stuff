@@ -1,12 +1,12 @@
 package com.bacon.websocket;
 
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Component;
 
 import javax.websocket.Session;
 
-public enum WsSender {
-    INSTANCE;
-
+@Component
+public class WsSender {
     public Session activeSession;
 
     @SneakyThrows

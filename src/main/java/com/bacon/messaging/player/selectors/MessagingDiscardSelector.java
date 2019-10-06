@@ -2,20 +2,23 @@ package com.bacon.messaging.player.selectors;
 
 import com.bacon.gameobjects.cards.Card;
 import com.bacon.messaging.player.PlayerMessaging;
+import com.bacon.messaging.player.state.AwaitDiscardsMessagingState;
 import com.bacon.player.Player;
 import com.bacon.selectors.discards.DiscardSelector;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.messaging.player.MessagingState.AWAIT_DISCARDS;
-
-@AllArgsConstructor
+@Component
 public class MessagingDiscardSelector implements DiscardSelector {
+    @Autowired
     private PlayerMessaging messaging;
+    @Autowired
+    private AwaitDiscardsMessagingState state;
 
     @Override
     public List<List<Card>> selectDiscards(Player player) {
-        return messaging.await(AWAIT_DISCARDS);
+        return messaging.await(state);
     }
 }

@@ -3,30 +3,32 @@ package com.bacon.messaging.player;
 import com.bacon.events.EventEmitter;
 import com.bacon.messaging.player.listener.MessagingListener;
 import com.bacon.messaging.player.messageparser.ParsedState;
-import com.bacon.messaging.player.selectors.MessagingSelectorContainer;
+import com.bacon.messaging.player.state.MessagingState;
+import com.bacon.messaging.player.state.NormalMessagingState;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import static com.bacon.messaging.player.MessagingState.NORMAL;
-
 @Slf4j
+@Component
 public class PlayerMessaging {
-    public final MessagingSelectorContainer selectorContainer;
+    @Autowired
+    private MessagingListener listener;
+    @Autowired
+    private NormalMessagingState normalMessagingState;
+    @Autowired
+    private EventEmitter eventEmitter;
+
     private MessagingState state;
-    private Object value;
+    private ThreadLocal<Object> value = new ThreadLocal<>();
+    private ThreadLocal<Object> lock = new ThreadLocal<>();
 
     public BlockingQueue<String> messageQueue = new ArrayBlockingQueue<>(1000);
-
-    @SneakyThrows
-    public PlayerMessaging() {
-        selectorContainer = new MessagingSelectorContainer(this);
-        EventEmitter.INSTANCE.register(new MessagingListener());
-        MessageHub.INSTANCE.register(this);
-        threadQueueJob();
-    }
 
     @SneakyThrows
     private void threadQueueJob() {
@@ -45,19 +47,26 @@ public class PlayerMessaging {
     @SneakyThrows
     public synchronized  <T> T await(MessagingState newState) {
         state = newState;
-        wait();
+        lock.wait();
         return (T) value;
     }
 
     private synchronized void processMsg(String msg) {
-        if (state == null || state == NORMAL) {
+        if (state == null || state.equals(normalMessagingState)) {
             return;
         }
 
-        ParsedState parsed = state.messageParser.parse(msg);
+        ParsedState parsed = state.messageParser().parse(msg);
         if (parsed.parsed) {
-            value = parsed.value;
-            notifyAll();
+            value.set(parsed.value);
+            lock.notifyAll();
         }
+    }
+
+    @SneakyThrows
+    @PostConstruct
+    public void initMessaging() {
+        eventEmitter.register(listener);
+        threadQueueJob();
     }
 }

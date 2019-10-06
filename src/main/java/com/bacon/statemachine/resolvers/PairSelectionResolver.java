@@ -8,6 +8,7 @@ import com.bacon.player.PlayerBeatHolder;
 import com.bacon.selectors.pairs.PairSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Slf4j
 @Scope(value = SCOPE_PROTOTYPE)
 public class PairSelectionResolver {
+    @Autowired
+    private EventEmitter emitter;
+
     public SelectorHolder<PairSelector> pairSelectors = new SelectorHolder<>();
 
     public StateTransitionCondition selectPairs(GameInfoHolder gameInfoHolder) {
@@ -45,7 +49,7 @@ public class PairSelectionResolver {
                 mapList(gameInfoHolder.playerTwo.beatHolder.currentBeatPair.cards, card -> card.name)
         );
 
-        EventEmitter.INSTANCE.emit(event(PAIRS_SELECTED, null));
+        emitter.emit(event(PAIRS_SELECTED, null));
         return EMPTY;
     }
 }

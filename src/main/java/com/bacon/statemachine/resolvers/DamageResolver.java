@@ -7,6 +7,7 @@ import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,6 +26,9 @@ import static java.lang.Math.max;
 @Component
 @Slf4j
 public class DamageResolver {
+    @Autowired
+    private EventEmitter emitter;
+
     public StateTransitionCondition resolveDamage(GameInfoHolder holder, boolean active) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
@@ -40,7 +44,7 @@ public class DamageResolver {
         damageTaking.health -= damageDealt;
         damageDealing.beatHolder.damageDealt = damageTaking.beatHolder.damageTaken = damageDealt;
 
-        EventEmitter.INSTANCE.emit(event(
+        emitter.emit(event(
                 damageTaking == holder.playerOne ? EventType.P1_DAMAGE : EventType.P2_DAMAGE,
                 List.of(damageDealt, damageTaking.health)
         ));

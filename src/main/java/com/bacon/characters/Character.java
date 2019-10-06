@@ -1,27 +1,35 @@
 package com.bacon.characters;
 
+import com.bacon.cards.common.CommonCards;
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.cards.common.CommonCards.COMMON_BASES;
-import static com.bacon.cards.common.CommonCards.COMMON_STYLES;
 import static com.bacon.utils.StreamUtils.concatLists;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
-public interface Character {
-    List<Card> bases();
-    List<Card> styles();
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
+public abstract class Character {
+    @Autowired
+    private CommonCards commonCards;
 
-    String name();
-    String displayName();
+    public abstract List<Card> bases();
+    public abstract List<Card> styles();
 
-    UniqueAbility ua();
+    public abstract String name();
+    public abstract String displayName();
 
-    default List<Card> basesKit() {
-        return concatLists(bases(), COMMON_BASES);
+    public abstract UniqueAbility ua();
+
+    public List<Card> basesKit() {
+        return concatLists(bases(), commonCards.commonBases());
     }
 
-    default List<Card> stylesKit() {
-        return concatLists(styles(), COMMON_STYLES);
+    public List<Card> stylesKit() {
+        return concatLists(styles(), commonCards.commonStyles());
     }
 }

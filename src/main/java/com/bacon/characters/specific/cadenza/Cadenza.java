@@ -1,30 +1,44 @@
 package com.bacon.characters.specific.cadenza;
 
+import com.bacon.cards.specific.cadenza.*;
 import com.bacon.characters.Character;
 import com.bacon.characters.UniqueAbility;
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.cards.specific.cadenza.Battery.BATTERY;
-import static com.bacon.cards.specific.cadenza.Clockwork.CLOCKWORK;
-import static com.bacon.cards.specific.cadenza.Grapnel.GRAPNEL;
-import static com.bacon.cards.specific.cadenza.Hydraulic.HYDRAULIC;
-import static com.bacon.cards.specific.cadenza.Mechanical.MECHANICAL;
-import static com.bacon.cards.specific.cadenza.Press.PRESS;
 import static java.util.List.of;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
-public class Cadenza implements Character {
-    private UniqueAbility ua = new CadenzaUa();
+@Component
+@Scope(value = SCOPE_PROTOTYPE)
+public class Cadenza extends Character {
+    @Autowired
+    private CadenzaUa cadenzaUa;
+    @Autowired
+    private Press press;
+    @Autowired
+    private Battery battery;
+    @Autowired
+    private Clockwork clockwork;
+    @Autowired
+    private Grapnel grapnel;
+    @Autowired
+    private Hydraulic hydraulic;
+    @Autowired
+    private Mechanical mechanical;
 
     @Override
     public List<Card> bases() {
-        return of(PRESS);
+        return of(press.press());
     }
 
     @Override
     public List<Card> styles() {
-        return of(BATTERY, CLOCKWORK, GRAPNEL, HYDRAULIC, MECHANICAL);
+        return of(battery.battery(), clockwork.clockwork(), grapnel.grapnel(), hydraulic.hydraulic(), mechanical.mechanical());
     }
 
     @Override
@@ -39,6 +53,6 @@ public class Cadenza implements Character {
 
     @Override
     public UniqueAbility ua() {
-        return ua;
+        return cadenzaUa;
     }
 }

@@ -7,6 +7,7 @@ import com.bacon.ioc.selector.SelectorHolder;
 import com.bacon.selectors.discards.DiscardSelector;
 import com.bacon.statemachine.conditions.StateTransitionCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,9 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Slf4j
 @Scope(value = SCOPE_PROTOTYPE)
 public class DiscardResolver {
+    @Autowired
+    private EventEmitter emitter;
+
     public SelectorHolder<DiscardSelector> discardSelectors = new SelectorHolder<>();
 
     public StateTransitionCondition selectDiscards(GameInfoHolder holder) {
@@ -36,10 +40,10 @@ public class DiscardResolver {
         log.info("Discard state routine ended. Players one {} two {}",
                 holder.playerOne, holder.playerTwo);
 
-        EventEmitter.INSTANCE.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne));
-        EventEmitter.INSTANCE.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo));
-        EventEmitter.INSTANCE.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne));
-        EventEmitter.INSTANCE.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo));
+        emitter.emit(event(P1_D1_DISCARD_CHANGED, holder.playerOne.discardOne));
+        emitter.emit(event(P1_D2_DISCARD_CHANGED, holder.playerOne.discardTwo));
+        emitter.emit(event(P2_D1_DISCARD_CHANGED, holder.playerTwo.discardOne));
+        emitter.emit(event(P2_D2_DISCARD_CHANGED, holder.playerTwo.discardTwo));
 
         return EMPTY;
     }

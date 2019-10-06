@@ -4,18 +4,26 @@ import com.bacon.effects.movement.common.Direction;
 import com.bacon.events.EventEmitter;
 import com.bacon.holders.GameInfoHolder;
 import com.bacon.player.Player;
+import com.bacon.utils.calculation.MovementCalculator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static com.bacon.effects.movement.common.Direction.LEFT;
 import static com.bacon.events.EventType.BOARD_CHANGED;
 import static com.bacon.events.GameEvent.event;
-import static com.bacon.utils.calculation.MovementCalculator.findPlayerIndex;
 import static java.util.List.of;
 
 @Slf4j
+@Component
 public class MovementHelper {
-    public static void move(GameInfoHolder holder, Player player, Direction direction, int spaces) {
-        int index = findPlayerIndex(holder, player);
+    @Autowired
+    private MovementCalculator movementCalculator;
+    @Autowired
+    private EventEmitter emitter;
+
+    public void move(GameInfoHolder holder, Player player, Direction direction, int spaces) {
+        int index = movementCalculator.findPlayerIndex(holder, player);
         int endIndex = (direction == LEFT) ? index - spaces : index + spaces;
 
         if (endIndex < 0 || endIndex > 6) {
@@ -26,6 +34,6 @@ public class MovementHelper {
         holder.field.spaces.set(index, null);
         holder.field.spaces.set(endIndex, player.playerId);
 
-        EventEmitter.INSTANCE.emit(event(BOARD_CHANGED, of(holder.field)));
+        emitter.emit(event(BOARD_CHANGED, of(holder.field)));
     }
 }

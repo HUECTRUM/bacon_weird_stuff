@@ -1,42 +1,79 @@
 package com.bacon.cards;
 
+import com.bacon.cards.common.bases.*;
+import com.bacon.cards.common.styles.Switch;
+import com.bacon.cards.specific.cadenza.*;
+import com.bacon.cards.specific.dummy.dummyone.*;
+import com.bacon.cards.specific.shekthur.*;
 import com.bacon.gameobjects.cards.Card;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.cards.common.bases.Burst.BURST;
-import static com.bacon.cards.common.bases.Dodge.DODGE;
-import static com.bacon.cards.common.bases.Drive.DRIVE;
-import static com.bacon.cards.common.bases.Grasp.GRASP;
-import static com.bacon.cards.common.bases.Shot.SHOT;
-import static com.bacon.cards.common.bases.Strike.STRIKE;
-import static com.bacon.cards.common.styles.Switch.SWITCH;
-import static com.bacon.cards.specific.cadenza.Battery.BATTERY;
-import static com.bacon.cards.specific.cadenza.Clockwork.CLOCKWORK;
-import static com.bacon.cards.specific.cadenza.Grapnel.GRAPNEL;
-import static com.bacon.cards.specific.cadenza.Hydraulic.HYDRAULIC;
-import static com.bacon.cards.specific.cadenza.Mechanical.MECHANICAL;
-import static com.bacon.cards.specific.cadenza.Press.PRESS;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneBase.DUMMY_ONE_BASE;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleFive.DUMMY_ONE_STYLE_FIVE;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleFour.DUMMY_ONE_STYLE_FOUR;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleOne.DUMMY_ONE_STYLE_ONE;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleThree.DUMMY_ONE_STYLE_THREE;
-import static com.bacon.cards.specific.dummy.dummyone.DummyOneStyleTwo.DUMMY_ONE_STYLE_TWO;
-import static com.bacon.cards.specific.shekthur.Brand.BRAND;
-import static com.bacon.cards.specific.shekthur.Combination.COMBINATION;
-import static com.bacon.cards.specific.shekthur.Jugular.JUGULAR;
-import static com.bacon.cards.specific.shekthur.Reaver.REAVER;
-import static com.bacon.cards.specific.shekthur.Spiral.SPIRAL;
-import static com.bacon.cards.specific.shekthur.Unleashed.UNLEASHED;
 import static java.util.Arrays.asList;
 
+@Component
 public class CardDatabase {
+    @Autowired
+    private Burst burst;
+    @Autowired
+    private Shot shot;
+    @Autowired
+    private Strike strike;
+    @Autowired
+    private Drive drive;
+    @Autowired
+    private Grasp grasp;
+    @Autowired
+    private Dodge dodge;
+    @Autowired
+    private Switch switchCard;
+    @Autowired
+    private DummyOneStyleOne dummyOneStyleOne;
+    @Autowired
+    private DummyOneStyleTwo dummyOneStyleTwo;
+    @Autowired
+    private DummyOneStyleThree dummyOneStyleThree;
+    @Autowired
+    private DummyOneStyleFour dummyOneStyleFour;
+    @Autowired
+    private DummyOneStyleFive dummyOneStyleFive;
+    @Autowired
+    private DummyOneBase dummyOneBase;
+    @Autowired
+    private Unleashed unleashed;
+    @Autowired
+    private Reaver reaver;
+    @Autowired
+    private Combination combination;
+    @Autowired
+    private Jugular jugular;
+    @Autowired
+    private Spiral spiral;
+    @Autowired
+    private Brand brand;
+    @Autowired
+    private Battery battery;
+    @Autowired
+    private Clockwork clockwork;
+    @Autowired
+    private Grapnel grapnel;
+    @Autowired
+    private Hydraulic hydraulic;
+    @Autowired
+    private Mechanical mechanical;
+    @Autowired
+    private Press press;
+
     //todo: another way?
-    public static List<Card> CARD_DB = asList(
-            BURST, SHOT, STRIKE, DRIVE, GRASP, DODGE, SWITCH,
-            DUMMY_ONE_STYLE_ONE, DUMMY_ONE_STYLE_TWO, DUMMY_ONE_STYLE_THREE, DUMMY_ONE_STYLE_FOUR, DUMMY_ONE_STYLE_FIVE, DUMMY_ONE_BASE,
-            UNLEASHED, REAVER, COMBINATION, JUGULAR, SPIRAL, BRAND,
-            BATTERY, CLOCKWORK, GRAPNEL, HYDRAULIC, MECHANICAL, PRESS
-    );
+    public List<Card> cardDb() {
+        return asList(
+                burst.burst(), shot.shot(), strike.strike(), drive.drive(), grasp.grasp(), dodge.dodge(), switchCard.switchCard(),
+                dummyOneStyleOne.dummyOneStyleOne(), dummyOneStyleTwo.dummyOneStyleTwo(), dummyOneStyleThree.dummyOneStyleThree(),
+                dummyOneStyleFour.dummyOneStyleFour(), dummyOneStyleFive.dummyOneStyleFive(), dummyOneBase.dummyOneBase(),
+                unleashed.unleashed(), reaver.reaver(), combination.combination(), jugular.jugular(), spiral.spiral(), brand.brand(),
+                battery.battery(), clockwork.clockwork(), grapnel.grapnel(), hydraulic.hydraulic(), mechanical.mechanical(), press.press()
+        );
+    }
 }

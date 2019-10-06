@@ -1,6 +1,5 @@
 package com.bacon.statemachine;
 
-import com.bacon.events.EventEmitter;
 import com.bacon.events.EventType;
 import com.bacon.gameobjects.triggers.EffectTrigger;
 import com.bacon.holders.GameInfoHolder;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
-import static com.bacon.events.GameEvent.event;
 import static com.bacon.statemachine.conditions.AttackCheckTransitionConditions.*;
 import static com.bacon.statemachine.conditions.ClashTransitionConditions.CLASHED_OUT;
 import static com.bacon.statemachine.conditions.RegularTransitionConditions.EMPTY;
@@ -393,12 +391,5 @@ public enum GameStates implements GameState {
     };
 
     public EventType eventType;
-
-    public StateTransitionCondition transition(GameInfoHolder holder) {
-        if (eventType != null) {
-            EventEmitter.INSTANCE.emit(event(eventType, null));
-        }
-        return transitionInternal(holder);
-    }
 }
 

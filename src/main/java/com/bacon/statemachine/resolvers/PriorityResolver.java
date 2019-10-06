@@ -20,6 +20,8 @@ import static java.util.List.of;
 public class PriorityResolver {
     @Autowired
     public ClashResolver clashResolver;
+    @Autowired
+    private EventEmitter emitter;
 
     public StateTransitionCondition resolvePriority(GameInfoHolder holder) {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
@@ -42,7 +44,7 @@ public class PriorityResolver {
         beatInfoHolder.reactivePlayerPair =
                 firstPlayerFaster ? holder.playerTwo.beatHolder.currentBeatPair : holder.playerOne.beatHolder.currentBeatPair;
 
-        EventEmitter.INSTANCE.emit(GameEvent.event(PRIORITY_ACTIVE, of(beatInfoHolder.activePlayer.playerId)));
+        emitter.emit(GameEvent.event(PRIORITY_ACTIVE, of(beatInfoHolder.activePlayer.playerId)));
         return EMPTY;
     }
 
