@@ -31,15 +31,15 @@ public class GameInfoHolder {
     public GameInfoHelper infoHelper;
     @Autowired
     private GameStateHolder stateHolder;
+    @Autowired
+    public Field field;
 
     public UUID gameId = new UUID(0L, 0L);
 
-    private GameStates state = START;
+    public GameStates state = START;
 
     public Player playerOne;
     public Player playerTwo;
-
-    public Field field;
 
     public Map<BeatTriggerKey, List<CardEffect>> additionalEffects = new HashMap<>();
 
@@ -71,6 +71,7 @@ public class GameInfoHolder {
     //TODO: views
     public void logGameInfo() {
         log.info("----------------------------------");
+        log.info("Game id {}", gameId);
         if (playerOne != null && playerTwo != null) {
             logPlayer(playerOne, "one");
             logPlayer(playerTwo, "two");
@@ -93,8 +94,9 @@ public class GameInfoHolder {
                 name, mapList(player.discardOne, card -> card.name), mapList(player.discardTwo, card -> card.name));
     }
 
-    public void initGame(UUID gameId) {
+    public GameInfoHolder initGame(UUID gameId) {
         this.gameId = gameId;
-        this.field = new Field(gameId);
+        field.gameId = gameId;
+        return this;
     }
 }

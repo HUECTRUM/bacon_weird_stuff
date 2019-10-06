@@ -29,6 +29,8 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 public class ShekthurUa implements UniqueAbility {
     @Autowired
     private EventEmitter emitter;
+    @Autowired
+    private ShekthurUaRegain shekthurUaRegain;
 
     public int tokens = 3;
 
@@ -53,7 +55,7 @@ public class ShekthurUa implements UniqueAbility {
         int beatNum = holder.infoHelper.currentBeatNumber(holder);
 
         player.attachBonus(beatNum, of(PRIORITY, valueOf(tokensAnted)));
-        holder.addEffect(trigger(beatNum, OD, player), new ShekthurUaRegain());
+        holder.addEffect(trigger(beatNum, OD, player), shekthurUaRegain);
 
         emitter.emit(event(player.equals(holder.playerOne) ? P1_UA_CHANGE : P2_UA_CHANGE, of(description()), holder.gameId));
     }

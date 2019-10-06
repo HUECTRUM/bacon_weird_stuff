@@ -1,9 +1,10 @@
 package com.bacon.websocket;
 
+import com.bacon.configuration.WebSocketConfigurator;
 import com.bacon.messaging.player.MessageHub;
+import com.bacon.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.*;
@@ -12,20 +13,23 @@ import javax.websocket.server.ServerEndpoint;
 
 import static java.util.UUID.fromString;
 
-@ServerEndpoint(value="/game/{id}")
+@ServerEndpoint(value="/game/{id}", configurator = WebSocketConfigurator.class)
 @Service
 @Slf4j
-@Component
 public class GameWs {
     @Autowired
     private WsSender sender;
     @Autowired
     private MessageHub messageHub;
+    @Autowired
+    private GameService gameService;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("id")String id) {
+        log.info("Session opened with id {}", id);
         sender.activeSessions.put(fromString(id), session);
         messageHub.initGame(fromString(id));
+        gameService.createPVEGame(fromString(id)).run();
         log.info("Session opened for game id {}", id);
     }
 

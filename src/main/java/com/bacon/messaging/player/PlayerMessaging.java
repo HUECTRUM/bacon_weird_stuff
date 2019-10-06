@@ -49,22 +49,26 @@ public class PlayerMessaging {
     }
 
     @SneakyThrows
-    public synchronized  <T> T await(MessagingState newState, UUID gameId) {
-        states.put(gameId, newState);
-        locks.get(gameId).wait();
-        return (T) values.get(gameId);
+    public <T> T await(MessagingState newState, UUID gameId) {
+        synchronized (locks.get(gameId)) {
+            states.put(gameId, newState);
+            locks.get(gameId).wait();
+            return (T) values.get(gameId);
+        }
     }
 
-    private synchronized void processMsg(GameMessage msg) {
-        UUID gameId = msg.gameId;
-        if (gameId == null || states.get(gameId).equals(normalMessagingState)) {
-            return;
-        }
+    private void processMsg(GameMessage msg) {
+        synchronized (locks.get(msg.gameId)) {
+            UUID gameId = msg.gameId;
+            if (gameId == null || states.get(gameId).equals(normalMessagingState)) {
+                return;
+            }
 
-        ParsedState parsedState = states.get(gameId).messageParser().parse(msg.msg);
-        if (parsedState.parsed) {
-            values.put(gameId, parsedState.value);
-            locks.get(gameId).notifyAll();
+            ParsedState parsedState = states.get(gameId).messageParser().parse(msg.msg);
+            if (parsedState.parsed) {
+                values.put(gameId, parsedState.value);
+                locks.get(gameId).notifyAll();
+            }
         }
     }
 

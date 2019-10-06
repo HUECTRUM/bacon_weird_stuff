@@ -22,7 +22,7 @@ public class Field {
     @Autowired
     private EventEmitter emitter;
 
-    public final UUID gameId;
+    public UUID gameId;
 
     public static final int ONE_STARTING_POSITION = 2;
     public static final int TWO_STARTING_POSITION = 4;
