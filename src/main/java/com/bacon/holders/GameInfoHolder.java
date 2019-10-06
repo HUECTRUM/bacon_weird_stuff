@@ -59,6 +59,7 @@ public class GameInfoHolder {
     }
 
     public void run() {
+        //TODO: This causes a leak. Should be rewritten to stop when the ws connection is closed.
         new Thread(this::runActions).start();
     }
 
