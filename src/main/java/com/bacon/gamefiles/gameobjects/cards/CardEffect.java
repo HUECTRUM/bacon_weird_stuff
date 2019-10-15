@@ -9,4 +9,8 @@ public interface CardEffect {
     String effectName();
     List<?> choices(Player player, GameInfoHolder gameInfoHolder);
     void apply(Player player, GameInfoHolder gameInfoHolder, int choiceIndex);
+
+    default Object[] constructorParams() {
+        return new Object[0];
+    }
 }

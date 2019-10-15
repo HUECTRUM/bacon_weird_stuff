@@ -16,7 +16,7 @@ public class Switch {
         return Card
                 .builder()
                 .cardType(STYLE)
-                .name("Switch")
+                .name("SwitchCard")
                 .minRange(0)
                 .maxRange(0)
                 .power(0)

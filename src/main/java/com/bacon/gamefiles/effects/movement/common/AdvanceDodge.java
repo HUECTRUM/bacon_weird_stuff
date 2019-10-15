@@ -39,6 +39,11 @@ public class AdvanceDodge implements CardEffect {
     }
 
     @Override
+    public Object[] constructorParams() {
+        return choices.toArray(new Object[0]);
+    }
+
+    @Override
     public List<Integer> choices(Player player, GameInfoHolder gameInfoHolder) {
         int advanceMax = movementCalculator.maxAvailableAdvance(gameInfoHolder, player);
         List<Integer> advances = filterList(choices, choice -> choice > 0 && abs(choice) <= advanceMax);

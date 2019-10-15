@@ -16,7 +16,7 @@ public class DummyOneBase {
         return Card
                 .builder()
                 .cardType(BASE)
-                .name("Dummy1UB")
+                .name("DummyOneBase")
                 .minRange(1)
                 .maxRange(3)
                 .power(3)

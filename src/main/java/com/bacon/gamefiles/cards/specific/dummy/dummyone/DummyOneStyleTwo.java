@@ -16,7 +16,7 @@ public class DummyOneStyleTwo {
         return Card
                 .builder()
                 .cardType(STYLE)
-                .name("Dummy1Style2")
+                .name("DummyOneStyleTwo")
                 .minRange(1)
                 .maxRange(3)
                 .power(0)

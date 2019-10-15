@@ -29,6 +29,7 @@ public class Card {
     public BigDecimal priority;
     public int stunGuard;
     public int soak;
+    public String methodName;
 
     public Map<EffectTrigger, List<CardEffect>> cardEffects;
 }

@@ -32,6 +32,11 @@ public class Advance implements CardEffect {
     public final List<Integer> choices;
 
     @Override
+    public Object[] constructorParams() {
+        return choices.toArray(new Object[0]);
+    }
+
+    @Override
     public String effectName() {
         return String.format("Advance %s", choices);
     }

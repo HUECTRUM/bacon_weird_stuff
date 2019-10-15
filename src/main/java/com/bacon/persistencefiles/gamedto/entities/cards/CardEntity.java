@@ -11,5 +11,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class CardEntity {
     public Class cardClass;
+    public String methodName;
     public Map<EffectTrigger, List<CardEffectEntity>> cardEffects;
 }
