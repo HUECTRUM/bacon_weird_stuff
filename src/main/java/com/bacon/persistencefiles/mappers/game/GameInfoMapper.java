@@ -20,7 +20,7 @@ public class GameInfoMapper implements GamePersistenceMapper {
     private final CardEffectMapper cardEffectMapper;
     private final BeatInfoMapper beatInfoMapper;
     private final GameService gameService;
-    
+
     @Override
     public GameInfoHolder toBean(GameEntity entity, PlayerMode firstPlayerMode, PlayerMode secondPlayerMode) {
         GameInfoHolder holder = gameService.createGame(firstPlayerMode, secondPlayerMode);
