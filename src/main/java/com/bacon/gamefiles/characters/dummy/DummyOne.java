@@ -62,4 +62,13 @@ public class DummyOne extends Character {
     public UniqueAbility ua() {
         return dummyOneUa;
     }
+
+    @Override
+    public Object[] additionalData() {
+        return new Object[0];
+    }
+
+    @Override
+    public void setData(Object[] data) {
+    }
 }

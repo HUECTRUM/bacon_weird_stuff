@@ -14,11 +14,13 @@ public class CharacterMapper implements PersistenceMapper<Character, CharacterEn
 
     @Override
     public Character toBean(CharacterEntity entity) {
-        return (Character) applicationContext.getBean(entity.characterClass);
+        Character character = (Character)applicationContext.getBean(entity.characterClass);
+        character.setData(entity.characterData);
+        return character;
     }
 
     @Override
     public CharacterEntity toEntity(Character bean) {
-        return new CharacterEntity(bean.getClass());
+        return new CharacterEntity(bean.getClass(), bean.additionalData());
     }
 }

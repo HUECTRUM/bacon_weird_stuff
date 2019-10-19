@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class CharacterEntity {
     public Class characterClass;
+    public Object[] characterData;
 }

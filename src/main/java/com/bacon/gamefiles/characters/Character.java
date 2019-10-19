@@ -32,4 +32,10 @@ public abstract class Character {
     public List<Card> stylesKit() {
         return concatLists(styles(), commonCards.commonStyles());
     }
+
+    //These 2 methods are used to copy and move games states. They provide direct access to the
+    //character or UA details that would otherwise be inaccessible since are hidden behind common interfaces
+    //(e.g. setting Shekthur's token amount)
+    public abstract Object[] additionalData();
+    public abstract void setData(Object[] data);
 }

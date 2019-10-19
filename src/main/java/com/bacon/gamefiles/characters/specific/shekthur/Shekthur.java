@@ -62,4 +62,14 @@ public class Shekthur extends Character {
     public UniqueAbility ua() {
         return shekthurUa;
     }
+
+    @Override
+    public Object[] additionalData() {
+        return new Object[] {shekthurUa.tokens};
+    }
+
+    @Override
+    public void setData(Object[] data) {
+        shekthurUa.tokens = (Integer)data[0];
+    }
 }

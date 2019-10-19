@@ -55,4 +55,14 @@ public class Cadenza extends Character {
     public UniqueAbility ua() {
         return cadenzaUa;
     }
+
+    @Override
+    public Object[] additionalData() {
+        return new Object[]{cadenzaUa.tokens};
+    }
+
+    @Override
+    public void setData(Object[] data) {
+        cadenzaUa.tokens = (Integer) data[0];
+    }
 }
