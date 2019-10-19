@@ -3,13 +3,13 @@ package com.bacon.gamefiles.holders.beat;
 import com.bacon.gamefiles.attacks.AttackPair;
 import com.bacon.gamefiles.gameobjects.cards.Card;
 import com.bacon.gamefiles.player.Player;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 @NoArgsConstructor
+@AllArgsConstructor
 public class BeatInfoHolder {
     public int beatNumber;
 
