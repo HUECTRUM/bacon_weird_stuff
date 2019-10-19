@@ -40,7 +40,7 @@ public class AdvanceDodge implements CardEffect {
 
     @Override
     public Object[] constructorParams() {
-        return choices.toArray(new Object[0]);
+        return new Object[] {choices};
     }
 
     @Override

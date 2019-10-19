@@ -11,7 +11,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
-public class Switch {
+public class SwitchCard {
     public Card switchCard() {
         return Card
                 .builder()

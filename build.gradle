@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE")
     }
 }
 
@@ -30,9 +30,9 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core'
     compile 'com.fasterxml.jackson.core:jackson-annotations'
     compile 'com.fasterxml.jackson.core:jackson-databind'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.6.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.6.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.1.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.2.0.RELEASE'
     compile("com.h2database:h2")
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.6'

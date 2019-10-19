@@ -1,7 +1,7 @@
 package com.bacon.gamefiles.cards;
 
 import com.bacon.gamefiles.cards.common.bases.*;
-import com.bacon.gamefiles.cards.common.styles.Switch;
+import com.bacon.gamefiles.cards.common.styles.SwitchCard;
 import com.bacon.gamefiles.cards.specific.cadenza.*;
 import com.bacon.gamefiles.cards.specific.dummy.dummyone.*;
 import com.bacon.gamefiles.cards.specific.shekthur.*;
@@ -28,7 +28,7 @@ public class CardDatabase {
     @Autowired
     private Dodge dodge;
     @Autowired
-    private Switch switchCard;
+    private SwitchCard switchCard;
     @Autowired
     private DummyOneStyleOne dummyOneStyleOne;
     @Autowired

@@ -18,7 +18,7 @@ public class PlayerEntityMapper implements PersistenceMapper<Player, PlayerEntit
 
     @Override
     public Player toBean(PlayerEntity entity) {
-        return new Player(
+        return entity == null ? null : new Player(
                 entity.playerId,
                 entity.health,
                 characterMapper.toBean(entity.character),
@@ -32,7 +32,7 @@ public class PlayerEntityMapper implements PersistenceMapper<Player, PlayerEntit
 
     @Override
     public PlayerEntity toEntity(Player bean) {
-        return new PlayerEntity(
+        return bean == null ? null : new PlayerEntity(
                 bean.playerId,
                 bean.health,
                 characterMapper.toEntity(bean.character),

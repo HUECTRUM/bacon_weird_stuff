@@ -23,7 +23,7 @@ public class CardMapper implements PersistenceMapper<Card, CardEntity> {
 
     @Override
     public Card toBean(CardEntity entity) {
-        Object generator = applicationContext.getBean(entity.getClass());
+        Object generator = applicationContext.getBean(entity.methodName);
         Card card = (Card) ReflectionUtils.callMethod(generator, entity.getMethodName());
         card.cardEffects = entity.cardEffects == null
                 ? null :

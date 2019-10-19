@@ -1,7 +1,7 @@
 package com.bacon.gamefiles.cards.common;
 
 import com.bacon.gamefiles.cards.common.bases.*;
-import com.bacon.gamefiles.cards.common.styles.Switch;
+import com.bacon.gamefiles.cards.common.styles.SwitchCard;
 import com.bacon.gamefiles.gameobjects.cards.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class CommonCards {
    @Autowired
    private Dodge dodge;
    @Autowired
-   private Switch switchCard;
+   private SwitchCard switchCard;
 
    public List<Card> commonBases() {
       return asList(burst.burst(), shot.shot(), strike.strike(), drive.drive(), grasp.grasp(), dodge.dodge());
