@@ -10,7 +10,6 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class CardEntity {
-    public Class cardClass;
     public String methodName;
     public Map<EffectTrigger, List<CardEffectEntity>> cardEffects;
 }

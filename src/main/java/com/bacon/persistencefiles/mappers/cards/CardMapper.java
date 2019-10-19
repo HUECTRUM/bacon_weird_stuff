@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static com.bacon.gamefiles.utils.StreamUtils.mapList;
+import static java.lang.Character.toLowerCase;
 import static java.util.stream.Collectors.toMap;
 
 @Component
@@ -34,8 +35,7 @@ public class CardMapper implements PersistenceMapper<Card, CardEntity> {
     @Override
     public CardEntity toEntity(Card bean) {
         return new CardEntity(
-                bean.getClass(),
-                Character.toLowerCase(bean.name.charAt(0)) + bean.name.substring(1),
+                toLowerCase(bean.name.charAt(0)) + bean.name.substring(1),
                 bean.cardEffects == null
                         ? null
                         : mapEffects(bean.cardEffects, e -> mapList(e.getValue(), cardEffectMapper::toEntity))

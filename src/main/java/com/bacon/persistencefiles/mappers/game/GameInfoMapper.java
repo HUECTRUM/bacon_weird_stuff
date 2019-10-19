@@ -3,6 +3,7 @@ package com.bacon.persistencefiles.mappers.game;
 import com.bacon.gamefiles.holders.GameInfoHolder;
 import com.bacon.gamefiles.ioc.PlayerMode;
 import com.bacon.gamefiles.service.GameService;
+import com.bacon.persistencefiles.gamedto.entities.game.FieldEntity;
 import com.bacon.persistencefiles.gamedto.entities.game.GameEntity;
 import com.bacon.persistencefiles.mappers.GamePersistenceMapper;
 import com.bacon.persistencefiles.mappers.cards.CardEffectMapper;
@@ -33,6 +34,9 @@ public class GameInfoMapper implements GamePersistenceMapper {
         holder.beatInfoHolder = beatInfoMapper.toBean(entity.beatInfoHolder);
         holder.prevBeats = entity.prevBeats == null ? null : mapList(entity.prevBeats, beatInfoMapper::toBean);
 
+        holder.field.gameId = entity.gameId;
+        holder.field.spaces = entity.fieldEntity.spaces;
+
         return holder;
     }
 
@@ -45,7 +49,8 @@ public class GameInfoMapper implements GamePersistenceMapper {
                 playerEntityMapper.toEntity(bean.playerTwo),
                 bean.additionalEffects == null ? null : mapValues(bean.additionalEffects, v -> mapList(v, cardEffectMapper::toEntity)),
                 beatInfoMapper.toEntity(bean.beatInfoHolder),
-                bean.prevBeats == null ? null : mapList(bean.prevBeats, beatInfoMapper::toEntity)
+                bean.prevBeats == null ? null : mapList(bean.prevBeats, beatInfoMapper::toEntity),
+                new FieldEntity(bean.field.spaces)
         );
     }
 }

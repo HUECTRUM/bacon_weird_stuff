@@ -27,4 +27,6 @@ public class GameEntity {
 
     public BeatInfoEntity beatInfoHolder;
     public List<BeatInfoEntity> prevBeats;
+
+    public FieldEntity fieldEntity;
 }
