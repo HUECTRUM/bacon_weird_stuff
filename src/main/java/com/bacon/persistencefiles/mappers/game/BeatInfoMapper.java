@@ -17,7 +17,7 @@ public class BeatInfoMapper implements PersistenceMapper<BeatInfoHolder, BeatInf
 
     @Override
     public BeatInfoHolder toBean(BeatInfoEntity entity) {
-        return new BeatInfoHolder(
+        return entity == null ? null : new BeatInfoHolder(
                 entity.beatNumber,
                 playerEntityMapper.toBean(entity.activePlayer),
                 playerEntityMapper.toBean(entity.reactivePlayer),
@@ -29,7 +29,7 @@ public class BeatInfoMapper implements PersistenceMapper<BeatInfoHolder, BeatInf
 
     @Override
     public BeatInfoEntity toEntity(BeatInfoHolder bean) {
-        return new BeatInfoEntity(
+        return bean == null ? null : new BeatInfoEntity(
                 bean.beatNumber,
                 playerEntityMapper.toEntity(bean.activePlayer),
                 playerEntityMapper.toEntity(bean.reactivePlayer),

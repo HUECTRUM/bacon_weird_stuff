@@ -25,7 +25,9 @@ public class CardMapper implements PersistenceMapper<Card, CardEntity> {
     public Card toBean(CardEntity entity) {
         Object generator = applicationContext.getBean(entity.getClass());
         Card card = (Card) ReflectionUtils.callMethod(generator, entity.getMethodName());
-        card.cardEffects = mapEffects(entity.cardEffects, e -> mapList(e.getValue(), cardEffectMapper::toBean));
+        card.cardEffects = entity.cardEffects == null
+                ? null :
+                mapEffects(entity.cardEffects, e -> mapList(e.getValue(), cardEffectMapper::toBean));
         return card;
     }
 
@@ -34,7 +36,9 @@ public class CardMapper implements PersistenceMapper<Card, CardEntity> {
         return new CardEntity(
                 bean.getClass(),
                 Character.toLowerCase(bean.name.charAt(0)) + bean.name.substring(1),
-                mapEffects(bean.cardEffects, e -> mapList(e.getValue(), cardEffectMapper::toEntity))
+                bean.cardEffects == null
+                        ? null
+                        : mapEffects(bean.cardEffects, e -> mapList(e.getValue(), cardEffectMapper::toEntity))
         );
     }
 

@@ -29,9 +29,9 @@ public class GameInfoMapper implements GamePersistenceMapper {
         holder.state = entity.state;
         holder.playerOne = playerEntityMapper.toBean(entity.playerOne);
         holder.playerTwo = playerEntityMapper.toBean(entity.playerTwo);
-        holder.additionalEffects = mapValues(entity.additionalEffects, v -> mapList(v, cardEffectMapper::toBean));
+        holder.additionalEffects = entity.additionalEffects == null ? null : mapValues(entity.additionalEffects, v -> mapList(v, cardEffectMapper::toBean));
         holder.beatInfoHolder = beatInfoMapper.toBean(entity.beatInfoHolder);
-        holder.prevBeats = mapList(entity.prevBeats, beatInfoMapper::toBean);
+        holder.prevBeats = entity.prevBeats == null ? null : mapList(entity.prevBeats, beatInfoMapper::toBean);
 
         return holder;
     }
@@ -43,9 +43,9 @@ public class GameInfoMapper implements GamePersistenceMapper {
                 bean.state,
                 playerEntityMapper.toEntity(bean.playerOne),
                 playerEntityMapper.toEntity(bean.playerTwo),
-                mapValues(bean.additionalEffects, v -> mapList(v, cardEffectMapper::toEntity)),
+                bean.additionalEffects == null ? null : mapValues(bean.additionalEffects, v -> mapList(v, cardEffectMapper::toEntity)),
                 beatInfoMapper.toEntity(bean.beatInfoHolder),
-                mapList(bean.prevBeats, beatInfoMapper::toEntity)
+                bean.prevBeats == null ? null : mapList(bean.prevBeats, beatInfoMapper::toEntity)
         );
     }
 }

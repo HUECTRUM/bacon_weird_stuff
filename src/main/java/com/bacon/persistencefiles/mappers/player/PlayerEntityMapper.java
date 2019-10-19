@@ -22,10 +22,10 @@ public class PlayerEntityMapper implements PersistenceMapper<Player, PlayerEntit
                 entity.playerId,
                 entity.health,
                 characterMapper.toBean(entity.character),
-                mapList(entity.discardOne, cardMapper::toBean),
-                mapList(entity.discardTwo, cardMapper::toBean),
+                entity.discardOne == null ? null : mapList(entity.discardOne, cardMapper::toBean),
+                entity.discardTwo == null ? null : mapList(entity.discardTwo, cardMapper::toBean),
                 playerBeatMapper.toBean(entity.beatHolder),
-                mapList(entity.prevBeats, playerBeatMapper::toBean),
+                entity.prevBeats == null ? null : mapList(entity.prevBeats, playerBeatMapper::toBean),
                 entity.bonuses
         );
     }
@@ -36,10 +36,10 @@ public class PlayerEntityMapper implements PersistenceMapper<Player, PlayerEntit
                 bean.playerId,
                 bean.health,
                 characterMapper.toEntity(bean.character),
-                mapList(bean.discardOne, cardMapper::toEntity),
-                mapList(bean.discardTwo, cardMapper::toEntity),
+                bean.discardOne == null ? null : mapList(bean.discardOne, cardMapper::toEntity),
+                bean.discardTwo == null ? null : mapList(bean.discardTwo, cardMapper::toEntity),
                 playerBeatMapper.toEntity(bean.beatHolder),
-                mapList(bean.prevBeats, playerBeatMapper::toEntity),
+                bean.prevBeats == null ? null : mapList(bean.prevBeats, playerBeatMapper::toEntity),
                 bean.bonuses
         );
     }

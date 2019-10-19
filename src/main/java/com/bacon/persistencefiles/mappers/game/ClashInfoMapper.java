@@ -17,16 +17,16 @@ public class ClashInfoMapper implements PersistenceMapper<ClashInfoHolder, Clash
     @Override
     public ClashInfoHolder toBean(ClashInfoEntity entity) {
         return new ClashInfoHolder(
-                mapList(entity.firstPlayerBasesPlayed, cardMapper::toBean),
-                mapList(entity.secondPlayerBasesPlayed, cardMapper::toBean)
+                entity.firstPlayerBasesPlayed == null ? null : mapList(entity.firstPlayerBasesPlayed, cardMapper::toBean),
+                entity.secondPlayerBasesPlayed == null ? null : mapList(entity.secondPlayerBasesPlayed, cardMapper::toBean)
         );
     }
 
     @Override
     public ClashInfoEntity toEntity(ClashInfoHolder bean) {
         return new ClashInfoEntity(
-                mapList(bean.firstPlayerBasesPlayed, cardMapper::toEntity),
-                mapList(bean.secondPlayerBasesPlayed, cardMapper::toEntity)
+                bean.firstPlayerBasesPlayed == null ? null : mapList(bean.firstPlayerBasesPlayed, cardMapper::toEntity),
+                bean.secondPlayerBasesPlayed == null ? null : mapList(bean.secondPlayerBasesPlayed, cardMapper::toEntity)
         );
     }
 }

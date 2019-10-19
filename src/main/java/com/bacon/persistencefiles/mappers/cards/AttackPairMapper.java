@@ -15,11 +15,15 @@ public class AttackPairMapper implements PersistenceMapper<AttackPair, AttackPai
 
     @Override
     public AttackPair toBean(AttackPairEntity entity) {
-        return new AttackPair(mapList(entity.cards, cardMapper::toBean));
+        return entity == null || entity.cards == null
+                ? new AttackPair(null)
+                : new AttackPair(mapList(entity.cards, cardMapper::toBean));
     }
 
     @Override
     public AttackPairEntity toEntity(AttackPair bean) {
-        return new AttackPairEntity(mapList(bean.cards, cardMapper::toEntity));
+        return bean == null || bean.cards == null
+                ? new AttackPairEntity(null)
+                : new AttackPairEntity(mapList(bean.cards, cardMapper::toEntity));
     }
 }
