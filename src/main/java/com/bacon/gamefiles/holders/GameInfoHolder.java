@@ -37,6 +37,7 @@ public class GameInfoHolder {
     public UUID gameId = new UUID(0L, 0L);
 
     public GameStates state = START;
+    public boolean processingStopped = false;
 
     public Player playerOne;
     public Player playerTwo;
@@ -48,14 +49,19 @@ public class GameInfoHolder {
     public List<BeatInfoHolder> prevBeats = new ArrayList<>(singletonList(new BeatInfoHolder()));
 
     public void runActions() {
-        while (state != GAME_END) {
+        runActionsUntil(singletonList(GAME_END));
+        log.info("Game ended");
+    }
+
+    public void runActionsUntil(List<GameStates> endStates) {
+        while (!endStates.contains(state) && !processingStopped) {
             log.info("State {}", state);
             StateTransitionCondition condition = stateHolder.transition(this);
 
             logGameInfo();
             state = state.nextStates().get(condition);
         }
-        log.info("Game ended");
+        log.info("Terminal state {} met", state);
     }
 
     public void run() {

@@ -12,13 +12,13 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public abstract class PlayerMode {
-    abstract ClashBaseSelector clashBaseSelector();
-    abstract AnteSelector anteSelector();
-    abstract PlayerSelector playerSelector();
-    abstract DiscardSelector discardSelector();
-    abstract PairSelector pairSelector();
-    abstract ChoiceSelector choiceSelector();
-    abstract EffectOrderSelector effectOrderSelector();
+    public abstract ClashBaseSelector clashBaseSelector();
+    public abstract AnteSelector anteSelector();
+    public abstract PlayerSelector playerSelector();
+    public abstract DiscardSelector discardSelector();
+    public abstract PairSelector pairSelector();
+    public abstract ChoiceSelector choiceSelector();
+    public abstract EffectOrderSelector effectOrderSelector();
 
     public void inject(GameInfoHolder holder, int order) {
         //todo: reflection?

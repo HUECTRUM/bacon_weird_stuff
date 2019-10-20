@@ -1,60 +1,48 @@
-package com.bacon.gamefiles.ioc;
+package com.bacon.aifiles.ais.midbeatoptimal.processing;
 
-import com.bacon.gamefiles.messaging.player.selectors.*;
+import com.bacon.gamefiles.ioc.PlayerMode;
 import com.bacon.gamefiles.selectors.ante.AnteSelector;
 import com.bacon.gamefiles.selectors.choices.ChoiceSelector;
+import com.bacon.gamefiles.selectors.choices.RandomChoiceSelector;
 import com.bacon.gamefiles.selectors.clash.ClashBaseSelector;
 import com.bacon.gamefiles.selectors.discards.DiscardSelector;
 import com.bacon.gamefiles.selectors.effectorder.EffectOrderSelector;
+import com.bacon.gamefiles.selectors.effectorder.SequentialEffectOrderSelector;
 import com.bacon.gamefiles.selectors.pairs.PairSelector;
 import com.bacon.gamefiles.selectors.player.PlayerSelector;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
-
 @Component
-@Scope(value = SCOPE_PROTOTYPE)
-public class MessagingPlayerMode extends PlayerMode {
+public class MidbeatOptimalProcessingMode extends PlayerMode {
     @Autowired
-    private MessagingAnteSelector anteSelector;
+    RandomChoiceSelector choiceSelector;
     @Autowired
-    private MessagingChoiceSelector choiceSelector;
-    @Autowired
-    private MessagingClashSelector clashSelector;
-    @Autowired
-    private MessagingDiscardSelector discardSelector;
-    @Autowired
-    private MessagingEffectOrderSelector effectOrderSelector;
-    @Autowired
-    private MessagingPairSelector pairSelector;
-    @Autowired
-    private MessagingPlayerSelector playerSelector;
+    SequentialEffectOrderSelector effectOrderSelector;
 
     @Override
     public ClashBaseSelector clashBaseSelector() {
-        return clashSelector;
+        return null;
     }
 
     @Override
     public AnteSelector anteSelector() {
-        return anteSelector;
+        return null;
     }
 
     @Override
     public PlayerSelector playerSelector() {
-        return playerSelector;
+        return null;
     }
 
     @Override
     public DiscardSelector discardSelector() {
-        return discardSelector;
+        return null;
     }
 
     @Override
     public PairSelector pairSelector() {
-        return pairSelector;
+        return null;
     }
 
     @Override

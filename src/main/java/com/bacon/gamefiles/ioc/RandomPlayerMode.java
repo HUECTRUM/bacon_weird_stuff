@@ -35,37 +35,37 @@ public class RandomPlayerMode extends PlayerMode {
     SequentialEffectOrderSelector effectOrderSelecor;
 
     @Override
-    ClashBaseSelector clashBaseSelector() {
+    public ClashBaseSelector clashBaseSelector() {
         return clashBaseSelector;
     }
 
     @Override
-    AnteSelector anteSelector() {
+    public AnteSelector anteSelector() {
         return anteSelector;
     }
 
     @Override
-    PlayerSelector playerSelector() {
+    public PlayerSelector playerSelector() {
         return playerSelector;
     }
 
     @Override
-    DiscardSelector discardSelector() {
+    public DiscardSelector discardSelector() {
         return discardSelector;
     }
 
     @Override
-    PairSelector pairSelector() {
+    public PairSelector pairSelector() {
         return pairSelector;
     }
 
     @Override
-    ChoiceSelector choiceSelector() {
+    public ChoiceSelector choiceSelector() {
         return choiceSelector;
     }
 
     @Override
-    EffectOrderSelector effectOrderSelector() {
+    public EffectOrderSelector effectOrderSelector() {
         return effectOrderSelecor;
     }
 }
