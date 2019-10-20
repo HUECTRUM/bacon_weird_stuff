@@ -1,7 +1,8 @@
-package com.bacon.aifiles.ais.midbeatoptimal.processing.processors;
+package com.bacon.aifiles.ais.midbeatoptimal.processing.processors.order;
 
 import com.bacon.aifiles.ais.midbeatoptimal.processing.containers.GameChoiceContainer;
 import com.bacon.aifiles.ais.midbeatoptimal.processing.permutations.PermutationGenerator;
+import com.bacon.aifiles.ais.midbeatoptimal.processing.processors.GenericProcessor;
 import com.bacon.gamefiles.gameobjects.cards.CardEffect;
 import com.bacon.gamefiles.holders.GameInfoHolder;
 import com.bacon.gamefiles.player.Player;
@@ -14,17 +15,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.aifiles.general.enums.GameDecisionType.OPPONENT;
-import static com.bacon.aifiles.general.enums.GameDecisionType.PLAYER;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.range;
+import static com.bacon.aifiles.ais.midbeatoptimal.processing.processors.order.ProcessorEffectOrderSelectorHelper.orderEffects;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
 @Slf4j
-public class ProcessorEffectOrderSelector implements EffectOrderSelector {
+public class SecondPlayerProcessorEffectOrderSelector implements EffectOrderSelector {
     @Autowired
     private GameChoiceContainer gameChoiceContainer;
     @Autowired
@@ -32,21 +30,15 @@ public class ProcessorEffectOrderSelector implements EffectOrderSelector {
     @Autowired
     private PermutationGenerator permutationGenerator;
 
-    private final Player calculatedPlayer;
-
     @Override
     public List<Integer> effectOrder(Player player, GameInfoHolder gameInfoHolder, List<CardEffect> effects) {
-        Object choice = gameChoiceContainer.nextChoices.remove(gameInfoHolder.gameId);
-        if (choice != null) {
-            return (List<Integer>) choice;
-        }
-
-        List<Integer> identityPermutation = range(0, effects.size()).boxed().collect(toList());
-        genericProcessor.processNext(
+        return orderEffects(
+                gameChoiceContainer,
+                genericProcessor,
+                permutationGenerator,
                 gameInfoHolder,
-                player.playerId.equals(calculatedPlayer.playerId) ? PLAYER : OPPONENT,
-                permutationGenerator.allPermutations(identityPermutation)
+                effects,
+                player.playerId.equals(gameInfoHolder.playerTwo.playerId)
         );
-        return identityPermutation;
     }
 }

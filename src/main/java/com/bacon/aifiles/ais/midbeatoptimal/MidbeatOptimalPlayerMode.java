@@ -23,17 +23,17 @@ public class MidbeatOptimalPlayerMode extends PlayerMode {
     @Autowired
     private RandomBaseSelector clashBaseSelector;
     @Autowired
-    RandomAnteSelector anteSelector;
+    private RandomAnteSelector anteSelector;
     @Autowired
-    DummyPlayerSelector playerSelector;
+    private DummyPlayerSelector playerSelector;
     @Autowired
-    RandomDiscardSelector discardSelector;
+    private RandomDiscardSelector discardSelector;
     @Autowired
-    RandomPairSelector pairSelector;
+    private RandomPairSelector pairSelector;
     @Autowired
-    RandomChoiceSelector choiceSelector;
+    private RandomChoiceSelector choiceSelector;
     @Autowired
-    SequentialEffectOrderSelector effectOrderSelecor;
+    private SequentialEffectOrderSelector effectOrderSelecor;
 
     @Override
     public ClashBaseSelector clashBaseSelector() {

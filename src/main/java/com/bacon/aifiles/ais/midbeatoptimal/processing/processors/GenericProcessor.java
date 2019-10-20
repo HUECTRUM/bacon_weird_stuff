@@ -1,6 +1,6 @@
 package com.bacon.aifiles.ais.midbeatoptimal.processing.processors;
 
-import com.bacon.aifiles.ais.midbeatoptimal.processing.MidbeatOptimalProcessingMode;
+import com.bacon.aifiles.ais.midbeatoptimal.processing.MidbeatOptimalProcessingModeP1;
 import com.bacon.aifiles.ais.midbeatoptimal.processing.containers.BeatDecisionTreeContainer;
 import com.bacon.aifiles.ais.midbeatoptimal.processing.containers.GameChoiceContainer;
 import com.bacon.aifiles.general.enums.GameDecisionType;
@@ -26,9 +26,9 @@ public class GenericProcessor {
     private final GameChoiceContainer gameChoiceContainer;
 
     private final GameCopyService gameCopyService;
-    private final MidbeatOptimalProcessingMode mode;
+    private final MidbeatOptimalProcessingModeP1 mode;
 
-    void processNext(GameInfoHolder holder, GameDecisionType type, List<?> choices) {
+    public void processNext(GameInfoHolder holder, GameDecisionType type, List<?> choices) {
         BeatDecisionTreeHolder treeHolder = getCurrentHolder(holder);
 
         createNode(holder, type);

@@ -1,6 +1,7 @@
-package com.bacon.aifiles.ais.midbeatoptimal.processing.processors;
+package com.bacon.aifiles.ais.midbeatoptimal.processing.processors.choice;
 
 import com.bacon.aifiles.ais.midbeatoptimal.processing.containers.GameChoiceContainer;
+import com.bacon.aifiles.ais.midbeatoptimal.processing.processors.GenericProcessor;
 import com.bacon.gamefiles.gameobjects.cards.CardEffect;
 import com.bacon.gamefiles.holders.GameInfoHolder;
 import com.bacon.gamefiles.player.Player;
@@ -13,34 +14,26 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bacon.aifiles.general.enums.GameDecisionType.OPPONENT;
-import static com.bacon.aifiles.general.enums.GameDecisionType.PLAYER;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
 @Slf4j
-public class ProcessorChoiceSelector implements ChoiceSelector {
+public class FirstPlayerProcessorChoiceSelector implements ChoiceSelector {
     @Autowired
     private GameChoiceContainer gameChoiceContainer;
     @Autowired
     private GenericProcessor genericProcessor;
 
-    private final Player calculatedPlayer;
-
     @Override
     public int choose(GameInfoHolder holder, Player player, CardEffect effect, List<?> choices) {
-        Object choice = gameChoiceContainer.nextChoices.remove(holder.gameId);
-        if (choice != null) {
-            return (Integer) choice;
-        }
-
-        genericProcessor.processNext(
+        return ProcessorChoiceSelectorHelper.choose(
+                gameChoiceContainer,
+                genericProcessor,
                 holder,
-                player.playerId.equals(calculatedPlayer.playerId) ? PLAYER : OPPONENT,
-                choices
+                choices,
+                player.playerId.equals(holder.playerOne.playerId)
         );
-        return 0;
     }
 }
